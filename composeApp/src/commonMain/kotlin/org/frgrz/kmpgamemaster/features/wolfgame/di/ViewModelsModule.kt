@@ -2,6 +2,7 @@ package org.frgrz.kmpgamemaster.features.wolfgame.di
 
 import org.frgrz.kmpgamemaster.features.wolfgame.ui.WGHomeViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.ui.WGRoleViewModel
+import org.frgrz.kmpgamemaster.features.wolfgame.ui.WGRules
 import org.koin.dsl.module
 
 val wolfGameViewModelsModule = module {
@@ -14,3 +15,4 @@ val wolfGameViewModelsModule = module {
         WGRoleViewModel()
     }
 }
+
