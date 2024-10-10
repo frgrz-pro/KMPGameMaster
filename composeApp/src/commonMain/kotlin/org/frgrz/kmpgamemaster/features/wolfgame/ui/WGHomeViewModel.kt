@@ -13,8 +13,8 @@ class WGHomeViewModel : ScreenModel {
 
     var wolvesCount = mutableStateOf(WGRules.OPTIMAL_WOLVES_COUNT)
     var wolvesLabel = mutableStateOf("${wolvesCount.value} Loups")
-    var canAddWolves = mutableStateOf(false)
-    var canRemoveWolves = mutableStateOf(false)
+    var canAddWolves = mutableStateOf(true)
+    var canRemoveWolves = mutableStateOf(true)
 
     var isSolosEnabled = mutableStateOf(true)
     var isMayorEnabled = mutableStateOf(true)

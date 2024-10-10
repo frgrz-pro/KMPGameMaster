@@ -45,6 +45,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation("tech.annexflow.compose:constraintlayout-compose-multiplatform:0.4.0")
 
             implementation(libs.kotlin.coroutines)
 
