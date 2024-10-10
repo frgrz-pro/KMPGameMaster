@@ -1,6 +1,8 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.ui
 
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -17,40 +19,42 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kmpgamemaster.composeapp.generated.resources.Res
 import kmpgamemaster.composeapp.generated.resources.home
+import kmpgamemaster.composeapp.generated.resources.wolf_game
+import org.frgrz.kmpgamemaster.material.theme.AppTheme
 import org.jetbrains.compose.resources.stringResource
 
 class WGHomeScreen : Screen {
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
 
         val navigator = LocalNavigator.currentOrThrow
         val viewModel = getScreenModel<WGHomeViewModel>()
 
-        Scaffold(
-            topBar = {
-                TopAppBar(title = { Text(text = stringResource(Res.string.home)) })
-            },
-            content = { paddingValues ->
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues) // Use padding values from the Scaffold
-                ) {
-                    // Spacer to push the button down to 2/3 of the screen height
-                    Button(
-                        onClick = { /* Handle button click */ },
-                        modifier = Modifier
-                            .padding(bottom = 16.dp) // Optional padding
-                    ) {
-                        Text("Werewolf Game")
-                    }
+        WGHomeScreen_Content()
 
-                }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WGHomeScreen_Content() {
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text(text = stringResource(Res.string.wolf_game)) })
+        },
+        content = { paddingValues ->
+            Column {
+
             }
+        }
+    )
+}
 
-        )
-
+@Composable
+@Preview
+fun WGHomeScreen_Preview() {
+    AppTheme {
+        WGHomeScreen_Content()
     }
 }

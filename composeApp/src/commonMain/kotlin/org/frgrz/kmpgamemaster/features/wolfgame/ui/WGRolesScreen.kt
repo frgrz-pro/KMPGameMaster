@@ -4,14 +4,34 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import org.frgrz.kmpgamemaster.material.theme.AppTheme
 
 class WGRolesScreen : Screen {
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
-        Scaffold() {
 
-        }
+        val navigator = LocalNavigator.currentOrThrow
+        val viewModel = getScreenModel<WGRoleViewModel>()
+
+        WGRolesScreen_Content()
+
     }
+}
+
+@Composable
+fun WGRolesScreen_Content() {
+    Scaffold() {
+
+    }
+}
+
+@Composable
+fun WGRolesScreen_Preview() {
+AppTheme {
+    WGRolesScreen_Content()
+}
 }

@@ -38,7 +38,7 @@ class HomeScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val viewModel = getScreenModel<HomeViewModel>()
 
-        HomeContent {
+        HomeScreen_Content {
             navigator.push(WGHomeScreen())
         }
     }
@@ -46,7 +46,7 @@ class HomeScreen : Screen {
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun HomeContent(onWGButtonClick: () -> Unit, ) {
+fun HomeScreen_Content(onWGButtonClick: () -> Unit, ) {
     Scaffold(
         topBar = {
             TopAppBar(title = { Text(text = stringResource(Res.string.home)) })
@@ -96,6 +96,6 @@ fun HomeContent(onWGButtonClick: () -> Unit, ) {
 @Preview
 fun HomeContent_Preview() {
     AppTheme {
-        HomeContent {}
+        HomeScreen_Content {}
     }
 }
