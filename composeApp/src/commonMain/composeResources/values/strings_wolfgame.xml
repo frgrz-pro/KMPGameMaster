@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
-
+    <string name="players">Joueurs</string>
+    <string name="wolves">Loups</string>
+    <string name="civilians">Villageois</string>
+    <string name="solos">Solistes</string>
+    <string name="roles_selection">Selection des roles</string>
+    <string name="start_game">Démarrer la partie</string>
 </resources>
