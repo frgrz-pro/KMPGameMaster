@@ -6,11 +6,9 @@ object WGRules {
 
     const val MIN_PLAYER = 5
     const val MIN_WOLVES = 1
-    const val MIN_CIVILIANS = 4
 
     const val OPTIMAL_PLAYER_COUNT = 9
     const val OPTIMAL_WOLVES_COUNT = 2
-    const val OPTIMAL_CIVILIANS_COUNT = 7
 
     fun getOptimalWolvesCount(playersCount: Int): Int {
         return when {

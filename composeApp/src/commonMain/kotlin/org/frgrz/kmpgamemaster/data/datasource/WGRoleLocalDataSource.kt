@@ -11,8 +11,7 @@ import org.frgrz.kmpgamemaster.utils.RequestState
 class WGRoleLocalDataSourceImpl(
     private val dao: WGRoleDao,
     private val mapper: WGRoleModelMapper,
-) :
-    WGRoleLocalDataSource {
+) : WGRoleLocalDataSource {
 
     override fun getAllChecked(): Flow<RequestState<List<WGRoleModel>>> {
         return dao.all()

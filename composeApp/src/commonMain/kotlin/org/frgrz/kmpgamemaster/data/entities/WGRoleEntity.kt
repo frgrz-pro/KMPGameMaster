@@ -5,9 +5,11 @@ import io.realm.kotlin.types.annotations.PrimaryKey
 import org.mongodb.kbson.BsonObjectId
 import org.mongodb.kbson.ObjectId
 
-class WGRoleEntity : RealmObject {
+data class WGRoleEntity(
+    var name: Int = 0,
+    var default: Boolean = false,
+) : RealmObject {
     @PrimaryKey
     var id: ObjectId = BsonObjectId()
-    var name: String = ""
-    var selected: Boolean = false
+    var selected: Boolean = default
 }

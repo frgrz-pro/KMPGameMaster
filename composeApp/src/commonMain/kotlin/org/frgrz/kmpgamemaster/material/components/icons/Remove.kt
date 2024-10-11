@@ -10,6 +10,9 @@ import androidx.compose.ui.graphics.vector.ImageVector.Builder
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
 
+/*
+* Generated class with `SVG to Compose` plugin
+* */
 val IconPack.Remove: ImageVector
     get() {
         if (remove != null) {
