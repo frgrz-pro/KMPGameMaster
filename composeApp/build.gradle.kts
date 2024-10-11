@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.compose)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.realm.plugin)
 }
 
 kotlin {
@@ -45,16 +46,15 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation("tech.annexflow.compose:constraintlayout-compose-multiplatform:0.4.0")
 
             implementation(libs.kotlin.coroutines)
+            implementation(libs.koin.core)
+            implementation(libs.mongodb.realm)
 
             implementation(libs.navigator)
             implementation(libs.navigator.screen.model)
             implementation(libs.navigator.transitions)
             implementation(libs.navigator.koin)
-
-            implementation(libs.koin.core)
 
             //Adding stately to prevent koin from pulling and older version of stately
             //https://github.com/sqldelight/sqldelight/issues/4357#issuecomment-1839905700
@@ -63,6 +63,9 @@ kotlin {
             //Material theme builder helper
             //https://materialkolor.com/
             implementation(libs.materialKolor)
+
+            implementation(libs.constraintLayout)
+            implementation(libs.kotlin.datetime)
 
         }
         desktopMain.dependencies {

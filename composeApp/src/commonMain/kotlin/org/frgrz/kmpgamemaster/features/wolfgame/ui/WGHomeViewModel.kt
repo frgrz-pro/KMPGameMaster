@@ -2,8 +2,13 @@ package org.frgrz.kmpgamemaster.features.wolfgame.ui
 
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
+import org.frgrz.kmpgamemaster.db.WGRoleRepository
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRules
 
-class WGHomeViewModel : ScreenModel {
+class WGHomeViewModel(private val repository: WGRoleRepository) : ScreenModel {
+
+
+    class CardItem
 
     var playerCount = mutableStateOf(WGRules.OPTIMAL_PLAYER_COUNT)
     var playerLabel = mutableStateOf("Joueurs : " + playerCount.value.toString())
@@ -16,16 +21,26 @@ class WGHomeViewModel : ScreenModel {
     var canAddWolves = mutableStateOf(true)
     var canRemoveWolves = mutableStateOf(true)
 
-    var isSolosEnabled = mutableStateOf(true)
-    var isMayorEnabled = mutableStateOf(true)
+    var dataList = mutableStateOf(
+        listOf(
+            CardItem(),
+            CardItem(),
+            CardItem(),
+            CardItem(),
+            CardItem(),
+            CardItem(),
+            CardItem(),
+            CardItem(),
+            CardItem(),
+            CardItem(),
+            CardItem(),
+            CardItem(),
+            CardItem(),
+            CardItem(),
+            CardItem(),
+        )
+    )
 
-    fun onSolosCheckedChanged(isChecked: Boolean) {
-        isSolosEnabled.value = isChecked
-    }
-
-    fun onMayorCheckedChanged(isChecked: Boolean) {
-        isMayorEnabled.value = isChecked
-    }
 
     fun onPlayerCountChanged(count: Int) {
         playerCount.value = count
@@ -61,37 +76,3 @@ class WGHomeViewModel : ScreenModel {
 
 }
 
-object WGRules {
-
-    const val MAX_PLAYER_COUNT = 18
-
-    const val MIN_PLAYER = 5
-    const val MIN_WOLVES = 1
-    const val MIN_CIVILIANS = 4
-
-    const val OPTIMAL_PLAYER_COUNT = 9
-    const val OPTIMAL_WOLVES_COUNT = 2
-    const val OPTIMAL_CIVILIANS_COUNT = 7
-
-    fun getOptimalWolvesCount(playersCount: Int): Int {
-        return when {
-            playersCount < 5 -> 0
-            playersCount in 5..7 -> 1
-            playersCount == 8 -> 2
-            else -> 1 + (playersCount - 5) / 4
-        }
-    }
-
-    fun canAddWolves(playersCount: Int, wolvesCount: Int): Boolean {
-        return when {
-            playersCount < 7 -> false
-            else -> {
-                wolvesCount != getOptimalWolvesCount(playersCount) + 1
-            }
-        }
-    }
-
-    fun canRemoveWolves(wolvesCount: Int): Boolean {
-        return wolvesCount != 1
-    }
-}

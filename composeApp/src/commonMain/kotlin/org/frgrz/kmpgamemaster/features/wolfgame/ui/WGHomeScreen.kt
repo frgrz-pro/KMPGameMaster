@@ -1,7 +1,6 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,10 +32,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -52,37 +47,12 @@ import org.frgrz.kmpgamemaster.material.components.icons.Remove
 
 class WGHomeScreen : Screen {
 
-    class CardItem
-
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
 
         val navigator = LocalNavigator.currentOrThrow
         val viewModel = getScreenModel<WGHomeViewModel>()
-        var selectedCardIndex by remember { mutableStateOf<Int?>(null) }
-
-        var dataList by remember {
-            mutableStateOf(
-                listOf(
-                    CardItem(),
-                    CardItem(),
-                    CardItem(),
-                    CardItem(),
-                    CardItem(),
-                    CardItem(),
-                    CardItem(),
-                    CardItem(),
-                    CardItem(),
-                    CardItem(),
-                    CardItem(),
-                    CardItem(),
-                    CardItem(),
-                    CardItem(),
-                    CardItem(),
-                )
-            )
-        }
 
         Scaffold(
             topBar = {
@@ -178,25 +148,25 @@ class WGHomeScreen : Screen {
                             verticalArrangement = Arrangement.spacedBy(4.dp),
                             modifier = Modifier.padding(12.dp)
                         ) {
-                            itemsIndexed(dataList) { index, _ ->
+                            itemsIndexed(viewModel.dataList.value) { index, _ ->
                                 Card(
-                                    onClick = { selectedCardIndex = index },
+                                    //onClick = { selectedCardIndex = index },
                                     elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
                                     shape = RoundedCornerShape(4.dp),
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .aspectRatio(1f)
-                                        .then(
-                                            if (index == selectedCardIndex) {
-                                                Modifier.border(
-                                                    2.dp,
-                                                    Color.Blue,
-                                                    RoundedCornerShape(4.dp)
-                                                )
-                                            } else {
-                                                Modifier
-                                            }
-                                        )
+//                                        .then(
+//                                            if (index == selectedCardIndex) {
+//                                                Modifier.border(
+//                                                    2.dp,
+//                                                    Color.Blue,
+//                                                    RoundedCornerShape(4.dp)
+//                                                )
+//                                            } else {
+//                                                Modifier
+//                                            }
+//                                        )
                                 ) {
                                     Box(
                                         modifier = Modifier.fillMaxSize()

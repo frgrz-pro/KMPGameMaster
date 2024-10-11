@@ -3,7 +3,7 @@ agp = "8.2.2"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
-kotlin = "2.0.20"
+kotlin = "2.0.10"
 compose-plugin = "1.6.11"
 kotlinx-coroutines = "1.9.0"
 androidx-activity-compose = "1.9.2"
@@ -11,6 +11,10 @@ voyager = "1.0.0"
 koin = "3.5.6"
 material-kolor = "2.0.0"
 stately = "2.0.5"
+realm = "2.0.0"
+constraint-layout = "0.4.0"
+kotlinxDatetime = "0.6.1"
+
 
 [libraries]
 kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
@@ -23,7 +27,9 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 navigator-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "material-kolor" }
 stately-common = { module = "co.touchlab:stately-common", version.ref = "stately" }
-
+mongodb-realm = { module = "io.realm.kotlin:library-base", version.ref = "realm" }
+constraintLayout = { module = "tech.annexflow.compose:constraintlayout-compose-multiplatform", version.ref = "constraint-layout" }
+kotlin-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -32,3 +38,4 @@ jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "compose-plugi
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+realm-plugin = { id = "io.realm.kotlin", version.ref = "realm" }
