@@ -1,4 +1,4 @@
-package org.frgrz.kmpgamemaster.features.wolfgame.repository
+package org.frgrz.kmpgamemaster.data.mappers
 
 import org.frgrz.kmpgamemaster.data.entities.WGRoleEntity
 import org.frgrz.kmpgamemaster.features.wolfgame.models.WGRoleModel

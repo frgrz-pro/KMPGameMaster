@@ -2,8 +2,8 @@ package org.frgrz.kmpgamemaster.features.wolfgame.ui
 
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
-import org.frgrz.kmpgamemaster.db.WGRoleRepository
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRules
+import org.frgrz.kmpgamemaster.features.wolfgame.repository.WGRoleRepository
 
 class WGHomeViewModel(private val repository: WGRoleRepository) : ScreenModel {
 
