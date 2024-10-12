@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -67,152 +66,144 @@ class WGHomeScreen : Screen {
                 TopAppBar(title = { Text("Loup Garou") })
             },
             snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-            content = { _ ->
-                ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-                    val column = createRef()
+            content = { innerPadding ->
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                        .padding(32.dp)
+                ) {
+                    Text(
+                        text = viewModel.playerLabel.value,
+                        style = MaterialTheme.typography.headlineMedium
+                    )
 
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .padding(32.dp)
-                            .wrapContentSize()
-                            .constrainAs(column) {
-                                top.linkTo(parent.top)
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                                bottom.linkTo(parent.bottom)
-                            }
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Slider(
+                        value = viewModel.playerCount.value.toFloat(),
+                        onValueChange = { viewModel.onPlayerCountChanged(it.toInt()) },
+                        valueRange = viewModel.minPlayers.toFloat()..viewModel.maxPlayers.toFloat(),
+                        steps = viewModel.maxPlayers - viewModel.minPlayers,
+                        modifier = Modifier.width(240.dp)
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        IconButton(
+                            onClick = { viewModel.onRemoveWolvesClicked() },
+                            enabled = viewModel.canRemoveWolves.value
+                        ) {
+                            val icon =
+                                rememberVectorPainter(
+                                    image = IconPack.Remove
+                                )
+                            Icon(
+                                painter = icon,
+                                contentDescription = "Remove"
+                            )
+                        }
+
+                        Text(
+                            text = viewModel.wolvesLabel.value,
+                            modifier = Modifier.padding(start = 8.dp, end = 8.dp),
+                            style = MaterialTheme.typography.titleLarge
+                        )
+
+                        IconButton(
+                            onClick = { viewModel.onAddWolvesClicked() },
+                            enabled = viewModel.canAddWolves.value
+                        ) {
+                            val icon =
+                                rememberVectorPainter(
+                                    image = Icons.Filled.Add
+                                )
+                            Icon(
+                                painter = icon,
+                                contentDescription = "Remove"
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
-                            text = viewModel.playerLabel.value,
+                            text = "Rôles",
+                            modifier = Modifier.padding(end = 8.dp),
                             style = MaterialTheme.typography.headlineMedium
                         )
+                    }
 
-                        Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                        Slider(
-                            value = viewModel.playerCount.value.toFloat(),
-                            onValueChange = { viewModel.onPlayerCountChanged(it.toInt()) },
-                            valueRange = viewModel.minPlayers.toFloat()..viewModel.maxPlayers.toFloat(),
-                            steps = viewModel.maxPlayers - viewModel.minPlayers,
-                            modifier = Modifier.width(240.dp)
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
+                    selectedRoles.DisplayResult(
+                        onLoading = { /*TODO*/ },
+                        onError = { /*TODO*/ },
+                        onSuccess = {
+                            if (it.isNotEmpty()) {
+                                LazyVerticalGrid(
+                                    columns = GridCells.Fixed(5),
+                                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                                    modifier = Modifier.padding(12.dp)
+                                ) {
+                                    itemsIndexed(it) { index, item ->
 
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            IconButton(
-                                onClick = { viewModel.onRemoveWolvesClicked() },
-                                enabled = viewModel.canRemoveWolves.value
-                            ) {
-                                val icon =
-                                    rememberVectorPainter(
-                                        image = IconPack.Remove
-                                    )
-                                Icon(
-                                    painter = icon,
-                                    contentDescription = "Remove"
-                                )
-                            }
-
-                            Text(
-                                text = viewModel.wolvesLabel.value,
-                                modifier = Modifier.padding(start = 8.dp, end = 8.dp),
-                                style = MaterialTheme.typography.titleLarge
-                            )
-
-                            IconButton(
-                                onClick = { viewModel.onAddWolvesClicked() },
-                                enabled = viewModel.canAddWolves.value
-                            ) {
-                                val icon =
-                                    rememberVectorPainter(
-                                        image = Icons.Filled.Add
-                                    )
-                                Icon(
-                                    painter = icon,
-                                    contentDescription = "Remove"
-                                )
-                            }
-                        }
-
-                        Spacer(modifier = Modifier.height(24.dp))
-
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Text(
-                                text = "Rôles",
-                                modifier = Modifier.padding(end = 8.dp),
-                                style = MaterialTheme.typography.headlineMedium
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        selectedRoles.DisplayResult(
-                            onLoading = { /*TODO*/ },
-                            onError = { /*TODO*/ },
-                            onSuccess = {
-                                if (it.isNotEmpty()) {
-                                    LazyVerticalGrid(
-                                        columns = GridCells.Fixed(5),
-                                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                                        verticalArrangement = Arrangement.spacedBy(4.dp),
-                                        modifier = Modifier.padding(12.dp)
-                                    ) {
-                                        itemsIndexed(it) { index, item ->
-
-                                            Card(
-                                                onClick = {
-                                                    scope.launch {
-                                                        snackbarHostState.showSnackbar(
-                                                            message = "${item.role.name} : ${item.isSelected}",
-                                                            duration = SnackbarDuration.Short
-                                                        )
-                                                    }
-                                                },
-                                                elevation = CardDefaults.cardElevation(
-                                                    defaultElevation = 2.dp
-                                                ),
-                                                shape = RoundedCornerShape(4.dp),
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .aspectRatio(1f)
-                                            ) {
-                                                RoleImageMedium(item.role)
-                                            }
+                                        Card(
+                                            onClick = {
+                                                scope.launch {
+                                                    snackbarHostState.showSnackbar(
+                                                        message = "${item.role.name} : ${item.isSelected}",
+                                                        duration = SnackbarDuration.Short
+                                                    )
+                                                }
+                                            },
+                                            elevation = CardDefaults.cardElevation(
+                                                defaultElevation = 2.dp
+                                            ),
+                                            shape = RoundedCornerShape(4.dp),
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .aspectRatio(1f)
+                                        ) {
+                                            RoleImageMedium(item.role)
                                         }
                                     }
                                 }
                             }
+                        }
+                    )
+
+                    TextButton(
+                        onClick = { navigator.push(WGRolesScreen()) },
+                    ) {
+                        Text(
+                            text = "Plus de rôles",
+                            modifier = Modifier.padding(start = 8.dp, end = 8.dp),
+                            style = MaterialTheme.typography.labelLarge
                         )
+                    }
 
-                        TextButton(
-                            onClick = { navigator.push(WGRolesScreen()) },
-                        ) {
-                            Text(
-                                text = "Plus de rôles",
-                                modifier = Modifier.padding(start = 8.dp, end = 8.dp),
-                                style = MaterialTheme.typography.labelLarge
-                            )
-                        }
+                    Spacer(modifier = Modifier.height(48.dp))
 
-                        Spacer(modifier = Modifier.height(48.dp))
-
-                        FilledTonalButton(
-                            onClick = { },
-                            modifier = Modifier.fillMaxWidth()
-                                .padding(12.dp)
-                        ) {
-                            Text(
-                                text = "Lancer la partie",
-                                style = MaterialTheme.typography.titleMedium
-                            )
-                        }
+                    FilledTonalButton(
+                        onClick = { },
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(12.dp)
+                    ) {
+                        Text(
+                            text = "Lancer la partie",
+                            style = MaterialTheme.typography.titleMedium
+                        )
                     }
                 }
+
             }
         )
     }

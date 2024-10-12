@@ -18,6 +18,7 @@ import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import org.frgrz.kmpgamemaster.features.wolfgame.ui.WGHomeScreen
+import org.frgrz.kmpgamemaster.material.components.icons.ColorsScreen
 
 class HomeScreen : Screen {
 
@@ -78,6 +79,15 @@ class HomeScreen : Screen {
                             .wrapContentHeight()
                     ) {
                         Text("Reset Database")
+                    }
+
+                    OutlinedButton(
+                        onClick = { navigator.push(ColorsScreen())},
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                    ) {
+                        Text("Colors")
                     }
                 }
             }

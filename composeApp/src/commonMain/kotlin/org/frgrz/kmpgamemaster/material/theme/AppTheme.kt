@@ -13,8 +13,7 @@ fun AppTheme(
 ) {
     val dynamicThemeState = rememberDynamicMaterialThemeState(
         isDark = darkTheme,
-        style = PaletteStyle.Fidelity,
-        contrastLevel = 1.0,
+        style = PaletteStyle.Content,
         seedColor = Seed,
     )
 
@@ -23,5 +22,4 @@ fun AppTheme(
         animate = true,
         content = content,
     )
-
 }
