@@ -6,6 +6,6 @@ import org.frgrz.kmpgamemaster.features.wolfgame.models.WGRoleModel
 import org.frgrz.kmpgamemaster.utils.RequestState
 
 interface WGRoleLocalDataSource {
-    fun getAllChecked(): Flow<RequestState<List<WGRoleModel>>>
+    fun getAllChecked(isChecked:Boolean): Flow<RequestState<List<WGRoleModel>>>
     fun getAllFiltered(filter: RoleFilter): Flow<RequestState<List<WGRoleModel>>>
 }

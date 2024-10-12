@@ -14,11 +14,11 @@ class WGRoleLocalDataSourceImpl(
     private val mapper: WGRoleModelMapper,
 ) : WGRoleLocalDataSource {
 
-    override fun getAllChecked(): Flow<RequestState<List<WGRoleModel>>> {
+    override fun getAllChecked(isChecked: Boolean): Flow<RequestState<List<WGRoleModel>>> {
         return dao.all()
             .map { result ->
                 RequestState.Success(
-                    data = result.filter { role -> role.selected }
+                    data = result.filter { role -> role.selected == isChecked }
                         .map { mapper.map(it) }
                 )
             }

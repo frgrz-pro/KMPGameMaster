@@ -109,6 +109,7 @@ import kmpgamemaster.composeapp.generated.resources.wolf_kitten_medium
 import kmpgamemaster.composeapp.generated.resources.wolf_large
 import kmpgamemaster.composeapp.generated.resources.wolf_medium
 import org.frgrz.kmpgamemaster.data.entities.WGRole
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -177,9 +178,9 @@ fun RoleImageMedium(role: WGRole) {
     )
 }
 
-@Composable
-fun RoleImageLarge(role: WGRole) {
-    val drawableId = when (role) {
+
+fun getLargeImageRes(role: WGRole):DrawableResource {
+    return when (role) {
         WGRole.LITTLE_GIRL -> Res.drawable.little_girl_large
         WGRole.HUNTER -> Res.drawable.hunter_large
         WGRole.MAYOR -> Res.drawable.mayor_large
@@ -233,12 +234,4 @@ fun RoleImageLarge(role: WGRole) {
         WGRole.WOLF_FAN -> Res.drawable.wolf_fan_large
         WGRole.WOLF_KITTEN -> Res.drawable.wolf_kitten_large
     }
-
-    val imagePainter = painterResource(drawableId)
-
-    Image(
-        painter = imagePainter,
-        contentDescription = "My Image",
-        modifier = Modifier.fillMaxSize()
-    )
 }

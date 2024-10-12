@@ -8,6 +8,7 @@ import org.frgrz.kmpgamemaster.di.databaseModule
 import org.frgrz.kmpgamemaster.features.home.di.homeViewModelsModule
 import org.frgrz.kmpgamemaster.features.home.ui.HomeScreen
 import org.frgrz.kmpgamemaster.features.wolfgame.di.wgModule
+import org.frgrz.kmpgamemaster.features.wolfgame.ui.WGRolesScreen
 import org.frgrz.kmpgamemaster.material.theme.AppTheme
 import org.koin.core.context.startKoin
 
@@ -18,7 +19,7 @@ fun App() {
     startKoin()
 
     AppTheme {
-        Navigator(HomeScreen()) { navigator ->
+        Navigator(WGRolesScreen()) { navigator ->
             SlideTransition(navigator)
         }
     }

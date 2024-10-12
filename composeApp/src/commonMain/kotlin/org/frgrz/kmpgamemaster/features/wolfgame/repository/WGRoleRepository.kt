@@ -10,8 +10,8 @@ class WGRoleRepository(
     private val localDataSource: WGRoleLocalDataSource,
 ) {
 
-    fun getAllChecked(): Flow<RequestState<List<WGRoleModel>>> {
-        return localDataSource.getAllChecked()
+    fun getAllChecked(isChecked:Boolean): Flow<RequestState<List<WGRoleModel>>> {
+        return localDataSource.getAllChecked(isChecked)
     }
 
     fun getAllFiltered(filter: RoleFilter): Flow<RequestState<List<WGRoleModel>>> {

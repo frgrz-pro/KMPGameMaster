@@ -33,7 +33,7 @@ class WGHomeViewModel(private val repository: WGRoleRepository) : ScreenModel {
     init {
         _selectedRoles.value = RequestState.Loading
         screenModelScope.launch(Dispatchers.Main) {
-            repository.getAllChecked()
+            repository.getAllChecked(true)
                 .collectLatest {
                     _selectedRoles.value = it
                 }

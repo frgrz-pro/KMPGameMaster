@@ -1,14 +1,18 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.models
 
 import org.frgrz.kmpgamemaster.data.entities.WGRole
+import org.frgrz.kmpgamemaster.data.mappers.WGRoleAction
+import org.jetbrains.compose.resources.StringResource
 
 data class WGRoleModel(
     val role: WGRole,
+    val name: StringResource,
     val isSelected: Boolean,
     val isDefault: Boolean,
     val playsWith: PlaysWith,
     val winsWith: WinsWith,
-    val filters: List<RoleFilter>
+    val filters: List<RoleFilter>,
+    val actions: List<WGRoleAction>
 )
 
 enum class PlaysWith {
@@ -26,6 +30,8 @@ enum class WinsWith {
 }
 
 enum class RoleFilter {
+    SELECTED,
+    UNSELECTED,
     ALL,
     CLASSIC,
     WOLVES,
@@ -34,3 +40,5 @@ enum class RoleFilter {
     TRANSFORM,
     TEAM,
 }
+
+

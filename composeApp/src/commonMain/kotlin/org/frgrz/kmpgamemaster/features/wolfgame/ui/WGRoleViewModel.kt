@@ -20,28 +20,29 @@ class WGRoleViewModel(private val repository: WGRoleRepository) : ScreenModel {
     val filteredRoles: Roles = _filteredRoles
 
     init {
+        applyFilter(RoleFilter.entries[selectedFilterIndex.value])
+    }
+
+    private fun applyFilter(filter: RoleFilter) {
         _filteredRoles.value = RequestState.Loading
 
         screenModelScope.launch(Dispatchers.Main) {
-            repository.getAllFiltered(RoleFilter.ALL)
-                .collectLatest {
-                    _filteredRoles.value = it
-                }
+            if (filter == RoleFilter.SELECTED || filter == RoleFilter.UNSELECTED) {
+                repository.getAllChecked(filter == RoleFilter.SELECTED)
+                    .collectLatest {
+                        _filteredRoles.value = it
+                    }
+            } else {
+                repository.getAllFiltered(filter)
+                    .collectLatest {
+                        _filteredRoles.value = it
+                    }
+            }
         }
     }
 
     fun onFilterSelected(filter: RoleFilter) {
-        selectedFilterIndex.value =
-            filters.indexOf(filter)
-
-        _filteredRoles.value = RequestState.Loading
-
-        screenModelScope.launch(Dispatchers.Main) {
-            repository.getAllFiltered(filter)
-                .collectLatest {
-                    _filteredRoles.value = it
-                }
-        }
+        selectedFilterIndex.value = filters.indexOf(filter)
+        applyFilter(filter)
     }
-
 }
