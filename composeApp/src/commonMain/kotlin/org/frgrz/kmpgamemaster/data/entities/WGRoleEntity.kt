@@ -7,9 +7,7 @@ import org.mongodb.kbson.ObjectId
 
 open class WGRoleEntity : RealmObject {
 
-    constructor() {
-        val yo = 1
-    }
+    constructor()
 
     constructor(
         role: WGRole = WGRole.DEFAULT,

@@ -17,21 +17,8 @@ class WGRolesScreen : Screen {
         val navigator = LocalNavigator.currentOrThrow
         val viewModel = getScreenModel<WGRoleViewModel>()
 
-        WGRolesScreen_Content()
+        Scaffold() {
 
+        }
     }
-}
-
-@Composable
-fun WGRolesScreen_Content() {
-    Scaffold() {
-
-    }
-}
-
-@Composable
-fun WGRolesScreen_Preview() {
-AppTheme {
-    WGRolesScreen_Content()
-}
 }

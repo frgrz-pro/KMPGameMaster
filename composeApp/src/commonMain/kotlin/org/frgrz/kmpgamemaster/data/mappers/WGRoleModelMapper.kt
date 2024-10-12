@@ -2,16 +2,21 @@ package org.frgrz.kmpgamemaster.data.mappers
 
 import org.frgrz.kmpgamemaster.data.entities.WGRole
 import org.frgrz.kmpgamemaster.data.entities.WGRoleEntity
+import org.frgrz.kmpgamemaster.features.wolfgame.models.PlaysWith
+import org.frgrz.kmpgamemaster.features.wolfgame.models.RoleFilter
 import org.frgrz.kmpgamemaster.features.wolfgame.models.WGRoleModel
+import org.frgrz.kmpgamemaster.features.wolfgame.models.WinsWith
 
 class WGRoleModelMapper {
+
     fun map(entity: WGRoleEntity): WGRoleModel {
         return WGRoleModel(
             role = entity.role,
             isSelected = entity.selected,
             isDefault = entity.default,
             playsWith = mapPlaysWith(entity.role),
-            winsWith = mapWinsWith(entity.role)
+            winsWith = mapWinsWith(entity.role),
+            filters = mapRoleFilters(entity.role)
         )
     }
 
@@ -40,7 +45,6 @@ class WGRoleModelMapper {
             WGRole.TRAITOR,
             WGRole.HITMAN,
             WGRole.PIED_PIPER,
-            WGRole.GURU,
                 -> PlaysWith.SOLO
 
             WGRole.ASTRONOMER,
@@ -52,6 +56,7 @@ class WGRoleModelMapper {
             WGRole.DEFLECTOR,
             WGRole.DEMONIAC_SOUL,
             WGRole.DRUGGIST,
+            WGRole.GURU,
             WGRole.DUELISTS,
             WGRole.FOX,
             WGRole.GUARD,
@@ -143,19 +148,134 @@ class WGRoleModelMapper {
         }
     }
 
+    private fun mapRoleFilters(role: WGRole): List<RoleFilter> {
+        val filters = mutableListOf<RoleFilter>()
+        filters.add(RoleFilter.ALL)
 
-}
+        val wolves = listOf(
+            WGRole.WOLF_FAN,
+            WGRole.WOLF_KITTEN,
+            WGRole.WOLF,
+            WGRole.BIG_BAG_WOLF,
+            WGRole.BLACK_WOLF,
+            WGRole.BLUE_WOLF,
+            WGRole.WOLF_BERSERK,
+            WGRole.WOLF_DOG,
+            WGRole.GENTLEMAN,
+            WGRole.WILD_KID,
+            WGRole.WOLF_FAN,
+        )
 
-enum class PlaysWith {
-    WOLVES,
-    VILLAGE,
-    WOLVES_OR_VILLAGE,
-    SOLO;
-}
+        if (role in wolves) {
+            filters.add(RoleFilter.WOLVES)
+        }
 
-enum class WinsWith {
-    WOLVES,
-    VILLAGE,
-    WOLVES_OR_VILLAGE,
-    SOLO;
+        val classics = listOf(
+            WGRole.LITTLE_GIRL,
+            WGRole.HUNTER,
+            WGRole.MAYOR,
+            WGRole.CUPID,
+            WGRole.PEASANT,
+            WGRole.SEER,
+            WGRole.SORCERER,
+            WGRole.THIEF,
+            WGRole.WOLF
+        )
+
+        if (role in classics) {
+            filters.add(RoleFilter.CLASSIC)
+        }
+
+        val transforms = listOf(
+            WGRole.WOLF_DOG,
+            WGRole.GENTLEMAN,
+            WGRole.WILD_KID,
+            WGRole.THIEF,
+            WGRole.COMEDIAN,
+            WGRole.WOLF_FAN,
+        )
+
+        if (role in transforms) {
+            filters.add(RoleFilter.TRANSFORM)
+        }
+
+        val solos = listOf(
+            WGRole.ANGEL,
+            WGRole.BERSERK,
+            WGRole.ASSASSIN,
+            WGRole.CORRUPTER,
+            WGRole.TRAITOR,
+            WGRole.HITMAN,
+            WGRole.PIED_PIPER,
+            WGRole.CASSANDRA
+        )
+
+        if (role in solos) {
+            filters.add(RoleFilter.SOLO)
+        }
+
+        val teams = listOf(
+            WGRole.TWO_SISTERS,
+            WGRole.THREE_BROTHERS,
+            WGRole.GURU,
+            WGRole.DUELISTS
+        )
+
+        if (role in teams) {
+            filters.add(RoleFilter.TEAM)
+        }
+
+        val villagers = listOf(
+            WGRole.ASTRONOMER,
+            WGRole.BEAR_HANDLER,
+            WGRole.BLACKSMITH,
+            WGRole.BULLY,
+            WGRole.COMEDIAN,
+            WGRole.CUPID,
+            WGRole.TWO_SISTERS,
+            WGRole.THREE_BROTHERS,
+            WGRole.GURU,
+            WGRole.DUELISTS,
+            WGRole.WOLF_DOG,
+            WGRole.GENTLEMAN,
+            WGRole.WILD_KID,
+            WGRole.THIEF,
+            WGRole.COMEDIAN,
+            WGRole.WOLF_FAN,
+            WGRole.DEFLECTOR,
+            WGRole.DEMONIAC_SOUL,
+            WGRole.DRUGGIST,
+            WGRole.GURU,
+            WGRole.DUELISTS,
+            WGRole.FOX,
+            WGRole.GUARD,
+            WGRole.HUNTER,
+            WGRole.IDIOT,
+            WGRole.LITTLE_GIRL,
+            WGRole.MARSHALL,
+            WGRole.MOON_SON,
+            WGRole.NOCTAMBULIST,
+            WGRole.OLD_KNIGHT,
+            WGRole.PEASANT,
+            WGRole.PRIEST,
+            WGRole.PYROMANIAC,
+            WGRole.RANGER,
+            WGRole.SEER,
+            WGRole.SORCERER,
+            WGRole.THIEF,
+            WGRole.THREE_BROTHERS,
+            WGRole.TWO_SISTERS,
+            WGRole.VILLAGE_ELDER,
+            WGRole.WHITE_SOOTHSAYER,
+            WGRole.WIZARD,
+            WGRole.CASSANDRA,
+        )
+
+        if (role in villagers) {
+            filters.add(RoleFilter.VILLAGE)
+        }
+
+        return filters
+    }
+
 }
