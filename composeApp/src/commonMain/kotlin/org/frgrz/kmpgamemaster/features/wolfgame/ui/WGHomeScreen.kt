@@ -1,8 +1,6 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.ui
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,13 +26,18 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -42,6 +45,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import kotlinx.coroutines.launch
+import org.frgrz.kmpgamemaster.features.wolfgame.ui.components.RoleImageMedium
 import org.frgrz.kmpgamemaster.material.components.icons.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.Remove
 
@@ -53,11 +58,15 @@ class WGHomeScreen : Screen {
 
         val navigator = LocalNavigator.currentOrThrow
         val viewModel = getScreenModel<WGHomeViewModel>()
+        val selectedRoles by viewModel.selectedRoles
+        val snackbarHostState = remember { SnackbarHostState() }
+        val scope = rememberCoroutineScope()
 
         Scaffold(
             topBar = {
                 TopAppBar(title = { Text("Loup Garou") })
             },
+            snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
             content = { _ ->
                 ConstraintLayout(modifier = Modifier.fillMaxSize()) {
                     val column = createRef()
@@ -142,42 +151,46 @@ class WGHomeScreen : Screen {
 
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        LazyVerticalGrid(
-                            columns = GridCells.Fixed(5),
-                            horizontalArrangement = Arrangement.spacedBy(4.dp),
-                            verticalArrangement = Arrangement.spacedBy(4.dp),
-                            modifier = Modifier.padding(12.dp)
-                        ) {
-                            itemsIndexed(viewModel.dataList.value) { index, _ ->
-                                Card(
-                                    //onClick = { selectedCardIndex = index },
-                                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-                                    shape = RoundedCornerShape(4.dp),
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .aspectRatio(1f)
-//                                        .then(
-//                                            if (index == selectedCardIndex) {
-//                                                Modifier.border(
-//                                                    2.dp,
-//                                                    Color.Blue,
-//                                                    RoundedCornerShape(4.dp)
-//                                                )
-//                                            } else {
-//                                                Modifier
-//                                            }
-//                                        )
-                                ) {
-                                    Box(
-                                        modifier = Modifier.fillMaxSize()
-                                            .background(Color.Red)
-                                    )
+                        selectedRoles.DisplayResult(
+                            onLoading = { /*TODO*/ },
+                            onError = { /*TODO*/ },
+                            onSuccess = {
+                                if (it.isNotEmpty()) {
+                                    LazyVerticalGrid(
+                                        columns = GridCells.Fixed(5),
+                                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                                        modifier = Modifier.padding(12.dp)
+                                    ) {
+                                        itemsIndexed(it) { index, item ->
+
+                                            Card(
+                                                onClick = {
+                                                    scope.launch {
+                                                        snackbarHostState.showSnackbar(
+                                                            message = "${item.role.name} : ${item.isSelected}",
+                                                            duration = SnackbarDuration.Short
+                                                        )
+                                                    }
+                                                },
+                                                elevation = CardDefaults.cardElevation(
+                                                    defaultElevation = 2.dp
+                                                ),
+                                                shape = RoundedCornerShape(4.dp),
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .aspectRatio(1f)
+                                            ) {
+                                                RoleImageMedium(item.role)
+                                            }
+                                        }
+                                    }
                                 }
                             }
-                        }
+                        )
 
                         TextButton(
-                            onClick = {},
+                            onClick = { navigator.push(WGRolesScreen()) },
                         ) {
                             Text(
                                 text = "Plus de rôles",

@@ -5,11 +5,94 @@ import io.realm.kotlin.types.annotations.PrimaryKey
 import org.mongodb.kbson.BsonObjectId
 import org.mongodb.kbson.ObjectId
 
-data class WGRoleEntity(
-    var name: Int = 0,
-    var default: Boolean = false,
-) : RealmObject {
+open class WGRoleEntity : RealmObject {
+
+    constructor() {
+        val yo = 1
+    }
+
+    constructor(
+        role: WGRole = WGRole.DEFAULT,
+        default: Boolean = false,
+    ): this() {
+        this.default = default
+        this.selected = default
+        this.role = role
+    }
+
     @PrimaryKey
     var id: ObjectId = BsonObjectId()
-    var selected: Boolean = default
+    var default: Boolean = false
+    var selected: Boolean = false
+
+    var role: WGRole
+        get() {
+            return WGRole.valueOf(enumDescription)
+        }
+        set(newMyEum) {
+            enumDescription = newMyEum.name
+        }
+
+    private var enumDescription: String = WGRole.DEFAULT.name
+
 }
+
+enum class WGRole {
+    ANGEL,
+    ASSASSIN,
+    ASTRONOMER, //TODO Rename resources Astronomer
+    BEAR_HANDLER,
+    BERSERK,
+    BIG_BAG_WOLF,
+    BLACK_WOLF,
+    BLACKSMITH,
+    BLUE_WOLF,
+    BULLY,
+    CASSANDRA,
+    COMEDIAN,
+    CORRUPTER,
+    CUPID,
+    DEFLECTOR,
+    DEMONIAC_SOUL,
+    DRUGGIST,
+    DUELISTS,
+    FOX,
+    GENTLEMAN,
+    GUARD,
+    GURU,
+    HITMAN,
+    HUNTER,
+    IDIOT,
+    LITTLE_GIRL,
+    MARSHALL,
+    MAYOR,
+    MOON_SON,
+    NOCTAMBULIST, //TODO Rename SLEEP_WALKER
+    OLD_KNIGHT,
+    PEASANT,
+    PIED_PIPER,
+    PRIEST,
+    PYROMANIAC, //TODO Rename resources Pyromaniac
+    RANGER,
+    SEER,
+    SORCERER,
+    THIEF,
+    THREE_BROTHERS,
+    TRAITOR,
+    TWO_SISTERS,
+    VILLAGE_ELDER,
+    WHITE_SOOTHSAYER,
+    WHITE_WOLF,
+    WILD_KID,
+    WIZARD,
+    WOLF_BERSERK,
+    WOLF_DOG,
+    WOLF_FAN,
+    WOLF_KITTEN,
+    WOLF;
+
+    companion object {
+        val DEFAULT = PEASANT
+    }
+}
+

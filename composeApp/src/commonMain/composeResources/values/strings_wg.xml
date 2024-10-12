@@ -2,7 +2,7 @@
 <resources>
     <string name="angel">Ange</string>
     <string name="assassin">Assassin</string>
-    <string name="astronomist">Astronome</string>
+    <string name="astronomer">Astronome</string>
     <string name="bear_handler">Eleveur d\'ours</string>
     <string name="berserk">Berserk</string>
     <string name="big_bad_wolf">Méchant Loup</string>
@@ -29,17 +29,18 @@
     <string name="marshall">Marshall</string>
     <string name="mayor">Maire</string>
     <string name="moon_son">Enfant de la lune</string>
-    <string name="noctambulist">Noctambule</string>
+    <string name="sleep_walker">Noctambule</string>
     <string name="old_knight">Vieux Chevalier</string>
     <string name="peasant">Paysan</string>
     <string name="pied_piper">Joueur de Flute</string>
     <string name="priest">Pretre</string>
-    <string name="pyroman">Pyromane</string>
+    <string name="pyromaniac">Pyromane</string>
     <string name="ranger">Garde Forestier</string>
     <string name="seer">Voyante</string>
     <string name="sorcerer">Sorciere</string>
     <string name="thief">Voleur</string>
     <string name="three_brothers">Trois Freres</string>
+    <string name="traitor">Traitre</string>
     <string name="two_sisters">Deux Soeurs</string>
     <string name="village_elder">Ancien</string>
     <string name="white_soothsayer">Devin Blanc</string>

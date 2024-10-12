@@ -1,6 +1,7 @@
 package org.frgrz.kmpgamemaster.data.datasource
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import org.frgrz.kmpgamemaster.data.dao.WGRoleDao
 import org.frgrz.kmpgamemaster.data.mappers.WGRoleModelMapper
@@ -17,10 +18,10 @@ class WGRoleLocalDataSourceImpl(
         return dao.all()
             .map { result ->
                 RequestState.Success(
-                    data = result.sortedByDescending { task -> task.selected }
+                    data = result.filter { task -> task.selected }
                         .map { mapper.map(it) }
                 )
             }
     }
-}
 
+}

@@ -1,6 +1,5 @@
 package org.frgrz.kmpgamemaster.features.home.ui
 
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -18,74 +18,70 @@ import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import org.frgrz.kmpgamemaster.features.wolfgame.ui.WGHomeScreen
-import org.frgrz.kmpgamemaster.material.theme.AppTheme
 
 class HomeScreen : Screen {
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
 
         val navigator = LocalNavigator.currentOrThrow
         val viewModel = getScreenModel<HomeViewModel>()
 
-        HomeScreen_Content {
-            navigator.push(WGHomeScreen())
-        }
-    }
-}
 
-@Composable
-@OptIn(ExperimentalMaterial3Api::class)
-fun HomeScreen_Content(onWGButtonClick: () -> Unit, ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(title = { Text("Home") })
-        },
-        content = { paddingValues ->
-            Column (
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues), // Use padding values from the Scaffold
-            ) {
-                FilledTonalButton(
-                    onClick = { onWGButtonClick() },
+        Scaffold(
+            topBar = {
+                TopAppBar(title = { Text("Home") })
+            },
+            content = { paddingValues ->
+                Column (
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
+                        .fillMaxSize()
+                        .padding(paddingValues), // Use padding values from the Scaffold
                 ) {
-                    Text("Loup Garou")
-                }
+                    FilledTonalButton(
+                        onClick = { navigator.push(WGHomeScreen()) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                    ) {
+                        Text("Loup Garou")
+                    }
 
-                //TODO: Not Implemented
-                FilledTonalButton(
-                    onClick = {},
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight(),
-                    enabled = false
-                ) {
-                    Text("Two rooms and a boom")
-                }
+                    //TODO: Not Implemented
+                    FilledTonalButton(
+                        onClick = {},
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight(),
+                        enabled = false
+                    ) {
+                        Text("Two rooms and a boom")
+                    }
 
-                //TODO: Not Implemented
-                FilledTonalButton(
-                    onClick = {},
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight(),
-                    enabled = false
-                ) {
-                    Text("Sporz")
+                    //TODO: Not Implemented
+                    FilledTonalButton(
+                        onClick = {},
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight(),
+                        enabled = false
+                    ) {
+                        Text("Sporz")
+                    }
+
+                    //TODO: Not Implemented
+                    OutlinedButton(
+                        onClick = { viewModel.onResetDatabaseClicked()},
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight()
+                    ) {
+                        Text("Reset Database")
+                    }
                 }
             }
-        }
-    )
-}
-
-@Composable
-@Preview
-fun HomeContent_Preview() {
-    AppTheme {
-        HomeScreen_Content {}
+        )
     }
 }
+
