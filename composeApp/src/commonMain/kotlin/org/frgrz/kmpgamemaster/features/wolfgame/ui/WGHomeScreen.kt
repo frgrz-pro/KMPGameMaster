@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -13,11 +12,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
@@ -44,9 +40,10 @@ import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.coroutines.launch
-import org.frgrz.kmpgamemaster.features.wolfgame.ui.components.RoleImageMedium
+import org.frgrz.kmpgamemaster.features.wolfgame.ui.components.WGRoleCardSmall
 import org.frgrz.kmpgamemaster.material.components.icons.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.Remove
+
 
 class WGHomeScreen : Screen {
 
@@ -87,6 +84,7 @@ class WGHomeScreen : Screen {
                         steps = viewModel.maxPlayers - viewModel.minPlayers,
                         modifier = Modifier.width(240.dp)
                     )
+
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Row(
@@ -96,10 +94,7 @@ class WGHomeScreen : Screen {
                             onClick = { viewModel.onRemoveWolvesClicked() },
                             enabled = viewModel.canRemoveWolves.value
                         ) {
-                            val icon =
-                                rememberVectorPainter(
-                                    image = IconPack.Remove
-                                )
+                            val icon = rememberVectorPainter(image = IconPack.Remove)
                             Icon(
                                 painter = icon,
                                 contentDescription = "Remove"
@@ -116,10 +111,7 @@ class WGHomeScreen : Screen {
                             onClick = { viewModel.onAddWolvesClicked() },
                             enabled = viewModel.canAddWolves.value
                         ) {
-                            val icon =
-                                rememberVectorPainter(
-                                    image = Icons.Filled.Add
-                                )
+                            val icon = rememberVectorPainter(image = Icons.Filled.Add)
                             Icon(
                                 painter = icon,
                                 contentDescription = "Remove"
@@ -152,26 +144,15 @@ class WGHomeScreen : Screen {
                                     verticalArrangement = Arrangement.spacedBy(4.dp),
                                     modifier = Modifier.padding(12.dp)
                                 ) {
-                                    itemsIndexed(it) { index, item ->
-
-                                        Card(
-                                            onClick = {
-                                                scope.launch {
-                                                    snackbarHostState.showSnackbar(
-                                                        message = "${item.role.name} : ${item.isSelected}",
-                                                        duration = SnackbarDuration.Short
-                                                    )
-                                                }
-                                            },
-                                            elevation = CardDefaults.cardElevation(
-                                                defaultElevation = 2.dp
-                                            ),
-                                            shape = RoundedCornerShape(4.dp),
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .aspectRatio(1f)
-                                        ) {
-                                            RoleImageMedium(item.role)
+                                    itemsIndexed(it) { _, item ->
+                                        WGRoleCardSmall(item.role) {
+                                            //TODO Replace with tooltip
+                                            scope.launch {
+                                                snackbarHostState.showSnackbar(
+                                                    message = "${item.role.name} : ${item.isSelected}",
+                                                    duration = SnackbarDuration.Short
+                                                )
+                                            }
                                         }
                                     }
                                 }

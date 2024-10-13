@@ -7,7 +7,7 @@ import org.jetbrains.compose.resources.StringResource
 data class WGRoleModel(
     val role: WGRole,
     val name: StringResource,
-    val isSelected: Boolean,
+    var isSelected: Boolean,
     val isDefault: Boolean,
     val playsWith: PlaysWith,
     val winsWith: WinsWith,
