@@ -401,7 +401,7 @@ class WGRoleModelMapper {
                 actions.add(
                     WGRoleAction(
                         "Espionnez les loups",
-                        "",
+                        "Espionne les loups pendant la nuit. Cependant si elle sera la victime des loups.",
                         WGRoleActionType.SPY,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
@@ -621,8 +621,8 @@ class WGRoleModelMapper {
                     WGRoleAction(
                         "Creez un couple",
                         "Le destins du couple sera lié, si l\'un meurs l\'autre aussi. Si un des amoureux est un loup il doit garder son amoureux en vie",
-                        WGRoleActionType.UNITE,
-                        WGRoleActionFrequency.START_GAME
+                        WGRoleActionType.BOUND_FATE,
+                        WGRoleActionFrequency.FIRST_NIGHT
                     )
                 )
             }
@@ -630,10 +630,10 @@ class WGRoleModelMapper {
             WGRole.PRIEST -> {
                 actions.add(
                     WGRoleAction(
-                        "Exorcisez les loups",
-                        "Muni de votre bol d\'eau benite, votre but est d\'exociser les loups qui mourra. Si vous vous trompez vous mourrez.",
+                        "Exorcisme",
+                        "Vous pouvez, une fois par partie lancer de l'eau bénite sur un autre joueur. Si c'est un loup il meurt, sinon vous mourrez",
                         WGRoleActionType.KILL,
-                        WGRoleActionFrequency.UNTIL_FAIL
+                        WGRoleActionFrequency.ONLY_ONCE_PER_GAME
                     )
                 )
             }
@@ -643,7 +643,7 @@ class WGRoleModelMapper {
                     WGRoleAction(
                         "Immunisé du vote",
                         "Si le village vote contre vous, vous restez en vie mais perdez votre droit de vote.",
-                        WGRoleActionType.VOTED,
+                        WGRoleActionType.VOTE_CANCEL,
                         WGRoleActionFrequency.WHEN_VOTED,
                         cancels = WGRoleActionCancel.VOTE
                     )
@@ -664,7 +664,7 @@ class WGRoleModelMapper {
                         "Resistez à une attaque",
                         "Vous pouvez resister à une attaque, la deuxième vous sera fatale",
                         WGRoleActionType.KILL_PROTECTOR,
-                        WGRoleActionFrequency.EVERY_NIGHT
+                        WGRoleActionFrequency.ONLY_ONCE_PER_GAME
                     )
                 )
             }
@@ -692,9 +692,464 @@ class WGRoleModelMapper {
                 )
             }
 
+
+            WGRole.WOLF_DOG -> {
+                actions.add(
+                    WGRoleAction(
+                        "Choisissez votre camp",
+                        "Lors de la première nuit vous pouvez répondre à l'appel des loups et vous devenez loup. Sinon vous restez villageois",
+                        WGRoleActionType.TRANSFORM,
+                        WGRoleActionFrequency.FIRST_NIGHT
+                    )
+                )
+            }
+
+            WGRole.COMEDIAN -> {
+                actions.add(
+                    WGRoleAction(
+                        "Choisissez votre rôle",
+                        "En début de partie trois rôle supplémentaires seront tirés, connus de tous. Chaque nuit vous pourrez choisir d'utiliser un de ces rôles, qui sera ensuite retiré des choix disponibles",
+                        WGRoleActionType.TRANSFORM,
+                        WGRoleActionFrequency.EVERY_NIGHT
+                    )
+                )
+            }
+
+
+            WGRole.PIED_PIPER -> {
+                actions.add(
+                    WGRoleAction(
+                        "Envoutez le village",
+                        "Chaque nuit vous envoutez 2 personnes, vous gagnez lorsque tout le village est envouté.",
+                        WGRoleActionType.INFECT,
+                        WGRoleActionFrequency.EVERY_NIGHT
+                    )
+                )
+            }
+
+            WGRole.VILLAGE_ELDER -> {
+                actions.add(
+                    WGRoleAction(
+                        "Resistez à une attaque",
+                        "Vous pouvez resister à une attaque des loups",
+                        WGRoleActionType.KILL_PROTECTOR,
+                        WGRoleActionFrequency.ONLY_ONCE_PER_GAME
+                    )
+                )
+
+                actions.add(
+                    WGRoleAction(
+                        "Mysticisme",
+                        "Si le village décide de vous voter, tous les villageois perdent leurs capacités",
+                        WGRoleActionType.CANCEL_ABILITY,
+                        WGRoleActionFrequency.WHEN_VOTED,
+                        cancels = WGRoleActionCancel.VILLAGERS
+                    )
+                )
+            }
+
+            WGRole.PEASANT -> {
+                actions.add(
+                    WGRoleAction(
+                        "Rien",
+                        "Vous n'avez pas de capacités, utilisez vos capacités d'enquêteur car vous n'aurez que ça",
+                        WGRoleActionType.NONE,
+                        WGRoleActionFrequency.EVERY_NIGHT
+                    )
+                )
+            }
+
+            WGRole.TWO_SISTERS -> {
+                actions.add(
+                    WGRoleAction(
+                        "Fraternité",
+                        "En début de partie les 2 soeurs se réveillent, et possèdent désormais une alliée sûre dans la partie",
+                        WGRoleActionType.TEAM,
+                        WGRoleActionFrequency.FIRST_NIGHT
+                    )
+                )
+            }
+
+            WGRole.THREE_BROTHERS -> {
+                actions.add(
+                    WGRoleAction(
+                        "Fraternité",
+                        "En début de partie les 3 frêres se réveillent, et possèdent désormais des alliés sûrs dans la partie",
+                        WGRoleActionType.TEAM,
+                        WGRoleActionFrequency.FIRST_NIGHT
+                    )
+                )
+            }
+
+            WGRole.MAYOR -> {
+                actions.add(
+                    WGRoleAction(
+                        "Double Vote",
+                        "En début de partie le maire est élu par le village, son vôte compte double. Il tranche en cas d'égalité",
+                        WGRoleActionType.DOUBLE_VOTE,
+                        WGRoleActionFrequency.START_GAME
+                    )
+                )
+            }
+
+
+            WGRole.ASTRONOMER -> {
+                actions.add(
+                    WGRoleAction(
+                        "Nouvelle Lune",
+                        "Lorsque vous déclenchez la nouvelle lune les loups ne pourront pas se reveiller et utiliser leurs pouvoirs",
+                        WGRoleActionType.CANCEL_ABILITY,
+                        WGRoleActionFrequency.ONLY_ONCE_PER_GAME,
+                        cancels = WGRoleActionCancel.WOLVES
+                    )
+                )
+
+                actions.add(
+                    WGRoleAction(
+                        "Pluie de méteorites",
+                        "Lorsque vous déclenchez la pluie de météorites un joueur aléatoire sera tué, si c'est un villageois vous mourrez aussi.",
+                        WGRoleActionType.KILL,
+                        WGRoleActionFrequency.ONLY_ONCE_PER_GAME
+                    )
+                )
+            }
+
+            WGRole.DEFLECTOR -> {
+                actions.add(
+                    WGRoleAction(
+                        "Redirection",
+                        "Pendant la nuit, choisissez un joueur qui sera protégé, et un autre qui sera attaqué à la place. Vous pouvez rediriger jusqu'à 2 attaques. Après une attaque réussie vous ne pouvez pas rediriger d'attaque la nuit suivante.",
+                        WGRoleActionType.REDIRECT_ATTACK,
+                        WGRoleActionFrequency.TWICE_PER_GAME,
+                        WGRoleActionCondition.IF_NOT_SUCCESSFUL_NIGHT_BEFORE
+                    )
+                )
+            }
+
+            WGRole.BULLY -> {
+                actions.add(
+                    WGRoleAction(
+                        "Lance Pierre",
+                        "Vous lancez un pierre et assomez un joueur, celui-ci ne restera assomé la journée et nuit suivant l'empechant de jouer son rôles et participer au vote",
+                        WGRoleActionType.CANCEL_ABILITY,
+                        WGRoleActionFrequency.EVERY_NIGHT,
+                        cancels = WGRoleActionCancel.ANY
+                    )
+                )
+
+                actions.add(
+                    WGRoleAction(
+                        "Lancé Mortel",
+                        "Un deuxième lancé sur un joueur déjà assomé lui sera mortel. Vous ne pouvez tuer que 2 joueurs par partie.",
+                        WGRoleActionType.KILL,
+                        WGRoleActionFrequency.TWICE_PER_GAME,
+                    )
+                )
+            }
+
+            WGRole.DEMONIAC_SOUL -> {
+                actions.add(
+                    WGRoleAction(
+                        "Usurpateur",
+                        "Chaque nuit vous aurez un villageois attribué, et jouerez son rôle à sa place",
+                        WGRoleActionType.TRANSFORM,
+                        WGRoleActionFrequency.EVERY_NIGHT,
+                    )
+                )
+
+                actions.add(
+                    WGRoleAction(
+                        "Destins Liés",
+                        "Si le joueur dont vous usurpez l'identité meurs pendant la nuit, vous mourrez aussi.",
+                        WGRoleActionType.TRANSFORM,
+                        WGRoleActionFrequency.WHEN_DESIGNATED_PLAYER_DIES,
+                    )
+                )
+            }
+
+            WGRole.HITMAN -> {
+                actions.add(
+                    WGRoleAction(
+                        "Diffamation",
+                        "Un joueur vous sera attribué en début de partie, lorsque ce joueur meurt par le vote du village vous gagnez. Si ce joueur meurt autrement vous gagnez avec le village",
+                        WGRoleActionType.TRANSFORM,
+                        WGRoleActionFrequency.WHEN_DESIGNATED_PLAYER_DIES,
+                    )
+                )
+            }
+
+            WGRole.GURU -> {
+                actions.add(
+                    WGRoleAction(
+                        "Convertissez",
+                        "Chaque nuit vous convertissez un membre à votre secte. Lorsque plus la moitié des joueurs appartiennent à la secte vous gagnez.",
+                        WGRoleActionType.INFECT,
+                        WGRoleActionFrequency.EVERY_NIGHT,
+                    )
+                )
+            }
+
+            WGRole.MARSHALL -> {
+                actions.add(
+                    WGRoleAction(
+                        "Ronde de nuit",
+                        "La nuit vous surveillez 2 joueurs, si l'un d'entre eux meurs, vous découvrez deux suspects.",
+                        WGRoleActionType.SPY,
+                        WGRoleActionFrequency.EVERY_NIGHT,
+                    )
+                )
+            }
+
+            WGRole.WIZARD -> {
+                actions.add(
+                    WGRoleAction(
+                        "Prestidigitation",
+                        "Selectionnez un rôle des joueurs morts de la nuit que vous jouerez jusqu'à la nuit suivante.",
+                        WGRoleActionType.TRANSFORM,
+                        WGRoleActionFrequency.EVERY_NIGHT,
+                    )
+                )
+            }
+
+            WGRole.HUNTER -> {
+                actions.add(
+                    WGRoleAction(
+                        "Derniere Balle",
+                        "A votre mort vous tirez votre dernière balle sur un joueur.",
+                        WGRoleActionType.KILL_PROTECTOR,
+                        WGRoleActionFrequency.WHEN_KILLED
+                    )
+                )
+            }
+
+            WGRole.WILD_KID -> {
+                actions.add(
+                    WGRoleAction(
+                        "Mentor",
+                        "En début de partie vous choisirez un joueur sans qu'il le sache pour devenir votre tuteur.",
+                        WGRoleActionType.BOUND_FATE,
+                        WGRoleActionFrequency.START_GAME
+                    )
+                )
+
+                actions.add(
+                    WGRoleAction(
+                        "Mort du mentor",
+                        "A la mort de votre mentor vous vous échapez et devenez un loup.",
+                        WGRoleActionType.TRANSFORM,
+                        WGRoleActionFrequency.WHEN_DESIGNATED_PLAYER_DIES
+                    )
+                )
+            }
+
+            WGRole.PYROMANIAC -> {
+                actions.add(
+                    WGRoleAction(
+                        "Incedie",
+                        "Une fois par partie, vous pouvez mettre le feu à la maison d'un des joueurs. Ce joueur perd son pouvoir. Si ce joueur est la victime des loups il sera sauvé.",
+                        WGRoleActionType.TRANSFORM,
+                        WGRoleActionFrequency.ONLY_ONCE_PER_GAME
+                    )
+                )
+            }
+
+
+            WGRole.NOCTAMBULIST -> {
+                actions.add(
+                    WGRoleAction(
+                        "Soirée Pyjama",
+                        "Chaque soir le noctambule désigne un joueur chez qui il passe la soirée. S'il s'agit d'un villageois il annulera toute attaque sur lui. S'il s'agit d'un loup il mourra.",
+                        WGRoleActionType.KILL_PROTECTOR,
+                        WGRoleActionFrequency.EVERY_NIGHT,
+                        cancels = WGRoleActionCancel.WOLVES
+                    )
+                )
+            }
+
+            WGRole.MOON_SON -> {
+                actions.add(
+                    WGRoleAction(
+                        "Nouvelle Lune",
+                        "La nuit suivant sa mort les loups ne se reveilleront pas et ne pourrons pas tuer.",
+                        WGRoleActionType.CANCEL_ABILITY,
+                        WGRoleActionFrequency.WHEN_KILLED,
+                        cancels = WGRoleActionCancel.WOLVES
+                    )
+                )
+            }
+
+            WGRole.BLACKSMITH -> {
+                actions.add(
+                    WGRoleAction(
+                        "Bouclier",
+                        "Forge un bouclier qu'il pourra donner la nuit suivante à un joueur pour se protéger.",
+                        WGRoleActionType.KILL_PROTECTOR,
+                        WGRoleActionFrequency.EVERY_TWO_NIGHTS,
+                    )
+                )
+
+                actions.add(
+                    WGRoleAction(
+                        "Epée",
+                        "Forge une épée qu'il pourra donner la nuit suivante à un joueur pour attaquer",
+                        WGRoleActionType.KILL_PROTECTOR,
+                        WGRoleActionFrequency.EVERY_TWO_NIGHTS,
+                    )
+                )
+            }
+
+            WGRole.FOX -> {
+                actions.add(
+                    WGRoleAction(
+                        "Odorat",
+                        "Chaque nuit peut renifler 3 joueurs, le renard perdra son odorat lorsque qu'aucun des 3 joueurs sentis n'est un loup.",
+                        WGRoleActionType.SPY,
+                        WGRoleActionFrequency.UNTIL_FAIL,
+                    )
+                )
+            }
+
+            WGRole.DUELISTS -> {
+                actions.add(
+                    WGRoleAction(
+                        "Duel",
+                        "Au début de partie les duelistes prennent connaissance l'un de l'autre. Si le village gagne et que les deux sont encore en vie ils perdent tous les deux.",
+                        WGRoleActionType.BOUND_FATE,
+                        WGRoleActionFrequency.START_GAME,
+                    )
+                )
+            }
+
+            WGRole.OLD_KNIGHT -> {
+                actions.add(
+                    WGRoleAction(
+                        "Tétanos",
+                        "S'il est attaqué par les loups il se défent avec son épée rouillée et donne le tétanos au premier loup à sa gauche. Le loup mourra la nuit suivante.",
+                        WGRoleActionType.KILL,
+                        WGRoleActionFrequency.WHEN_KILLED,
+                    )
+                )
+            }
+
+            WGRole.BEAR_HANDLER -> {
+                actions.add(
+                    WGRoleAction(
+                        "Odorat",
+                        "L'ours va renifler les joueurs à sa gauche et à sa droite. S'il y a un loup autour de lui le village le saura.",
+                        WGRoleActionType.SPY,
+                        WGRoleActionFrequency.EVERY_NIGHT,
+                    )
+                )
+            }
+
+            WGRole.GENTLEMAN -> {
+                actions.add(
+                    WGRoleAction(
+                        "Immunisé des potions",
+                        "Le gentleman ne boit pas les potions bizarre",
+                        WGRoleActionType.KILL_PROTECTOR,
+                        WGRoleActionFrequency.EVERY_NIGHT,
+                        cancels = WGRoleActionCancel.POTIONS
+                    )
+                )
+
+                actions.add(
+                    WGRoleAction(
+                        "Fuckboy",
+                        "Le gentleman devient un loup s'il est désigné par Cupidon",
+                        WGRoleActionType.TRANSFORM,
+                        WGRoleActionFrequency.START_GAME,
+                    )
+                )
+
+                actions.add(
+                    WGRoleAction(
+                        "Galant",
+                        "Le gentleman ne vote pas contre les femmes",
+                        WGRoleActionType.VOTE_PROTECTION,
+                        WGRoleActionFrequency.EVERY_NIGHT,
+                    )
+                )
+            }
+
+            WGRole.RANGER -> {
+                actions.add(
+                    WGRoleAction(
+                        "Piège",
+                        "Le ranger peut placer un piège devant la porte d'un joueur, si ce dernier est attaqué par les loups l'un d'eux mourra",
+                        WGRoleActionType.KILL_PROTECTOR,
+                        WGRoleActionFrequency.EVERY_NIGHT,
+                    )
+                )
+            }
+
+            WGRole.TRAITOR -> {
+                actions.add(
+                    WGRoleAction(
+                        "Opportuniste",
+                        "Lorsque le dernier loup meurt il deviens loup.",
+                        WGRoleActionType.TRANSFORM,
+                        WGRoleActionFrequency.WHEN_DESIGNATED_PLAYER_DIES,
+                    )
+                )
+            }
+
+            WGRole.DRUGGIST -> {
+                actions.add(
+                    WGRoleAction(
+                        "Potion de confusion",
+                        "Le joueur désigné ne pourra pas voter au prochain vote",
+                        WGRoleActionType.VOTE_CANCEL,
+                        WGRoleActionFrequency.EVERY_NIGHT
+                    )
+                )
+                actions.add(
+                    WGRoleAction(
+                        "Potion de charisme",
+                        "Le joueur désigné aura un vote double au prochain vote",
+                        WGRoleActionType.DOUBLE_VOTE,
+                        WGRoleActionFrequency.EVERY_NIGHT
+                    )
+                )
+                actions.add(
+                    WGRoleAction(
+                        "Trouve la voyante",
+                        "S'il trouve la voyante, il pourra lui recharger ses potions",
+                        WGRoleActionType.REFILL_POTION,
+                        WGRoleActionFrequency.EVERY_NIGHT
+                    )
+                )
+            }
+
+            WGRole.WHITE_SOOTHSAYER -> {
+                actions.add(
+                    WGRoleAction(
+                        "Observateur",
+                        "Chaque nuit il connait la victime des loups.",
+                        WGRoleActionType.SPY,
+                        WGRoleActionFrequency.EVERY_NIGHT
+                    )
+                )
+            }
+
+
+            WGRole.CASSANDRA -> {
+                actions.add(
+                    WGRoleAction(
+                        "Dilemne",
+                        "Chaque nuit choisit 3 joueurs. Parmis un de ces joueurs doit accepter de se sacrifier sinon les 3 mourront.",
+                        WGRoleActionType.KILL,
+                        WGRoleActionFrequency.EVERY_NIGHT
+                    )
+                )
+            }
+
             // TODO : Incomplete roles
 
-            else -> Unit
+
+            WGRole.BERSERK -> Unit
+            WGRole.CORRUPTER -> Unit
+
         }
 
         return actions
@@ -718,8 +1173,15 @@ enum class WGRoleActionType {
     TRANSFORM,
     CANCEL_ABILITY,
     REVIVE,
-    UNITE,
-    VOTED
+    BOUND_FATE,
+    VOTED,
+    NONE,
+    TEAM,
+    DOUBLE_VOTE,
+    VOTE_PROTECTION,
+    VOTE_CANCEL,
+    REDIRECT_ATTACK,
+    REFILL_POTION
 }
 
 enum class WGRoleActionFrequency {
@@ -728,14 +1190,18 @@ enum class WGRoleActionFrequency {
     ONLY_ONCE_PER_GAME,
     WHEN_KILLED,
     WHEN_VOTED,
+    WHEN_DESIGNATED_PLAYER_DIES,
     START_GAME,
-    UNTIL_FAIL,
+    FIRST_NIGHT,
+    TWICE_PER_GAME,
+    UNTIL_FAIL
 }
 
 enum class WGRoleActionCondition {
     NONE,
     IF_NO_WOLF_DEAD,
-    IF_FIRST_VOTE
+    IF_FIRST_VOTE,
+    IF_NOT_SUCCESSFUL_NIGHT_BEFORE
 }
 
 enum class WGRoleActionCancel {
@@ -743,5 +1209,8 @@ enum class WGRoleActionCancel {
     GURU,
     SEER,
     VOTE,
-    WOLVES
+    WOLVES,
+    VILLAGERS,
+    POTIONS,
+    ANY
 }

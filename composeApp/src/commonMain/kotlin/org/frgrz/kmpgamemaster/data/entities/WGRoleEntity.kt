@@ -58,7 +58,7 @@ enum class WGRole {
     GENTLEMAN,
     GUARD,
     GURU,
-    HITMAN,
+    HITMAN, //TODO Rename Accusateurs
     HUNTER,
     IDIOT,
     LITTLE_GIRL,
