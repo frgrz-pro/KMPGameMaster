@@ -1,6 +1,7 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.presentation.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,26 +12,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleFilter
+
 
 @Composable
-fun TextBadge(displayText: String, containerColor: Color, textColor: Color) {
+fun WGRoleFilterCard(
+    filter: RoleFilter,
+    backgroundColor: Color,
+    textColor: Color,
+    onFilterSelected: (RoleFilter) -> Unit,
+) {
+
     Card(
-        shape = RoundedCornerShape(16.dp)
+        shape = RoundedCornerShape(6.dp),
+        modifier = Modifier
+            .clickable {
+                onFilterSelected.invoke(filter)
+            },
     ) {
-        Box(
-            modifier = Modifier
-                .background(containerColor)
-        ) {
+        Box(modifier = Modifier.background(backgroundColor)) {
             Text(
-                text = displayText,
-                style = MaterialTheme.typography.labelSmall,
-                modifier = Modifier
-                    .padding(
-                        start = 4.dp,
-                        end = 4.dp,
-                        top = 2.dp,
-                        bottom = 2.dp
-                    ),
+                text = filter.name,
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                 color = textColor
             )
         }

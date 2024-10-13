@@ -1,55 +1,253 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
     <string name="angel">Ange</string>
+    <string name="angel_action">First Blood</string>
+    <string name="angel_action_desc">Faites vous éliminer au premier tour et vous gagnez la partie.</string>
+
     <string name="assassin">Assassin</string>
+    <string name="assassin_action">Assassinez les villageois</string>
+    <string name="assassin_action_desc">Chaque nuit décidez d\'une victime à assassiner, vous gagnez si vous êtes le dernier en vie</string>
+    <string name="assassin">Assassin</string>
+    <string name="assassin_action_2">Immunise des loups</string>
+    <string name="assassin_action_2_desc">Les loups ne peuvent pas vous tuer.</string>
+
     <string name="astronomer">Astronome</string>
+    <string name="astronomer_action">Nouvelle Lune</string>
+    <string name="astronomer_action_desc">Lorsque vous déclenchez la nouvelle lune les loups ne pourront pas se reveiller et utiliser leurs pouvoirs</string>
+    <string name="astronomer_action_2">Pluie de méteorites</string>
+    <string name="astronomer_action_2_desc">Lorsque vous déclenchez la pluie de météorites un joueur aléatoire sera tué, si c\'est un villageois vous mourrez aussi.</string>
+
     <string name="bear_handler">Eleveur d\'ours</string>
-    <string name="berserk">Berserk</string>
+    <string name="bear_handler_action">Odorat</string>
+    <string name="bear_handler_action_desc">L\'ours va renifler les joueurs à sa gauche et à sa droite. S\'il y a un loup autour de lui le village le saura.</string>
+
     <string name="big_bad_wolf">Méchant Loup</string>
+    <string name="big_bad_wolf_action">Tuez les villageois</string>
+    <string name="big_bad_wolf_action_desc">Chaque nuit décidez d\'une victime à abattre avec les autres loups</string>
+    <string name="big_bad_wolf_action_2">Tuez un villageois supplémentaire</string>
+    <string name="big_bad_wolf_action_2_desc">Tant qu\'aucun loup n\'est mort vous tuez un villageois</string>
+
     <string name="black_wolf">Loup Noir</string>
+    <string name="black_wolf_action">Tuez les villageois</string>
+    <string name="black_wolf_action_desc">Chaque nuit décidez d\'une victime à abattre avec les autres loups</string>
+    <string name="black_wolf_action_2">Infectez un villageois</string>
+    <string name="black_wolf_action_2_desc">Une fois par partie vous pouvez infecter un villageois sans qu\'il le sache et qui deviendra un loup la nuit suivante</string>
+
     <string name="blacksmith">Forgeron</string>
+    <string name="blacksmith_action">Bouclier</string>
+    <string name="blacksmith_action_desc">Forge un bouclier qu\'il pourra donner la nuit suivante à un joueur pour se protéger.</string>
+    <string name="blacksmith_action_2">Epée</string>
+    <string name="blacksmith_action_2_desc">Forge une épée qu\'il pourra donner la nuit suivante à un joueur pour attaquer</string>
+
     <string name="blue_wolf">Loup Bleu</string>
+    <string name="blue_wolf_action">Tuez les villageois</string>
+    <string name="blue_wolf_action_desc">Chaque nuit décidez d\'une victime à abattre avec les autres loups</string>
+    <string name="blue_wolf_action_2">Decouvrez les roles</string>
+    <string name="blue_wolf_action_2_desc">Chaque nuit découvrez le role secret d\'un des joueurs</string>
+    <string name="blue_wolf_action_3">Immunisé de la voyante</string>
+    <string name="blue_wolf_action_3_desc">La voyante ne pourra pas découvrir votre rôle, un faux rôle lui sera révélé si elle regarde votre carte</string>
+
     <string name="bully">Bully</string>
+    <string name="bully_action">Lance Pierre</string>
+    <string name="bully_action_desc">Vous lancez un pierre et assomez un joueur, celui-ci ne restera assomé la journée et nuit suivant l\'empechant de jouer son rôles et participer au vote</string>
+    <string name="bully_action_2">Lancé Mortel</string>
+    <string name="bully_action_2_desc">Un deuxième lancé sur un joueur déjà assomé lui sera mortel. Vous ne pouvez tuer que 2 joueurs par partie.</string>
+
     <string name="cassandre">Cassandre</string>
+    <string name="cassandre_action">Dilemne</string>
+    <string name="cassandre_action_desc">Chaque nuit choisit 3 joueurs. Parmis un de ces joueurs doit accepter de se sacrifier sinon les 3 mourront.</string>
+
     <string name="comedian">Comedien</string>
-    <string name="corrupter">Corrupter</string>
+    <string name="comedian_action">Choisissez votre rôle</string>
+    <string name="comedian_action_desc">En début de partie trois rôle supplémentaires seront tirés, connus de tous. Chaque nuit vous pourrez choisir d\'utiliser un de ces rôles, qui sera ensuite retiré des choix disponibles</string>
+
     <string name="cupid">Cupidon</string>
+    <string name="cupid_action">Creez un couple</string>
+    <string name="cupid_action_desc">Le destins du couple sera lié, si l\'un meurs l\'autre aussi. Si un des amoureux est un loup il doit garder son amoureux en vie</string>
+
     <string name="deflector">Deflecteur</string>
-    <string name="demoniac_soul">Corrupter</string>
+    <string name="deflector_action">Redirection</string>
+    <string name="deflector_action_desc">Pendant la nuit, choisissez un joueur qui sera protégé, et un autre qui sera attaqué à la place. Vous pouvez rediriger jusqu\'à 2 attaques. Après une attaque réussie vous ne pouvez pas rediriger d\'attaque la nuit suivante.</string>
+
+    <string name="demoniac_soul">Ame Demoniaque</string>
+    <string name="demoniac_soul_action">Usurpation</string>
+    <string name="demoniac_soul_action_desc">Chaque nuit vous aurez un villageois attribué, et jouerez son rôle à sa place</string>
+
     <string name="druggist">Droguiste</string>
+    <string name="druggist_action">Potion de confusion</string>
+    <string name="druggist_action_desc">Le joueur désigné ne pourra pas voter au prochain vote</string>
+    <string name="druggist_action_2">Potion de charisme</string>
+    <string name="druggist_action_2_desc">Le joueur désigné aura un vote double au prochain vote</string>
+    <string name="druggist_action_3">Trouve la voyante</string>
+    <string name="druggist_action_3_desc">S\'il trouve la voyante, il pourra lui recharger ses potions</string>
+
     <string name="duelists">Duelistes</string>
+    <string name="duelists_action">Duel</string>
+    <string name="duelists_action_desc">Au début de partie les duelistes prennent connaissance l\'un de l\'autre. Si le village gagne et que les deux sont encore en vie ils perdent tous les deux.</string>
+
     <string name="fox">Renard</string>
+    <string name="fox_action">Odorat</string>
+    <string name="fox_action_desc">Chaque nuit peut renifler 3 joueurs, le renard perdra son odorat lorsque qu\'aucun des 3 joueurs sentis n\'est un loup.</string>
+
     <string name="gentleman">Gentleman</string>
+    <string name="gentleman_action">Immunisé des potions</string>
+    <string name="gentleman_action_desc">Le gentleman ne boit pas les potions bizarre</string>
+    <string name="gentleman_action_2">Fuckboy</string>
+    <string name="gentleman_action_2_desc">Le gentleman devient un loup s\'il est désigné par Cupidon</string>
+    <string name="gentleman_action_3">Galant</string>
+    <string name="gentleman_action_3_desc">Le gentleman ne vote pas contre les femmes</string>
+
     <string name="guard">Garde</string>
+    <string name="guard_action">Protégez un joueur</string>
+    <string name="guard_action_desc">Choisissez un joueur à proteger, vous serez attaqué à sa place</string>
+    <string name="guard_action_2">Résistez à une attaque</string>
+    <string name="guard_action_2_desc">Vous pouvez resister à une attaque, la deuxième vous sera fatale</string>
+
     <string name="guru">Gourou</string>
+    <string name="guru_action">Convertissez</string>
+    <string name="guru_action_desc">Chaque nuit vous convertissez un membre à votre secte. Lorsque plus la moitié des joueurs appartiennent à la secte vous gagnez.</string>
+
     <string name="hitman">Hitman</string>
+    <string name="hitman_action">Diffamation</string>
+    <string name="hitman_action_desc">Un joueur vous sera attribué en début de partie, lorsque ce joueur meurt par le vote du village vous gagnez. Si ce joueur meurt autrement vous gagnez avec le village</string>
+
     <string name="hunter">Chasseur</string>
+    <string name="hunter_action">Derniere Balle</string>
+    <string name="hunter_action_desc">A votre mort vous tirez votre dernière balle sur un joueur.</string>
+
     <string name="idiot">Idiot</string>
+    <string name="idiot_action">Immunisé du vote</string>
+    <string name="idiot_action_desc">Si le village vote contre vous, vous restez en vie mais perdez votre droit de vote.</string>
+
     <string name="little_girl">Petite Fille</string>
+    <string name="little_girl_action">Espionnez les loups</string>
+    <string name="little_girl_action_desc">Espionne les loups pendant la nuit. Cependant si elle sera la victime des loups.</string>
+
     <string name="marshall">Marshall</string>
+    <string name="marshall_action">Ronde de nuit</string>
+    <string name="marshall_action_desc">La nuit vous surveillez 2 joueurs, si l\'un d\'entre eux meurs, vous découvrez deux suspects.</string>
+
     <string name="mayor">Maire</string>
+    <string name="mayor_action">Double Vote</string>
+    <string name="mayor_action_desc">En début de partie le maire est élu par le village, son vôte compte double. Il tranche en cas d\'égalité</string>
+
     <string name="moon_son">Enfant de la lune</string>
+    <string name="moon_son_action">Nouvelle Lune</string>
+    <string name="moon_son_action_desc">La nuit suivant sa mort les loups ne se reveilleront pas et ne pourrons pas tuer.</string>
+
     <string name="sleep_walker">Noctambule</string>
+    <string name="sleep_walker_action">Soirée Pyjama</string>
+    <string name="sleep_walker_action_desc">Chaque soir le noctambule désigne un joueur chez qui il passe la soirée. S\'il s\'agit d\'un villageois il annulera toute attaque sur lui. S\'il s\'agit d\'un loup il mourra.</string>
+
     <string name="old_knight">Vieux Chevalier</string>
+    <string name="old_knight_action">Tétanos</string>
+    <string name="old_knight_action_desc">S\'il est attaqué par les loups il se défent avec son épée rouillée et donne le tétanos au premier loup à sa gauche. Le loup mourra la nuit suivante.</string>
+
     <string name="peasant">Paysan</string>
+    <string name="peasant_action">Rien</string>
+    <string name="peasant_action_desc">Vous n\'avez pas de capacités, utilisez vos capacités d\'enquêteur car vous n\'aurez que ça</string>
+
     <string name="pied_piper">Joueur de Flute</string>
+    <string name="pied_piper_action">Envoutez le village</string>
+    <string name="pied_piper_action_desc">Chaque nuit vous envoutez 2 personnes, vous gagnez lorsque tout le village est envouté.</string>
+
     <string name="priest">Pretre</string>
+    <string name="priest_action">Exorcisme</string>
+    <string name="priest_action_desc">Vous pouvez, une fois par partie lancer de l\'eau bénite sur un autre joueur. Si c\'est un loup il meurt, sinon vous mourrez</string>
+
     <string name="pyromaniac">Pyromane</string>
+    <string name="pyramoniac_action">Incedie</string>
+    <string name="pyramoniac_action_desc">Une fois par partie, vous pouvez mettre le feu à la maison d\'un des joueurs. Ce joueur perd son pouvoir. Si ce joueur est la victime des loups il sera sauvé.</string>
+
     <string name="ranger">Garde Forestier</string>
+    <string name="ranger_action">Piège</string>
+    <string name="ranger_action_desc">Le ranger peut placer un piège devant la porte d\'un joueur, si ce dernier est attaqué par les loups l\'un d\'eux mourra</string>
+
     <string name="seer">Voyante</string>
+    <string name="seer_action">Boule de crystal</string>
+    <string name="seer_action_desc">Chaque nuit découvrez le role secret d\'un des joueurs</string>
+
     <string name="sorcerer">Sorciere</string>
+    <string name="sorcerer_action">Potion de résurection</string>
+    <string name="sorcerer_action_desc">Utilisez cette potion pour réanimer un joueur tué pendant la nuit</string>
+    <string name="sorcerer_action_2">Potion de mort</string>
+    <string name="sorcerer_action_2_desc">Utilisez cette potion pour tuer un joueur pendant la nuit, les deux potions ne peuvent pas être utilisées la même nuit.</string>
+
     <string name="thief">Voleur</string>
+    <string name="thief_action">Choisissez votre role</string>
+    <string name="thief_action_desc">Vous serez présenté 2 rôles en début de partie, vous pourrez choisir votre role pour le reste de la partie</string>
+
     <string name="three_brothers">Trois Freres</string>
+    <string name="three_brothers_action">Fraternité</string>
+    <string name="three_brothers_action_desc">En début de partie les 3 frêres se réveillent, et possèdent désormais des alliés sûrs dans la partie</string>
+
     <string name="traitor">Traitre</string>
+    <string name="traitor_action">Opportuniste</string>
+    <string name="traitor_action_desc">Lorsque le dernier loup meurt il deviens loup.</string>
+
     <string name="two_sisters">Deux Soeurs</string>
+    <string name="two_sisters_action">Tuez les loups</string>
+    <string name="two_sisters_action_desc">Vous gagnez seul(e), une nuit sur 2 sacrifiez secretement un autre loup</string>
+
     <string name="village_elder">Ancien</string>
+    <string name="village_elder_action">Resistez à une attaque</string>
+    <string name="village_elder_action_desc">Vous pouvez resister à une attaque des loups</string>
+    <string name="village_elder_action_2">Mysticisme</string>
+    <string name="village_elder_action_2_desc">Si le village décide de vous voter, tous les villageois perdent leurs capacités</string>
+
     <string name="white_soothsayer">Devin Blanc</string>
+    <string name="white_soothsayer_action">Observateur</string>
+    <string name="white_soothsayer_action_desc">Chaque nuit il connait la victime des loups.</string>
+
     <string name="white_wolf">Loup Blanc</string>
+    <string name="white_wolf_action">Tuez les villageois</string>
+    <string name="white_wolf_action_desc">Chaque nuit décidez d\'une victime à abattre avec les autres loups</string>
+    <string name="white_wolf_action_2">Tuez les loups</string>
+    <string name="white_wolf_action_2_desc">Vous gagnez seul(e), une nuit sur 2 sacrifiez secretement un autre loup</string>
+
     <string name="wild_kid">Enfant Sauvage</string>
+    <string name="wild_kid_action">Mentor</string>
+    <string name="wild_kid_action_desc">En début de partie vous choisirez un joueur sans qu\'il le sache pour devenir votre tuteur.</string>
+    <string name="wild_kid_action_2">Mort du mentor</string>
+    <string name="wild_kid_action_2_desc">A la mort de votre mentor vous vous échapez et devenez un loup.</string>
+
     <string name="wizard">Mage</string>
+    <string name="wizard_action">Prestidigitation</string>
+    <string name="wizard_action_desc">Selectionnez un rôle des joueurs morts de la nuit que vous jouerez jusqu\'à la nuit suivante.</string>
+
     <string name="wolf_berserk">Loup Berserk</string>
+    <string name="wolf_berserk_action">Tuez les villageois</string>
+    <string name="wolf_berserk_action_desc">Chaque nuit décidez d\'une victime à abattre avec les autres loups</string>
+    <string name="wolf_berserk_action_2">Enragez les loups</string>
+    <string name="wolf_berserk_action_2_desc">Une fois par partie, si la victime des loups est protégée par d\'autre(s) joueur(s), ce(s) joueurs mourront aussi</string>
+
     <string name="wolf_dog">Chien Loup</string>
+    <string name="wolf_dog_action">Choisissez votre camp</string>
+    <string name="wolf_dog_action_desc">Lors de la première nuit vous pouvez répondre à l\'appel des loups et vous devenez loup. Sinon vous restez villageois</string>
+
     <string name="wolf_fan">Fan des loups</string>
+    <string name="wolf_fan_action">Devenez un loup</string>
+    <string name="wolf_fan_action_desc">Si les loups essayent de vous tuer vous deviendrez un des leurs</string>
+    <string name="wolf_fan_action_2">Immunisé du Gourou</string>
+    <string name="wolf_fan_action_2_desc">Le Gourou ne peut pas vous convertir à sa secte</string>
+
     <string name="wolf_kitten">Loup Chaton</string>
+    <string name="wolf_kitten_action">Tuez les villageois</string>
+    <string name="wolf_kitten_action_desc">Chaque nuit décidez d\'une victime à abattre avec les autres loups</string>
+    <string name="wolf_kitten_action_2">Infectez un villageois</string>
+    <string name="wolf_kitten_action_2_desc">A votre mort le villageois désigné pendant le tour des loups deviendra un loup la nuit suivante</string>
+
     <string name="wolf">Loup</string>
+    <string name="wolf_action">Tuez les villageois</string>
+    <string name="wolf_action_desc">Chaque nuit décidez d\'une victime à abattre avec les autres loups</string>
+
+    <!-- TODO FILL ROLES ACTION & DESC -->
+    <string name="corrupter">Corrupter</string>
+    <string name="corrupter_action"></string>
+    <string name="corrupter_action_desc"></string>
+
+    <string name="berserk">Berserk</string>
+    <string name="berserk_action"></string>
+    <string name="berserk_action_desc"></string>
+
 </resources>
