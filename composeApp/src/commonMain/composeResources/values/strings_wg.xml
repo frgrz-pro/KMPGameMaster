@@ -7,7 +7,6 @@
     <string name="assassin">Assassin</string>
     <string name="assassin_action">Assassinez les villageois</string>
     <string name="assassin_action_desc">Chaque nuit décidez d\'une victime à assassiner, vous gagnez si vous êtes le dernier en vie</string>
-    <string name="assassin">Assassin</string>
     <string name="assassin_action_2">Immunise des loups</string>
     <string name="assassin_action_2_desc">Les loups ne peuvent pas vous tuer.</string>
 
