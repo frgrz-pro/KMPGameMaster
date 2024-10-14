@@ -21,15 +21,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
@@ -41,7 +41,6 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import kmpgamemaster.composeapp.generated.resources.Res
 import kmpgamemaster.composeapp.generated.resources.more_roles
 import kmpgamemaster.composeapp.generated.resources.start_game
-import kotlinx.coroutines.launch
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleCardSmall
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleExtrasCardSmall
 import org.frgrz.kmpgamemaster.material.components.icons.IconPack
@@ -57,14 +56,11 @@ class WGHomeScreen : Screen {
 
         val navigator = LocalNavigator.currentOrThrow
         val viewModel = getScreenModel<WGHomeViewModel>()
-        val snackbarHostState = remember { SnackbarHostState() }
-        val scope = rememberCoroutineScope()
 
         Scaffold(
             topBar = {
                 TopAppBar(title = { Text("Loup Garou") })
             },
-            snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
             content = { innerPadding ->
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -160,15 +156,8 @@ class WGHomeScreen : Screen {
                                         if (extraItems > 0 && index == displayedItems.lastIndex) {
                                             WGRoleExtrasCardSmall(extraItems)
                                         } else {
-                                            WGRoleCardSmall(item.role) {
-                                                //TODO Replace with tooltip
-                                                scope.launch {
-                                                    snackbarHostState.showSnackbar(
-                                                        message = "${item.role.name} : ${item.isSelected}",
-                                                        duration = SnackbarDuration.Short
-                                                    )
-                                                }
-                                            }
+                                            //TODO Add tooltip
+                                            WGRoleCardSmall(item.role) {}
                                         }
                                     }
                                 }
