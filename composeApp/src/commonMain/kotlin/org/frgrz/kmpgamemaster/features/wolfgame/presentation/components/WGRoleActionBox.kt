@@ -17,6 +17,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleAction
 import org.frgrz.kmpgamemaster.material.theme.AppTheme
+import org.jetbrains.compose.resources.stringResource
 
 
 @Composable
@@ -39,7 +40,7 @@ fun WGRoleActionItem(roleAction: WGRoleAction) {
                 })
 
             Text(
-                text = roleAction.name,
+                text = stringResource(roleAction.name),
                 modifier = Modifier
                     .padding(start = 8.dp)
                     .constrainAs(title) {
@@ -54,7 +55,7 @@ fun WGRoleActionItem(roleAction: WGRoleAction) {
             )
 
             Text(
-                text = roleAction.desc,
+                text = stringResource(roleAction.desc),
                 modifier = Modifier
                     .padding(top = 6.dp)
                     .constrainAs(desc) {

@@ -2,57 +2,197 @@ package org.frgrz.kmpgamemaster.features.wolfgame.data
 
 import kmpgamemaster.composeapp.generated.resources.Res
 import kmpgamemaster.composeapp.generated.resources.angel
+import kmpgamemaster.composeapp.generated.resources.angel_action
+import kmpgamemaster.composeapp.generated.resources.angel_action_desc
 import kmpgamemaster.composeapp.generated.resources.assassin
+import kmpgamemaster.composeapp.generated.resources.assassin_action
+import kmpgamemaster.composeapp.generated.resources.assassin_action_2
+import kmpgamemaster.composeapp.generated.resources.assassin_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.assassin_action_desc
 import kmpgamemaster.composeapp.generated.resources.astronomer
+import kmpgamemaster.composeapp.generated.resources.astronomer_action
+import kmpgamemaster.composeapp.generated.resources.astronomer_action_2
+import kmpgamemaster.composeapp.generated.resources.astronomer_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.astronomer_action_desc
 import kmpgamemaster.composeapp.generated.resources.bear_handler
+import kmpgamemaster.composeapp.generated.resources.bear_handler_action
+import kmpgamemaster.composeapp.generated.resources.bear_handler_action_desc
 import kmpgamemaster.composeapp.generated.resources.berserk
 import kmpgamemaster.composeapp.generated.resources.big_bad_wolf
+import kmpgamemaster.composeapp.generated.resources.big_bad_wolf_action
+import kmpgamemaster.composeapp.generated.resources.big_bad_wolf_action_2
+import kmpgamemaster.composeapp.generated.resources.big_bad_wolf_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.big_bad_wolf_action_desc
 import kmpgamemaster.composeapp.generated.resources.black_wolf
+import kmpgamemaster.composeapp.generated.resources.black_wolf_action
+import kmpgamemaster.composeapp.generated.resources.black_wolf_action_2
+import kmpgamemaster.composeapp.generated.resources.black_wolf_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.black_wolf_action_desc
 import kmpgamemaster.composeapp.generated.resources.blacksmith
+import kmpgamemaster.composeapp.generated.resources.blacksmith_action
+import kmpgamemaster.composeapp.generated.resources.blacksmith_action_2
+import kmpgamemaster.composeapp.generated.resources.blacksmith_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.blacksmith_action_desc
 import kmpgamemaster.composeapp.generated.resources.blue_wolf
+import kmpgamemaster.composeapp.generated.resources.blue_wolf_action
+import kmpgamemaster.composeapp.generated.resources.blue_wolf_action_2
+import kmpgamemaster.composeapp.generated.resources.blue_wolf_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.blue_wolf_action_3
+import kmpgamemaster.composeapp.generated.resources.blue_wolf_action_3_desc
+import kmpgamemaster.composeapp.generated.resources.blue_wolf_action_desc
 import kmpgamemaster.composeapp.generated.resources.bully
+import kmpgamemaster.composeapp.generated.resources.bully_action
+import kmpgamemaster.composeapp.generated.resources.bully_action_2
+import kmpgamemaster.composeapp.generated.resources.bully_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.bully_action_desc
 import kmpgamemaster.composeapp.generated.resources.cassandre
+import kmpgamemaster.composeapp.generated.resources.cassandre_action
+import kmpgamemaster.composeapp.generated.resources.cassandre_action_desc
 import kmpgamemaster.composeapp.generated.resources.comedian
+import kmpgamemaster.composeapp.generated.resources.comedian_action
+import kmpgamemaster.composeapp.generated.resources.comedian_action_desc
 import kmpgamemaster.composeapp.generated.resources.corrupter
 import kmpgamemaster.composeapp.generated.resources.cupid
+import kmpgamemaster.composeapp.generated.resources.cupid_action
+import kmpgamemaster.composeapp.generated.resources.cupid_action_desc
 import kmpgamemaster.composeapp.generated.resources.deflector
+import kmpgamemaster.composeapp.generated.resources.deflector_action
+import kmpgamemaster.composeapp.generated.resources.deflector_action_desc
 import kmpgamemaster.composeapp.generated.resources.demoniac_soul
+import kmpgamemaster.composeapp.generated.resources.demoniac_soul_action
+import kmpgamemaster.composeapp.generated.resources.demoniac_soul_action_desc
 import kmpgamemaster.composeapp.generated.resources.druggist
+import kmpgamemaster.composeapp.generated.resources.druggist_action
+import kmpgamemaster.composeapp.generated.resources.druggist_action_2
+import kmpgamemaster.composeapp.generated.resources.druggist_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.druggist_action_3
+import kmpgamemaster.composeapp.generated.resources.druggist_action_3_desc
+import kmpgamemaster.composeapp.generated.resources.druggist_action_desc
 import kmpgamemaster.composeapp.generated.resources.duelists
+import kmpgamemaster.composeapp.generated.resources.duelists_action
+import kmpgamemaster.composeapp.generated.resources.duelists_action_desc
 import kmpgamemaster.composeapp.generated.resources.fox
+import kmpgamemaster.composeapp.generated.resources.fox_action
+import kmpgamemaster.composeapp.generated.resources.fox_action_desc
 import kmpgamemaster.composeapp.generated.resources.gentleman
+import kmpgamemaster.composeapp.generated.resources.gentleman_action
+import kmpgamemaster.composeapp.generated.resources.gentleman_action_2
+import kmpgamemaster.composeapp.generated.resources.gentleman_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.gentleman_action_3
+import kmpgamemaster.composeapp.generated.resources.gentleman_action_3_desc
+import kmpgamemaster.composeapp.generated.resources.gentleman_action_desc
 import kmpgamemaster.composeapp.generated.resources.guard
+import kmpgamemaster.composeapp.generated.resources.guard_action
+import kmpgamemaster.composeapp.generated.resources.guard_action_2
+import kmpgamemaster.composeapp.generated.resources.guard_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.guard_action_desc
 import kmpgamemaster.composeapp.generated.resources.guru
+import kmpgamemaster.composeapp.generated.resources.guru_action
+import kmpgamemaster.composeapp.generated.resources.guru_action_desc
 import kmpgamemaster.composeapp.generated.resources.hitman
+import kmpgamemaster.composeapp.generated.resources.hitman_action
+import kmpgamemaster.composeapp.generated.resources.hitman_action_desc
 import kmpgamemaster.composeapp.generated.resources.hunter
+import kmpgamemaster.composeapp.generated.resources.hunter_action
+import kmpgamemaster.composeapp.generated.resources.hunter_action_desc
 import kmpgamemaster.composeapp.generated.resources.idiot
+import kmpgamemaster.composeapp.generated.resources.idiot_action
+import kmpgamemaster.composeapp.generated.resources.idiot_action_desc
 import kmpgamemaster.composeapp.generated.resources.little_girl
+import kmpgamemaster.composeapp.generated.resources.little_girl_action
+import kmpgamemaster.composeapp.generated.resources.little_girl_action_desc
 import kmpgamemaster.composeapp.generated.resources.marshall
+import kmpgamemaster.composeapp.generated.resources.marshall_action
+import kmpgamemaster.composeapp.generated.resources.marshall_action_desc
 import kmpgamemaster.composeapp.generated.resources.mayor
+import kmpgamemaster.composeapp.generated.resources.mayor_action
+import kmpgamemaster.composeapp.generated.resources.mayor_action_desc
 import kmpgamemaster.composeapp.generated.resources.moon_son
+import kmpgamemaster.composeapp.generated.resources.moon_son_action
+import kmpgamemaster.composeapp.generated.resources.moon_son_action_desc
 import kmpgamemaster.composeapp.generated.resources.old_knight
+import kmpgamemaster.composeapp.generated.resources.old_knight_action
+import kmpgamemaster.composeapp.generated.resources.old_knight_action_desc
 import kmpgamemaster.composeapp.generated.resources.peasant
+import kmpgamemaster.composeapp.generated.resources.peasant_action
+import kmpgamemaster.composeapp.generated.resources.peasant_action_desc
 import kmpgamemaster.composeapp.generated.resources.pied_piper
+import kmpgamemaster.composeapp.generated.resources.pied_piper_action
+import kmpgamemaster.composeapp.generated.resources.pied_piper_action_desc
 import kmpgamemaster.composeapp.generated.resources.priest
+import kmpgamemaster.composeapp.generated.resources.priest_action
+import kmpgamemaster.composeapp.generated.resources.priest_action_desc
+import kmpgamemaster.composeapp.generated.resources.pyramoniac_action
+import kmpgamemaster.composeapp.generated.resources.pyramoniac_action_desc
 import kmpgamemaster.composeapp.generated.resources.pyromaniac
 import kmpgamemaster.composeapp.generated.resources.ranger
+import kmpgamemaster.composeapp.generated.resources.ranger_action
+import kmpgamemaster.composeapp.generated.resources.ranger_action_desc
 import kmpgamemaster.composeapp.generated.resources.seer
+import kmpgamemaster.composeapp.generated.resources.seer_action
+import kmpgamemaster.composeapp.generated.resources.seer_action_desc
 import kmpgamemaster.composeapp.generated.resources.sleep_walker
+import kmpgamemaster.composeapp.generated.resources.sleep_walker_action
+import kmpgamemaster.composeapp.generated.resources.sleep_walker_action_desc
 import kmpgamemaster.composeapp.generated.resources.sorcerer
+import kmpgamemaster.composeapp.generated.resources.sorcerer_action
+import kmpgamemaster.composeapp.generated.resources.sorcerer_action_2
+import kmpgamemaster.composeapp.generated.resources.sorcerer_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.sorcerer_action_desc
 import kmpgamemaster.composeapp.generated.resources.thief
+import kmpgamemaster.composeapp.generated.resources.thief_action
+import kmpgamemaster.composeapp.generated.resources.thief_action_desc
 import kmpgamemaster.composeapp.generated.resources.three_brothers
+import kmpgamemaster.composeapp.generated.resources.three_brothers_action
+import kmpgamemaster.composeapp.generated.resources.three_brothers_action_desc
 import kmpgamemaster.composeapp.generated.resources.traitor
+import kmpgamemaster.composeapp.generated.resources.traitor_action
+import kmpgamemaster.composeapp.generated.resources.traitor_action_desc
 import kmpgamemaster.composeapp.generated.resources.two_sisters
+import kmpgamemaster.composeapp.generated.resources.two_sisters_action
+import kmpgamemaster.composeapp.generated.resources.two_sisters_action_desc
 import kmpgamemaster.composeapp.generated.resources.village_elder
+import kmpgamemaster.composeapp.generated.resources.village_elder_action
+import kmpgamemaster.composeapp.generated.resources.village_elder_action_2
+import kmpgamemaster.composeapp.generated.resources.village_elder_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.village_elder_action_desc
 import kmpgamemaster.composeapp.generated.resources.white_soothsayer
+import kmpgamemaster.composeapp.generated.resources.white_soothsayer_action
+import kmpgamemaster.composeapp.generated.resources.white_soothsayer_action_desc
 import kmpgamemaster.composeapp.generated.resources.white_wolf
+import kmpgamemaster.composeapp.generated.resources.white_wolf_action
+import kmpgamemaster.composeapp.generated.resources.white_wolf_action_2
+import kmpgamemaster.composeapp.generated.resources.white_wolf_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.white_wolf_action_desc
 import kmpgamemaster.composeapp.generated.resources.wild_kid
+import kmpgamemaster.composeapp.generated.resources.wild_kid_action
+import kmpgamemaster.composeapp.generated.resources.wild_kid_action_2
+import kmpgamemaster.composeapp.generated.resources.wild_kid_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.wild_kid_action_desc
 import kmpgamemaster.composeapp.generated.resources.wizard
+import kmpgamemaster.composeapp.generated.resources.wizard_action
+import kmpgamemaster.composeapp.generated.resources.wizard_action_desc
 import kmpgamemaster.composeapp.generated.resources.wolf
+import kmpgamemaster.composeapp.generated.resources.wolf_action
+import kmpgamemaster.composeapp.generated.resources.wolf_action_desc
 import kmpgamemaster.composeapp.generated.resources.wolf_berserk
+import kmpgamemaster.composeapp.generated.resources.wolf_berserk_action
+import kmpgamemaster.composeapp.generated.resources.wolf_berserk_action_2
+import kmpgamemaster.composeapp.generated.resources.wolf_berserk_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.wolf_berserk_action_desc
 import kmpgamemaster.composeapp.generated.resources.wolf_dog
+import kmpgamemaster.composeapp.generated.resources.wolf_dog_action
+import kmpgamemaster.composeapp.generated.resources.wolf_dog_action_desc
 import kmpgamemaster.composeapp.generated.resources.wolf_fan
+import kmpgamemaster.composeapp.generated.resources.wolf_fan_action
+import kmpgamemaster.composeapp.generated.resources.wolf_fan_action_2
+import kmpgamemaster.composeapp.generated.resources.wolf_fan_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.wolf_fan_action_desc
 import kmpgamemaster.composeapp.generated.resources.wolf_kitten
+import kmpgamemaster.composeapp.generated.resources.wolf_kitten_action
+import kmpgamemaster.composeapp.generated.resources.wolf_kitten_action_2
+import kmpgamemaster.composeapp.generated.resources.wolf_kitten_action_2_desc
+import kmpgamemaster.composeapp.generated.resources.wolf_kitten_action_desc
 import org.frgrz.kmpgamemaster.data.entities.WGRoleDBEntity
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.PlaysWith
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleFilter
@@ -132,7 +272,7 @@ class WGRoleModelMapper {
             WGRole.LITTLE_GIRL,
             WGRole.MARSHALL,
             WGRole.MOON_SON,
-            WGRole.NOCTAMBULIST,
+            WGRole.NOCTAMBUL,
             WGRole.OLD_KNIGHT,
             WGRole.PEASANT,
             WGRole.PRIEST,
@@ -196,7 +336,7 @@ class WGRoleModelMapper {
             WGRole.LITTLE_GIRL,
             WGRole.MARSHALL,
             WGRole.MOON_SON,
-            WGRole.NOCTAMBULIST,
+            WGRole.NOCTAMBUL,
             WGRole.OLD_KNIGHT,
             WGRole.PEASANT,
             WGRole.PRIEST,
@@ -323,7 +463,7 @@ class WGRoleModelMapper {
             WGRole.LITTLE_GIRL,
             WGRole.MARSHALL,
             WGRole.MOON_SON,
-            WGRole.NOCTAMBULIST,
+            WGRole.NOCTAMBUL,
             WGRole.OLD_KNIGHT,
             WGRole.PEASANT,
             WGRole.PRIEST,
@@ -378,7 +518,7 @@ class WGRoleModelMapper {
             WGRole.MARSHALL -> Res.string.marshall
             WGRole.MAYOR -> Res.string.mayor
             WGRole.MOON_SON -> Res.string.moon_son
-            WGRole.NOCTAMBULIST -> Res.string.sleep_walker
+            WGRole.NOCTAMBUL -> Res.string.sleep_walker
             WGRole.OLD_KNIGHT -> Res.string.old_knight
             WGRole.PEASANT -> Res.string.peasant
             WGRole.PIED_PIPER -> Res.string.pied_piper
@@ -411,8 +551,8 @@ class WGRoleModelMapper {
             WGRole.LITTLE_GIRL -> {
                 actions.add(
                     WGRoleAction(
-                        "Espionnez les loups",
-                        "Espionne les loups pendant la nuit. Cependant si elle sera la victime des loups.",
+                        Res.string.little_girl_action,
+                        Res.string.little_girl_action_desc,
                         WGRoleActionType.SPY,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
@@ -422,8 +562,8 @@ class WGRoleModelMapper {
             WGRole.WOLF -> {
                 actions.add(
                     WGRoleAction(
-                        "Tuez les villageois",
-                        "Chaque nuit décidez d\'une victime à abattre avec les autres loups",
+                        Res.string.wolf_action,
+                        Res.string.wolf_action_desc,
                         WGRoleActionType.KILL,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
@@ -433,16 +573,16 @@ class WGRoleModelMapper {
             WGRole.WHITE_WOLF -> {
                 actions.add(
                     WGRoleAction(
-                        "Tuez les villageois",
-                        "Chaque nuit décidez d\'une victime à abattre avec les autres loups",
+                        Res.string.white_wolf_action,
+                        Res.string.white_wolf_action_desc,
                         WGRoleActionType.KILL,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
                 )
                 actions.add(
                     WGRoleAction(
-                        "Tuez les loups",
-                        "Vous gagnez seul(e), une nuit sur 2 sacrifiez secretement un autre loup",
+                        Res.string.white_wolf_action_2,
+                        Res.string.white_wolf_action_2_desc,
                         WGRoleActionType.KILL,
                         WGRoleActionFrequency.EVERY_TWO_NIGHTS
                     )
@@ -452,8 +592,8 @@ class WGRoleModelMapper {
             WGRole.BIG_BAD_WOLF -> {
                 actions.add(
                     WGRoleAction(
-                        "Tuez les villageois",
-                        "Chaque nuit décidez d\'une victime à abattre avec les autres loups",
+                        Res.string.big_bad_wolf_action,
+                        Res.string.big_bad_wolf_action_desc,
                         WGRoleActionType.KILL,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
@@ -461,8 +601,8 @@ class WGRoleModelMapper {
 
                 actions.add(
                     WGRoleAction(
-                        "Tuez un villageois supplémentaire",
-                        "Tant qu'aucun loup n'est mort vous tuez un villageois",
+                        Res.string.big_bad_wolf_action_2,
+                        Res.string.big_bad_wolf_action_2_desc,
                         WGRoleActionType.KILL,
                         WGRoleActionFrequency.EVERY_NIGHT,
                         WGRoleActionCondition.IF_NO_WOLF_DEAD
@@ -473,16 +613,16 @@ class WGRoleModelMapper {
             WGRole.BLACK_WOLF -> {
                 actions.add(
                     WGRoleAction(
-                        "Tuez les villageois",
-                        "Chaque nuit décidez d\'une victime à abattre avec les autres loups",
+                        Res.string.black_wolf_action,
+                        Res.string.black_wolf_action_desc,
                         WGRoleActionType.KILL,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
                 )
                 actions.add(
                     WGRoleAction(
-                        "Infectez un villageois",
-                        "Une fois par partie vous pouvez infecter un villageois sans qu'il le sache et qui deviendra un loup la nuit suivante",
+                        Res.string.black_wolf_action_2,
+                        Res.string.black_wolf_action_2_desc,
                         WGRoleActionType.INFECT,
                         WGRoleActionFrequency.ONLY_ONCE_PER_GAME
                     )
@@ -492,8 +632,8 @@ class WGRoleModelMapper {
             WGRole.BLUE_WOLF -> {
                 actions.add(
                     WGRoleAction(
-                        "Tuez les villageois",
-                        "Chaque nuit décidez d\'une victime à abattre avec les autres loups",
+                        Res.string.blue_wolf_action,
+                        Res.string.blue_wolf_action_desc,
                         WGRoleActionType.KILL,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
@@ -501,16 +641,16 @@ class WGRoleModelMapper {
 
                 actions.add(
                     WGRoleAction(
-                        "Decouvrez les roles",
-                        "Chaque nuit découvrez le role secret d\'un des joueurs",
+                        Res.string.blue_wolf_action_2,
+                        Res.string.blue_wolf_action_2_desc,
                         WGRoleActionType.SPY,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
                 )
                 actions.add(
                     WGRoleAction(
-                        "Immunisé de la voyante",
-                        "La voyante ne pourra pas découvrir votre rôle, un faux rôle lui sera révélé si elle regarde votre carte",
+                        Res.string.blue_wolf_action_3,
+                        Res.string.blue_wolf_action_3_desc,
                         WGRoleActionType.CANCEL_ABILITY,
                         WGRoleActionFrequency.EVERY_NIGHT,
                         cancels = WGRoleActionCancel.SEER
@@ -521,16 +661,16 @@ class WGRoleModelMapper {
             WGRole.WOLF_KITTEN -> {
                 actions.add(
                     WGRoleAction(
-                        "Tuez les villageois",
-                        "Chaque nuit décidez d\'une victime à abattre avec les autres loups",
+                        Res.string.wolf_kitten_action,
+                        Res.string.wolf_kitten_action_desc,
                         WGRoleActionType.KILL,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
                 )
                 actions.add(
                     WGRoleAction(
-                        "Infectez un villageois",
-                        "A votre mort le villageois désigné pendant le tour des loups deviendra un loup la nuit suivante",
+                        Res.string.wolf_kitten_action_2,
+                        Res.string.wolf_kitten_action_2_desc,
                         WGRoleActionType.INFECT,
                         WGRoleActionFrequency.WHEN_KILLED
                     )
@@ -540,16 +680,16 @@ class WGRoleModelMapper {
             WGRole.WOLF_BERSERK -> {
                 actions.add(
                     WGRoleAction(
-                        "Tuez les villageois",
-                        "Chaque nuit décidez d\'une victime à abattre avec les autres loups",
+                        Res.string.wolf_berserk_action,
+                        Res.string.wolf_berserk_action_desc,
                         WGRoleActionType.KILL,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
                 )
                 actions.add(
                     WGRoleAction(
-                        "Enragez les loups",
-                        "Une fois par partie, si la victime des loups est protégée par d\'autre(s) joueur(s), ce(s) joueurs mourront aussi",
+                        Res.string.wolf_berserk_action_2,
+                        Res.string.wolf_berserk_action_2_desc,
                         WGRoleActionType.KILL_PROTECTOR,
                         WGRoleActionFrequency.ONLY_ONCE_PER_GAME
                     )
@@ -559,16 +699,16 @@ class WGRoleModelMapper {
             WGRole.WOLF_FAN -> {
                 actions.add(
                     WGRoleAction(
-                        "Devenez un loup",
-                        "Si les loups essayent de vous tuer vous deviendrez un des leurs",
+                        Res.string.wolf_fan_action,
+                        Res.string.wolf_fan_action_desc,
                         WGRoleActionType.TRANSFORM,
                         WGRoleActionFrequency.WHEN_KILLED
                     )
                 )
                 actions.add(
                     WGRoleAction(
-                        "Immunisé du Gourou",
-                        "Le Gourou ne peut pas vous convertir à sa secte",
+                        Res.string.wolf_fan_action_2,
+                        Res.string.wolf_fan_action_2_desc,
                         WGRoleActionType.CANCEL_ABILITY,
                         WGRoleActionFrequency.EVERY_NIGHT,
                         cancels = WGRoleActionCancel.GURU
@@ -579,8 +719,8 @@ class WGRoleModelMapper {
             WGRole.SEER -> {
                 actions.add(
                     WGRoleAction(
-                        "Decouvrez les roles",
-                        "Chaque nuit découvrez le role secret d\'un des joueurs",
+                        Res.string.seer_action,
+                        Res.string.seer_action_desc,
                         WGRoleActionType.SPY,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
@@ -590,16 +730,16 @@ class WGRoleModelMapper {
             WGRole.SORCERER -> {
                 actions.add(
                     WGRoleAction(
-                        "Potion de résurection",
-                        "Utilisez cette potion pour réanimer un joueur tué pendant la nuit",
+                        Res.string.sorcerer_action,
+                        Res.string.sorcerer_action_desc,
                         WGRoleActionType.REVIVE,
                         WGRoleActionFrequency.ONLY_ONCE_PER_GAME
                     )
                 )
                 actions.add(
                     WGRoleAction(
-                        "Potion de mort",
-                        "Utilisez cette potion pour tuer un joueur pendant la nuit, les deux potions ne peuvent pas être utilisées la même nuit.",
+                        Res.string.sorcerer_action_2,
+                        Res.string.sorcerer_action_2_desc,
                         WGRoleActionType.KILL,
                         WGRoleActionFrequency.ONLY_ONCE_PER_GAME
                     )
@@ -609,8 +749,8 @@ class WGRoleModelMapper {
             WGRole.ASSASSIN -> {
                 actions.add(
                     WGRoleAction(
-                        "Assassinez les villageois",
-                        "Chaque nuit décidez d\'une victime à assassiner, vous gagnez si vous êtes le dernier en vie",
+                        Res.string.assassin_action,
+                        Res.string.assassin_action_desc,
                         WGRoleActionType.KILL,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
@@ -618,8 +758,8 @@ class WGRoleModelMapper {
 
                 actions.add(
                     WGRoleAction(
-                        "Immunise des loups",
-                        "Les loups ne peuvent pas vous tuer.",
+                        Res.string.assassin_action_2,
+                        Res.string.assassin_action_2_desc,
                         WGRoleActionType.CANCEL_ABILITY,
                         WGRoleActionFrequency.EVERY_NIGHT,
                         cancels = WGRoleActionCancel.WOLVES
@@ -630,8 +770,8 @@ class WGRoleModelMapper {
             WGRole.CUPID -> {
                 actions.add(
                     WGRoleAction(
-                        "Creez un couple",
-                        "Le destins du couple sera lié, si l\'un meurs l\'autre aussi. Si un des amoureux est un loup il doit garder son amoureux en vie",
+                        Res.string.cupid_action,
+                        Res.string.cupid_action_desc,
                         WGRoleActionType.BOUND_FATE,
                         WGRoleActionFrequency.FIRST_NIGHT
                     )
@@ -641,8 +781,8 @@ class WGRoleModelMapper {
             WGRole.PRIEST -> {
                 actions.add(
                     WGRoleAction(
-                        "Exorcisme",
-                        "Vous pouvez, une fois par partie lancer de l'eau bénite sur un autre joueur. Si c'est un loup il meurt, sinon vous mourrez",
+                        Res.string.priest_action,
+                        Res.string.priest_action_desc,
                         WGRoleActionType.KILL,
                         WGRoleActionFrequency.ONLY_ONCE_PER_GAME
                     )
@@ -652,8 +792,8 @@ class WGRoleModelMapper {
             WGRole.IDIOT -> {
                 actions.add(
                     WGRoleAction(
-                        "Immunisé du vote",
-                        "Si le village vote contre vous, vous restez en vie mais perdez votre droit de vote.",
+                        Res.string.idiot_action,
+                        Res.string.idiot_action_desc,
                         WGRoleActionType.VOTE_CANCEL,
                         WGRoleActionFrequency.WHEN_VOTED,
                         cancels = WGRoleActionCancel.VOTE
@@ -664,16 +804,16 @@ class WGRoleModelMapper {
             WGRole.GUARD -> {
                 actions.add(
                     WGRoleAction(
-                        "Protegez un joueur",
-                        "Choisissez un joueur à proteger, vous serez attaqué à sa place",
+                        Res.string.guard_action,
+                        Res.string.guard_action_desc,
                         WGRoleActionType.KILL_PROTECTOR,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
                 )
                 actions.add(
                     WGRoleAction(
-                        "Resistez à une attaque",
-                        "Vous pouvez resister à une attaque, la deuxième vous sera fatale",
+                        Res.string.guard_action_2,
+                        Res.string.guard_action_2_desc,
                         WGRoleActionType.KILL_PROTECTOR,
                         WGRoleActionFrequency.ONLY_ONCE_PER_GAME
                     )
@@ -683,8 +823,8 @@ class WGRoleModelMapper {
             WGRole.THIEF -> {
                 actions.add(
                     WGRoleAction(
-                        "Choisissez votre role",
-                        "Vous serez présenté 2 rôles en début de partie, vous pourrez choisir votre role pour le reste de la partie",
+                        Res.string.thief_action,
+                        Res.string.thief_action_desc,
                         WGRoleActionType.TRANSFORM,
                         WGRoleActionFrequency.START_GAME
                     )
@@ -694,8 +834,8 @@ class WGRoleModelMapper {
             WGRole.ANGEL -> {
                 actions.add(
                     WGRoleAction(
-                        "First Blood",
-                        "Faites vous éliminer au premier tour et vous gagnez la partie.",
+                        Res.string.angel_action,
+                        Res.string.angel_action_desc,
                         WGRoleActionType.VOTED,
                         WGRoleActionFrequency.WHEN_VOTED,
                         WGRoleActionCondition.IF_FIRST_VOTE
@@ -707,8 +847,8 @@ class WGRoleModelMapper {
             WGRole.WOLF_DOG -> {
                 actions.add(
                     WGRoleAction(
-                        "Choisissez votre camp",
-                        "Lors de la première nuit vous pouvez répondre à l'appel des loups et vous devenez loup. Sinon vous restez villageois",
+                        Res.string.wolf_dog_action,
+                        Res.string.wolf_dog_action_desc,
                         WGRoleActionType.TRANSFORM,
                         WGRoleActionFrequency.FIRST_NIGHT
                     )
@@ -718,8 +858,8 @@ class WGRoleModelMapper {
             WGRole.COMEDIAN -> {
                 actions.add(
                     WGRoleAction(
-                        "Choisissez votre rôle",
-                        "En début de partie trois rôle supplémentaires seront tirés, connus de tous. Chaque nuit vous pourrez choisir d'utiliser un de ces rôles, qui sera ensuite retiré des choix disponibles",
+                        Res.string.comedian_action,
+                        Res.string.comedian_action_desc,
                         WGRoleActionType.TRANSFORM,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
@@ -730,8 +870,8 @@ class WGRoleModelMapper {
             WGRole.PIED_PIPER -> {
                 actions.add(
                     WGRoleAction(
-                        "Envoutez le village",
-                        "Chaque nuit vous envoutez 2 personnes, vous gagnez lorsque tout le village est envouté.",
+                        Res.string.pied_piper_action,
+                        Res.string.pied_piper_action_desc,
                         WGRoleActionType.INFECT,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
@@ -741,8 +881,8 @@ class WGRoleModelMapper {
             WGRole.VILLAGE_ELDER -> {
                 actions.add(
                     WGRoleAction(
-                        "Resistez à une attaque",
-                        "Vous pouvez resister à une attaque des loups",
+                        Res.string.village_elder_action,
+                        Res.string.village_elder_action_desc,
                         WGRoleActionType.KILL_PROTECTOR,
                         WGRoleActionFrequency.ONLY_ONCE_PER_GAME
                     )
@@ -750,8 +890,8 @@ class WGRoleModelMapper {
 
                 actions.add(
                     WGRoleAction(
-                        "Mysticisme",
-                        "Si le village décide de vous voter, tous les villageois perdent leurs capacités",
+                        Res.string.village_elder_action_2,
+                        Res.string.village_elder_action_2_desc,
                         WGRoleActionType.CANCEL_ABILITY,
                         WGRoleActionFrequency.WHEN_VOTED,
                         cancels = WGRoleActionCancel.VILLAGERS
@@ -762,8 +902,8 @@ class WGRoleModelMapper {
             WGRole.PEASANT -> {
                 actions.add(
                     WGRoleAction(
-                        "Rien",
-                        "Vous n'avez pas de capacités, utilisez vos capacités d'enquêteur car vous n'aurez que ça",
+                        Res.string.peasant_action,
+                        Res.string.peasant_action_desc,
                         WGRoleActionType.NONE,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
@@ -773,8 +913,8 @@ class WGRoleModelMapper {
             WGRole.TWO_SISTERS -> {
                 actions.add(
                     WGRoleAction(
-                        "Fraternité",
-                        "En début de partie les 2 soeurs se réveillent, et possèdent désormais une alliée sûre dans la partie",
+                        Res.string.two_sisters_action,
+                        Res.string.two_sisters_action_desc,
                         WGRoleActionType.TEAM,
                         WGRoleActionFrequency.FIRST_NIGHT
                     )
@@ -784,8 +924,8 @@ class WGRoleModelMapper {
             WGRole.THREE_BROTHERS -> {
                 actions.add(
                     WGRoleAction(
-                        "Fraternité",
-                        "En début de partie les 3 frêres se réveillent, et possèdent désormais des alliés sûrs dans la partie",
+                        Res.string.three_brothers_action,
+                        Res.string.three_brothers_action_desc,
                         WGRoleActionType.TEAM,
                         WGRoleActionFrequency.FIRST_NIGHT
                     )
@@ -795,8 +935,8 @@ class WGRoleModelMapper {
             WGRole.MAYOR -> {
                 actions.add(
                     WGRoleAction(
-                        "Double Vote",
-                        "En début de partie le maire est élu par le village, son vôte compte double. Il tranche en cas d'égalité",
+                        Res.string.mayor_action,
+                        Res.string.mayor_action_desc,
                         WGRoleActionType.DOUBLE_VOTE,
                         WGRoleActionFrequency.START_GAME
                     )
@@ -807,8 +947,8 @@ class WGRoleModelMapper {
             WGRole.ASTRONOMER -> {
                 actions.add(
                     WGRoleAction(
-                        "Nouvelle Lune",
-                        "Lorsque vous déclenchez la nouvelle lune les loups ne pourront pas se reveiller et utiliser leurs pouvoirs",
+                        Res.string.astronomer_action,
+                        Res.string.astronomer_action_desc,
                         WGRoleActionType.CANCEL_ABILITY,
                         WGRoleActionFrequency.ONLY_ONCE_PER_GAME,
                         cancels = WGRoleActionCancel.WOLVES
@@ -817,8 +957,8 @@ class WGRoleModelMapper {
 
                 actions.add(
                     WGRoleAction(
-                        "Pluie de méteorites",
-                        "Lorsque vous déclenchez la pluie de météorites un joueur aléatoire sera tué, si c'est un villageois vous mourrez aussi.",
+                        Res.string.astronomer_action_2,
+                        Res.string.astronomer_action_2_desc,
                         WGRoleActionType.KILL,
                         WGRoleActionFrequency.ONLY_ONCE_PER_GAME
                     )
@@ -828,8 +968,8 @@ class WGRoleModelMapper {
             WGRole.DEFLECTOR -> {
                 actions.add(
                     WGRoleAction(
-                        "Redirection",
-                        "Pendant la nuit, choisissez un joueur qui sera protégé, et un autre qui sera attaqué à la place. Vous pouvez rediriger jusqu'à 2 attaques. Après une attaque réussie vous ne pouvez pas rediriger d'attaque la nuit suivante.",
+                        Res.string.deflector_action,
+                        Res.string.deflector_action_desc,
                         WGRoleActionType.REDIRECT_ATTACK,
                         WGRoleActionFrequency.TWICE_PER_GAME,
                         WGRoleActionCondition.IF_NOT_SUCCESSFUL_NIGHT_BEFORE
@@ -840,8 +980,8 @@ class WGRoleModelMapper {
             WGRole.BULLY -> {
                 actions.add(
                     WGRoleAction(
-                        "Lance Pierre",
-                        "Vous lancez un pierre et assomez un joueur, celui-ci ne restera assomé la journée et nuit suivant l'empechant de jouer son rôles et participer au vote",
+                        Res.string.bully_action,
+                        Res.string.bully_action_desc,
                         WGRoleActionType.CANCEL_ABILITY,
                         WGRoleActionFrequency.EVERY_NIGHT,
                         cancels = WGRoleActionCancel.ANY
@@ -850,8 +990,8 @@ class WGRoleModelMapper {
 
                 actions.add(
                     WGRoleAction(
-                        "Lancé Mortel",
-                        "Un deuxième lancé sur un joueur déjà assomé lui sera mortel. Vous ne pouvez tuer que 2 joueurs par partie.",
+                        Res.string.bully_action_2,
+                        Res.string.bully_action_2_desc,
                         WGRoleActionType.KILL,
                         WGRoleActionFrequency.TWICE_PER_GAME,
                     )
@@ -861,28 +1001,29 @@ class WGRoleModelMapper {
             WGRole.DEMONIAC_SOUL -> {
                 actions.add(
                     WGRoleAction(
-                        "Usurpateur",
-                        "Chaque nuit vous aurez un villageois attribué, et jouerez son rôle à sa place",
+                        Res.string.demoniac_soul_action,
+                        Res.string.demoniac_soul_action_desc,
                         WGRoleActionType.TRANSFORM,
                         WGRoleActionFrequency.EVERY_NIGHT,
                     )
                 )
 
-                actions.add(
+                //TODO Fix missing resources
+                /*actions.add(
                     WGRoleAction(
                         "Destins Liés",
                         "Si le joueur dont vous usurpez l'identité meurs pendant la nuit, vous mourrez aussi.",
                         WGRoleActionType.TRANSFORM,
                         WGRoleActionFrequency.WHEN_DESIGNATED_PLAYER_DIES,
                     )
-                )
+                )*/
             }
 
             WGRole.HITMAN -> {
                 actions.add(
                     WGRoleAction(
-                        "Diffamation",
-                        "Un joueur vous sera attribué en début de partie, lorsque ce joueur meurt par le vote du village vous gagnez. Si ce joueur meurt autrement vous gagnez avec le village",
+                        Res.string.hitman_action,
+                        Res.string.hitman_action_desc,
                         WGRoleActionType.TRANSFORM,
                         WGRoleActionFrequency.WHEN_DESIGNATED_PLAYER_DIES,
                     )
@@ -892,8 +1033,8 @@ class WGRoleModelMapper {
             WGRole.GURU -> {
                 actions.add(
                     WGRoleAction(
-                        "Convertissez",
-                        "Chaque nuit vous convertissez un membre à votre secte. Lorsque plus la moitié des joueurs appartiennent à la secte vous gagnez.",
+                        Res.string.guru_action,
+                        Res.string.guru_action_desc,
                         WGRoleActionType.INFECT,
                         WGRoleActionFrequency.EVERY_NIGHT,
                     )
@@ -903,8 +1044,8 @@ class WGRoleModelMapper {
             WGRole.MARSHALL -> {
                 actions.add(
                     WGRoleAction(
-                        "Ronde de nuit",
-                        "La nuit vous surveillez 2 joueurs, si l'un d'entre eux meurs, vous découvrez deux suspects.",
+                        Res.string.marshall_action,
+                        Res.string.marshall_action_desc,
                         WGRoleActionType.SPY,
                         WGRoleActionFrequency.EVERY_NIGHT,
                     )
@@ -914,8 +1055,8 @@ class WGRoleModelMapper {
             WGRole.WIZARD -> {
                 actions.add(
                     WGRoleAction(
-                        "Prestidigitation",
-                        "Selectionnez un rôle des joueurs morts de la nuit que vous jouerez jusqu'à la nuit suivante.",
+                        Res.string.wizard_action,
+                        Res.string.wizard_action_desc,
                         WGRoleActionType.TRANSFORM,
                         WGRoleActionFrequency.EVERY_NIGHT,
                     )
@@ -925,8 +1066,8 @@ class WGRoleModelMapper {
             WGRole.HUNTER -> {
                 actions.add(
                     WGRoleAction(
-                        "Derniere Balle",
-                        "A votre mort vous tirez votre dernière balle sur un joueur.",
+                        Res.string.hunter_action,
+                        Res.string.hunter_action_desc,
                         WGRoleActionType.KILL_PROTECTOR,
                         WGRoleActionFrequency.WHEN_KILLED
                     )
@@ -936,8 +1077,8 @@ class WGRoleModelMapper {
             WGRole.WILD_KID -> {
                 actions.add(
                     WGRoleAction(
-                        "Mentor",
-                        "En début de partie vous choisirez un joueur sans qu'il le sache pour devenir votre tuteur.",
+                        Res.string.wild_kid_action,
+                        Res.string.wild_kid_action_desc,
                         WGRoleActionType.BOUND_FATE,
                         WGRoleActionFrequency.FIRST_NIGHT
                     )
@@ -945,8 +1086,8 @@ class WGRoleModelMapper {
 
                 actions.add(
                     WGRoleAction(
-                        "Mort du mentor",
-                        "A la mort de votre mentor vous vous échapez et devenez un loup.",
+                        Res.string.wild_kid_action_2,
+                        Res.string.wild_kid_action_2_desc,
                         WGRoleActionType.TRANSFORM,
                         WGRoleActionFrequency.WHEN_DESIGNATED_PLAYER_DIES
                     )
@@ -956,8 +1097,8 @@ class WGRoleModelMapper {
             WGRole.PYROMANIAC -> {
                 actions.add(
                     WGRoleAction(
-                        "Incedie",
-                        "Une fois par partie, vous pouvez mettre le feu à la maison d'un des joueurs. Ce joueur perd son pouvoir. Si ce joueur est la victime des loups il sera sauvé.",
+                        Res.string.pyramoniac_action,
+                        Res.string.pyramoniac_action_desc,
                         WGRoleActionType.TRANSFORM,
                         WGRoleActionFrequency.ONLY_ONCE_PER_GAME
                     )
@@ -965,11 +1106,11 @@ class WGRoleModelMapper {
             }
 
 
-            WGRole.NOCTAMBULIST -> {
+            WGRole.NOCTAMBUL -> {
                 actions.add(
                     WGRoleAction(
-                        "Soirée Pyjama",
-                        "Chaque soir le noctambule désigne un joueur chez qui il passe la soirée. S'il s'agit d'un villageois il annulera toute attaque sur lui. S'il s'agit d'un loup il mourra.",
+                        Res.string.sleep_walker_action,
+                        Res.string.sleep_walker_action_desc,
                         WGRoleActionType.KILL_PROTECTOR,
                         WGRoleActionFrequency.EVERY_NIGHT,
                         cancels = WGRoleActionCancel.WOLVES
@@ -980,8 +1121,8 @@ class WGRoleModelMapper {
             WGRole.MOON_SON -> {
                 actions.add(
                     WGRoleAction(
-                        "Nouvelle Lune",
-                        "La nuit suivant sa mort les loups ne se reveilleront pas et ne pourrons pas tuer.",
+                        Res.string.moon_son_action,
+                        Res.string.moon_son_action_desc,
                         WGRoleActionType.CANCEL_ABILITY,
                         WGRoleActionFrequency.WHEN_KILLED,
                         cancels = WGRoleActionCancel.WOLVES
@@ -992,8 +1133,8 @@ class WGRoleModelMapper {
             WGRole.BLACKSMITH -> {
                 actions.add(
                     WGRoleAction(
-                        "Bouclier",
-                        "Forge un bouclier qu'il pourra donner la nuit suivante à un joueur pour se protéger.",
+                        Res.string.blacksmith_action,
+                        Res.string.blacksmith_action_desc,
                         WGRoleActionType.KILL_PROTECTOR,
                         WGRoleActionFrequency.EVERY_TWO_NIGHTS,
                     )
@@ -1001,8 +1142,8 @@ class WGRoleModelMapper {
 
                 actions.add(
                     WGRoleAction(
-                        "Epée",
-                        "Forge une épée qu'il pourra donner la nuit suivante à un joueur pour attaquer",
+                        Res.string.blacksmith_action_2,
+                        Res.string.blacksmith_action_2_desc,
                         WGRoleActionType.KILL_PROTECTOR,
                         WGRoleActionFrequency.EVERY_TWO_NIGHTS,
                     )
@@ -1012,8 +1153,8 @@ class WGRoleModelMapper {
             WGRole.FOX -> {
                 actions.add(
                     WGRoleAction(
-                        "Odorat",
-                        "Chaque nuit peut renifler 3 joueurs, le renard perdra son odorat lorsque qu'aucun des 3 joueurs sentis n'est un loup.",
+                        Res.string.fox_action,
+                        Res.string.fox_action_desc,
                         WGRoleActionType.SPY,
                         WGRoleActionFrequency.UNTIL_FAIL,
                     )
@@ -1023,8 +1164,8 @@ class WGRoleModelMapper {
             WGRole.DUELISTS -> {
                 actions.add(
                     WGRoleAction(
-                        "Duel",
-                        "Au début de partie les duelistes prennent connaissance l'un de l'autre. Si le village gagne et que les deux sont encore en vie ils perdent tous les deux.",
+                        Res.string.duelists_action,
+                        Res.string.duelists_action_desc,
                         WGRoleActionType.BOUND_FATE,
                         WGRoleActionFrequency.START_GAME,
                     )
@@ -1034,8 +1175,8 @@ class WGRoleModelMapper {
             WGRole.OLD_KNIGHT -> {
                 actions.add(
                     WGRoleAction(
-                        "Tétanos",
-                        "S'il est attaqué par les loups il se défent avec son épée rouillée et donne le tétanos au premier loup à sa gauche. Le loup mourra la nuit suivante.",
+                        Res.string.old_knight_action,
+                        Res.string.old_knight_action_desc,
                         WGRoleActionType.KILL,
                         WGRoleActionFrequency.WHEN_KILLED,
                     )
@@ -1045,8 +1186,8 @@ class WGRoleModelMapper {
             WGRole.BEAR_HANDLER -> {
                 actions.add(
                     WGRoleAction(
-                        "Odorat",
-                        "L'ours va renifler les joueurs à sa gauche et à sa droite. S'il y a un loup autour de lui le village le saura.",
+                        Res.string.bear_handler_action,
+                        Res.string.bear_handler_action_desc,
                         WGRoleActionType.SPY,
                         WGRoleActionFrequency.EVERY_NIGHT,
                     )
@@ -1056,8 +1197,8 @@ class WGRoleModelMapper {
             WGRole.GENTLEMAN -> {
                 actions.add(
                     WGRoleAction(
-                        "Immunisé des potions",
-                        "Le gentleman ne boit pas les potions bizarre",
+                        Res.string.gentleman_action,
+                        Res.string.gentleman_action_desc,
                         WGRoleActionType.KILL_PROTECTOR,
                         WGRoleActionFrequency.EVERY_NIGHT,
                         cancels = WGRoleActionCancel.POTIONS
@@ -1066,8 +1207,8 @@ class WGRoleModelMapper {
 
                 actions.add(
                     WGRoleAction(
-                        "Fuckboy",
-                        "Le gentleman devient un loup s'il est désigné par Cupidon",
+                        Res.string.gentleman_action_2,
+                        Res.string.gentleman_action_2_desc,
                         WGRoleActionType.TRANSFORM,
                         WGRoleActionFrequency.START_GAME,
                     )
@@ -1075,8 +1216,8 @@ class WGRoleModelMapper {
 
                 actions.add(
                     WGRoleAction(
-                        "Galant",
-                        "Le gentleman ne vote pas contre les femmes",
+                        Res.string.gentleman_action_3,
+                        Res.string.gentleman_action_3_desc,
                         WGRoleActionType.VOTE_PROTECTION,
                         WGRoleActionFrequency.EVERY_NIGHT,
                     )
@@ -1086,8 +1227,8 @@ class WGRoleModelMapper {
             WGRole.RANGER -> {
                 actions.add(
                     WGRoleAction(
-                        "Piège",
-                        "Le ranger peut placer un piège devant la porte d'un joueur, si ce dernier est attaqué par les loups l'un d'eux mourra",
+                        Res.string.ranger_action,
+                        Res.string.ranger_action_desc,
                         WGRoleActionType.KILL_PROTECTOR,
                         WGRoleActionFrequency.EVERY_NIGHT,
                     )
@@ -1097,8 +1238,8 @@ class WGRoleModelMapper {
             WGRole.TRAITOR -> {
                 actions.add(
                     WGRoleAction(
-                        "Opportuniste",
-                        "Lorsque le dernier loup meurt il deviens loup.",
+                        Res.string.traitor_action,
+                        Res.string.traitor_action_desc,
                         WGRoleActionType.TRANSFORM,
                         WGRoleActionFrequency.WHEN_DESIGNATED_PLAYER_DIES,
                     )
@@ -1108,24 +1249,24 @@ class WGRoleModelMapper {
             WGRole.DRUGGIST -> {
                 actions.add(
                     WGRoleAction(
-                        "Potion de confusion",
-                        "Le joueur désigné ne pourra pas voter au prochain vote",
+                        Res.string.druggist_action,
+                        Res.string.druggist_action_desc,
                         WGRoleActionType.VOTE_CANCEL,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
                 )
                 actions.add(
                     WGRoleAction(
-                        "Potion de charisme",
-                        "Le joueur désigné aura un vote double au prochain vote",
+                        Res.string.druggist_action_2,
+                        Res.string.druggist_action_2_desc,
                         WGRoleActionType.DOUBLE_VOTE,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
                 )
                 actions.add(
                     WGRoleAction(
-                        "Trouve la voyante",
-                        "S'il trouve la voyante, il pourra lui recharger ses potions",
+                        Res.string.druggist_action_3,
+                        Res.string.druggist_action_3_desc,
                         WGRoleActionType.REFILL_POTION,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
@@ -1135,8 +1276,8 @@ class WGRoleModelMapper {
             WGRole.WHITE_SOOTHSAYER -> {
                 actions.add(
                     WGRoleAction(
-                        "Observateur",
-                        "Chaque nuit il connait la victime des loups.",
+                        Res.string.white_soothsayer_action,
+                        Res.string.white_soothsayer_action_desc,
                         WGRoleActionType.SPY,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )
@@ -1147,8 +1288,8 @@ class WGRoleModelMapper {
             WGRole.CASSANDRA -> {
                 actions.add(
                     WGRoleAction(
-                        "Dilemne",
-                        "Chaque nuit choisit 3 joueurs. Parmis un de ces joueurs doit accepter de se sacrifier sinon les 3 mourront.",
+                        Res.string.cassandre_action,
+                        Res.string.cassandre_action_desc,
                         WGRoleActionType.KILL,
                         WGRoleActionFrequency.EVERY_NIGHT
                     )

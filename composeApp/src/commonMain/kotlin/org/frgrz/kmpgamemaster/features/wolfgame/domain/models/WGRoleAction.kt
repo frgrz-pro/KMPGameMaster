@@ -1,8 +1,10 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.domain.models
 
+import org.jetbrains.compose.resources.StringResource
+
 data class WGRoleAction(
-    val name: String,//StringResource,
-    val desc: String,//StringResource
+    val name: StringResource,
+    val desc: StringResource,
     val type: WGRoleActionType,
     val frequency: WGRoleActionFrequency,
     val condition: WGRoleActionCondition = WGRoleActionCondition.NONE,

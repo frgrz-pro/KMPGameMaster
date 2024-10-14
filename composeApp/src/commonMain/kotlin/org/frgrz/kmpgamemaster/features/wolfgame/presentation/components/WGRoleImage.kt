@@ -147,7 +147,7 @@ fun WGRoleImageMedium(role: WGRole, modifier: Modifier) {
         WGRole.IDIOT -> Res.drawable.idiot_medium
         WGRole.MARSHALL -> Res.drawable.marshall_medium
         WGRole.MOON_SON -> Res.drawable.moon_son_medium
-        WGRole.NOCTAMBULIST -> Res.drawable.noctambulist_medium
+        WGRole.NOCTAMBUL -> Res.drawable.noctambulist_medium
         WGRole.OLD_KNIGHT -> Res.drawable.old_knight_medium
         WGRole.PIED_PIPER -> Res.drawable.pied_piper_medium
         WGRole.PRIEST -> Res.drawable.priest_medium
@@ -213,7 +213,7 @@ fun WGRoleImageLarge(role: WGRole, modifier: Modifier) {
         WGRole.IDIOT -> Res.drawable.idiot_large
         WGRole.MARSHALL -> Res.drawable.marshall_large
         WGRole.MOON_SON -> Res.drawable.moon_son_large
-        WGRole.NOCTAMBULIST -> Res.drawable.noctambulist_large
+        WGRole.NOCTAMBUL -> Res.drawable.noctambulist_large
         WGRole.OLD_KNIGHT -> Res.drawable.old_knight_large
         WGRole.PIED_PIPER -> Res.drawable.pied_piper_large
         WGRole.PRIEST -> Res.drawable.priest_large

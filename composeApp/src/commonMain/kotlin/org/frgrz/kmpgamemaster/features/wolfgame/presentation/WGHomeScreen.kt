@@ -28,7 +28,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -39,10 +38,15 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import kmpgamemaster.composeapp.generated.resources.Res
+import kmpgamemaster.composeapp.generated.resources.more_roles
+import kmpgamemaster.composeapp.generated.resources.start_game
 import kotlinx.coroutines.launch
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleCardSmall
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleExtrasCardSmall
 import org.frgrz.kmpgamemaster.material.components.icons.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.Remove
+import org.jetbrains.compose.resources.stringResource
 
 
 class WGHomeScreen : Screen {
@@ -53,7 +57,6 @@ class WGHomeScreen : Screen {
 
         val navigator = LocalNavigator.currentOrThrow
         val viewModel = getScreenModel<WGHomeViewModel>()
-        val selectedRoles by viewModel.selectedRoles
         val snackbarHostState = remember { SnackbarHostState() }
         val scope = rememberCoroutineScope()
 
@@ -133,25 +136,38 @@ class WGHomeScreen : Screen {
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    selectedRoles.DisplayResult(
+                    viewModel.selectedRoles.value.DisplayResult(
                         onLoading = { /*TODO*/ },
                         onError = { /*TODO*/ },
-                        onSuccess = {
-                            if (it.isNotEmpty()) {
+                        onSuccess = { items ->
+                            if (items.isNotEmpty()) {
+
+                                val exceedDisplayableLimit = items.size > 15
+                                val extraItems = items.size - 14
+                                val displayedItems = if (exceedDisplayableLimit) {
+                                    items.subList(0, 13)
+                                } else {
+                                    items
+                                }
+
                                 LazyVerticalGrid(
                                     columns = GridCells.Fixed(5),
                                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                                     verticalArrangement = Arrangement.spacedBy(4.dp),
                                     modifier = Modifier.padding(12.dp)
                                 ) {
-                                    itemsIndexed(it) { _, item ->
-                                        WGRoleCardSmall(item.role) {
-                                            //TODO Replace with tooltip
-                                            scope.launch {
-                                                snackbarHostState.showSnackbar(
-                                                    message = "${item.role.name} : ${item.isSelected}",
-                                                    duration = SnackbarDuration.Short
-                                                )
+                                    itemsIndexed(displayedItems) { index, item ->
+                                        if (extraItems > 0 && index == displayedItems.lastIndex) {
+                                            WGRoleExtrasCardSmall(extraItems)
+                                        } else {
+                                            WGRoleCardSmall(item.role) {
+                                                //TODO Replace with tooltip
+                                                scope.launch {
+                                                    snackbarHostState.showSnackbar(
+                                                        message = "${item.role.name} : ${item.isSelected}",
+                                                        duration = SnackbarDuration.Short
+                                                    )
+                                                }
                                             }
                                         }
                                     }
@@ -164,7 +180,7 @@ class WGHomeScreen : Screen {
                         onClick = { navigator.push(WGRolesScreen()) },
                     ) {
                         Text(
-                            text = "Plus de rôles",
+                            text = stringResource(Res.string.more_roles),
                             modifier = Modifier.padding(start = 8.dp, end = 8.dp),
                             style = MaterialTheme.typography.labelLarge
                         )
@@ -178,7 +194,7 @@ class WGHomeScreen : Screen {
                             .padding(12.dp)
                     ) {
                         Text(
-                            text = "Lancer la partie",
+                            text = stringResource(Res.string.start_game),
                             style = MaterialTheme.typography.titleMedium
                         )
                     }

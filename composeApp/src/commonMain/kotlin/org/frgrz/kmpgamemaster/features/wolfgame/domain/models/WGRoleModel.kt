@@ -69,7 +69,7 @@ enum class WGRole {
     MARSHALL,
     MAYOR,
     MOON_SON,
-    NOCTAMBULIST, //TODO Rename SLEEP_WALKER
+    NOCTAMBUL, //TODO Rename SLEEP_WALKER
     OLD_KNIGHT,
     PEASANT,
     PIED_PIPER,
