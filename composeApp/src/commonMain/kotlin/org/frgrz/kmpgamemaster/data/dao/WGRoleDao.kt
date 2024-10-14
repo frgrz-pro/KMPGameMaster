@@ -48,5 +48,5 @@ class WGRoleDaoImpl(private val db: RealmDatabase) : WGRoleDao {
 
         return entity
     }
-    
+
 }

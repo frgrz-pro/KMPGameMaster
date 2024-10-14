@@ -12,6 +12,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepository
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepositoryImpl
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.UpdateRoleSelectionUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGHomeViewModel
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGPlayersViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGRoleViewModel
 import org.koin.dsl.module
 
@@ -52,5 +53,9 @@ val wgModule = module {
             filterRolesListUseCase = get(),
             updateRoleCheckUseCase = get()
         )
+    }
+
+    factory {
+        WGPlayersViewModel()
     }
 }

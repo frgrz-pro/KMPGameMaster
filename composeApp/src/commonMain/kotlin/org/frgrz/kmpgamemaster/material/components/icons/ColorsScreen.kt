@@ -191,6 +191,19 @@ class ColorsScreen : Screen {
 
                         )
                     }
+
+                    Box(
+                        modifier = Modifier.fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.background)
+                            .height(48.dp)
+                    ) {
+                        Text(
+                            text = "SurfaceBright",
+                            modifier = Modifier.fillMaxWidth(),
+                            color = MaterialTheme.colorScheme.onBackground
+
+                        )
+                    }
                 }
             }
         )
