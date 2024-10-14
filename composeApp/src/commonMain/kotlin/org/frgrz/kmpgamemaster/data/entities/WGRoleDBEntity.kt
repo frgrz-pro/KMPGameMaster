@@ -15,23 +15,14 @@ open class WGRoleDBEntity : RealmObject {
     ): this() {
         this.default = default
         this.selected = default
-        this.role = role
+        this.role = role.name
     }
 
     @PrimaryKey
     var id: ObjectId = BsonObjectId()
     var default: Boolean = false
     var selected: Boolean = false
-
-    private var enumDescription: String = WGRole.DEFAULT.name
-    var role: WGRole
-        get() {
-            return WGRole.valueOf(enumDescription)
-        }
-        set(newMyEum) {
-            enumDescription = newMyEum.name
-        }
-
+    var role: String = ""
 
     enum class WGRole {
         ANGEL,

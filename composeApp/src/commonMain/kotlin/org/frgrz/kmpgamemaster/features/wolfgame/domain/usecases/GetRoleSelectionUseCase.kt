@@ -5,10 +5,10 @@ import org.frgrz.kmpgamemaster.core.RequestState
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepository
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 
-class GetSelectedRolesUseCase(
+class GetRoleSelectionUseCase(
     private val repository: WGRoleRepository
 ) {
-    fun getAllChecked(isChecked: Boolean): Flow<RequestState<List<WGRoleModel>>> {
+    fun invoke(isChecked: Boolean): Flow<RequestState<List<WGRoleModel>>> {
         return repository.getAllChecked(isChecked)
     }
 }

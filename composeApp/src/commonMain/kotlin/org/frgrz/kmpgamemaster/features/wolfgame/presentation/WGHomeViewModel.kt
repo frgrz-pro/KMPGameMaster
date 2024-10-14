@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.frgrz.kmpgamemaster.core.RequestState
 import org.frgrz.kmpgamemaster.features.wolfgame.WGRules
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetSelectedRolesUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleSelectionUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 
 typealias MutableRoles = MutableState<RequestState<List<WGRoleModel>>>
 typealias Roles = MutableState<RequestState<List<WGRoleModel>>>
 
-class WGHomeViewModel(private val useCase: GetSelectedRolesUseCase) : ScreenModel {
+class WGHomeViewModel(private val getRoleSelectionUseCase: GetRoleSelectionUseCase) : ScreenModel {
 
     var playerCount = mutableStateOf(WGRules.OPTIMAL_PLAYER_COUNT)
     var playerLabel = mutableStateOf("Joueurs : " + playerCount.value.toString())
@@ -33,7 +33,7 @@ class WGHomeViewModel(private val useCase: GetSelectedRolesUseCase) : ScreenMode
     init {
         _selectedRoles.value = RequestState.Loading
         screenModelScope.launch(Dispatchers.Main) {
-            useCase.getAllChecked(true)
+            getRoleSelectionUseCase.invoke(true)
                 .collectLatest {
                     _selectedRoles.value = it
                 }

@@ -25,7 +25,7 @@ import org.jetbrains.compose.resources.stringResource
 
 
 @Composable
-fun WGRoleCard(model: WGRoleModel) {
+fun WGRoleCard(model: WGRoleModel, onWGRoleSelected: (WGRoleModel, Boolean) -> Unit) {
 
     var showDialog by remember { mutableStateOf(false) } //TODO Move to ViewModel
 
@@ -56,8 +56,8 @@ fun WGRoleCard(model: WGRoleModel) {
 
             Checkbox(
                 checked = model.isSelected,
-                onCheckedChange = { _ ->
-                    //TODO Implement Check
+                onCheckedChange = { isChecked ->
+                   onWGRoleSelected(model, isChecked)
                 },
                 modifier = Modifier.constrainAs(checkbox) {
                     top.linkTo(parent.top)

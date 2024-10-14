@@ -3,16 +3,23 @@ package org.frgrz.kmpgamemaster.features.wolfgame.presentation
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleFilter
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.core.RequestState
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRolesForFilterUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.UpdateRoleSelectionUseCase
 
 
-class WGRoleViewModel(private val useCase: GetRolesForFilterUseCase) : ScreenModel {
+class WGRoleViewModel(
+    private val filterRolesListUseCase: GetRolesForFilterUseCase,
+    private val updateRoleCheckUseCase: UpdateRoleSelectionUseCase,
+) : ScreenModel {
 
     var selectedFilterIndex = mutableStateOf(0)
     var filters: List<RoleFilter> = RoleFilter.entries
@@ -28,7 +35,7 @@ class WGRoleViewModel(private val useCase: GetRolesForFilterUseCase) : ScreenMod
         _filteredRoles.value = RequestState.Loading
 
         screenModelScope.launch(Dispatchers.Main) {
-            useCase.getAllFiltered(filter)
+            filterRolesListUseCase.invoke(filter)
                 .collectLatest {
                     _filteredRoles.value = it
                 }
@@ -40,6 +47,9 @@ class WGRoleViewModel(private val useCase: GetRolesForFilterUseCase) : ScreenMod
         applyFilter(filter)
     }
 
-    fun onRoleCheckedChanged(isChecked: Boolean, role: WGRoleModel) {
+    fun onRoleCheckedChanged(role: WGRoleModel, isChecked: Boolean) {
+        screenModelScope.launch {
+            updateRoleCheckUseCase.invoke(role, isChecked)
+        }
     }
 }

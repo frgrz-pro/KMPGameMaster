@@ -209,7 +209,8 @@ import org.jetbrains.compose.resources.StringResource
 class WGRoleModelMapper {
 
     fun map(entity: WGRoleDBEntity): WGRoleModel {
-        val role = mapRole(entity.role)
+        val dbRole = WGRoleDBEntity.WGRole.entries.first { it.name == entity.role }
+        val role = mapRole(dbRole)
 
         return WGRoleModel(
             role = role,

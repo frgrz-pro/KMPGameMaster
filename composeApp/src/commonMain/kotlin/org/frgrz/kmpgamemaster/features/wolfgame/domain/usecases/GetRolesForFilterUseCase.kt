@@ -7,9 +7,9 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleFilter
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 
 class GetRolesForFilterUseCase(
-    private val repository: WGRoleRepository
+    private val repository: WGRoleRepository,
 ) {
-    fun getAllFiltered(filter: RoleFilter): Flow<RequestState<List<WGRoleModel>>> {
+    fun invoke(filter: RoleFilter): Flow<RequestState<List<WGRoleModel>>> {
         if (filter == RoleFilter.SELECTED || filter == RoleFilter.UNSELECTED) {
             return repository.getAllChecked(filter == RoleFilter.SELECTED)
         }
@@ -17,3 +17,4 @@ class GetRolesForFilterUseCase(
         return repository.getAllFiltered(filter)
     }
 }
+

@@ -101,7 +101,9 @@ class WGRolesScreen : Screen {
                                     modifier = Modifier.padding(12.dp)
                                 ) {
                                     itemsIndexed(it) { _, item ->
-                                        WGRoleCard(item)
+                                        WGRoleCard(item) { model, isChecked ->
+                                            viewModel.onRoleCheckedChanged(model,isChecked)
+                                        }
                                     }
                                 }
                             }
