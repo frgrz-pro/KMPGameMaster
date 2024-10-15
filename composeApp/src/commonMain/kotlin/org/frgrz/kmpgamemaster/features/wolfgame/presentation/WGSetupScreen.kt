@@ -170,7 +170,7 @@ class WGSetupScreen() : Screen {
                             navigator.push(WGPlayersScreen())
                         },
                         modifier = Modifier.fillMaxWidth()
-                            .padding(12.dp)
+                            .padding(horizontal = 6.dp)
                     ) {
                         Text(
                             text = "Modifier les joueurs",
@@ -178,14 +178,14 @@ class WGSetupScreen() : Screen {
                         )
                     }
 
-
                     FilledTonalButton(
                         onClick = {
                             viewModel.saveGameSettings()
                             navigator.push(WGGameScreen())
                         },
                         modifier = Modifier.fillMaxWidth()
-                            .padding(6.dp)
+                            .padding(6.dp),
+                        enabled = viewModel.canStartGame.value
                     ) {
                         Text(
                             text = stringResource(Res.string.start_game),

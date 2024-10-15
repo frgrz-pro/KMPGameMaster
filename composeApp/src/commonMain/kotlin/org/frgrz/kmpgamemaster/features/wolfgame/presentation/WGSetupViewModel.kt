@@ -28,6 +28,7 @@ class WGSetupViewModel(
     private val players: StateFlow<List<String>> = getCachedPlayersUseCase.invoke()
     private var playerCount = mutableStateOf(WGRules.OPTIMAL_PLAYER_COUNT)
     var playerLabel = mutableStateOf("Joueurs : " + playerCount.value.toString())
+    var canStartGame = mutableStateOf(playerCount.value > WGRules.MIN_PLAYER)
 
     private var _selectedRoles: MutableRoles = mutableStateOf(RequestState.Idle)
     val selectedRoles: Roles = _selectedRoles
@@ -74,6 +75,7 @@ class WGSetupViewModel(
     private fun onPlayerCountChanged(count: Int) {
         playerCount.value = count
         playerLabel.value = "Joueurs : " + playerCount.value
+        canStartGame.value = playerCount.value > WGRules.MIN_PLAYER
         val optimalWolvesCount = WGRules.getOptimalWolvesCount(count)
         updateWolvesCount(optimalWolvesCount)
     }
