@@ -20,15 +20,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.jetbrains.compose.resources.stringResource
+
 
 
 @Composable
 fun WGRoleDialog(model: WGRoleModel, onDialogDismissRequested:(Boolean)->Unit) {
     Dialog(
         onDismissRequest = { onDialogDismissRequested.invoke(false) },
+        properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
         content = {
             Card(modifier = Modifier.padding(24.dp)) {
                 ConstraintLayout(
@@ -109,7 +112,7 @@ fun WGRoleDialog(model: WGRoleModel, onDialogDismissRequested:(Boolean)->Unit) {
                             }
                     ) {
                         model.actions.forEach {
-                            WGRoleActionItem(it)
+                            WGRoleActionBox(it)
                         }
                     }
 

@@ -69,4 +69,15 @@ sealed class RequestState<out T> {
             }
         }
     }
+
+
+}
+
+fun <T, R> RequestState<T>.mapData(transform: (T) -> R): RequestState<R> {
+    return when (this) {
+        is RequestState.Idle -> RequestState.Idle
+        is RequestState.Loading -> RequestState.Loading
+        is RequestState.Success -> RequestState.Success(transform(data))
+        is RequestState.Error -> RequestState.Error(getErrorMessage())
+    }
 }

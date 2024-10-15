@@ -35,7 +35,7 @@ class WGRolesScreen : Screen {
     override fun Content() {
 
         val viewModel = getScreenModel<WGRoleViewModel>()
-        val filteredRoles by viewModel.filteredRoles
+        val filteredRoles by viewModel.filteredRoles //TODO Move to ViewModel
 
         Scaffold(
             topBar = {

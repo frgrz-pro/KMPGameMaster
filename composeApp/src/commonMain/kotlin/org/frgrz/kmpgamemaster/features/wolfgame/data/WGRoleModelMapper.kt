@@ -208,6 +208,19 @@ import org.jetbrains.compose.resources.StringResource
 
 class WGRoleModelMapper {
 
+    fun map(role: WGRole): WGRoleModel {
+        return WGRoleModel(
+            role = role,
+            name = getRoleNameResource(role),
+            isSelected = true,
+            isDefault = false, //TODO
+            playsWith = mapPlaysWith(role),
+            winsWith = mapWinsWith(role),
+            filters = mapRoleFilters(role),
+            actions = mapRoleActions(role)
+        )
+    }
+
     fun map(entity: WGRoleDBEntity): WGRoleModel {
         val dbRole = WGRoleDBEntity.WGRole.entries.first { it.name == entity.role }
         val role = mapRole(dbRole)

@@ -10,7 +10,7 @@ data class WGRoleModel(
     val playsWith: PlaysWith,
     val winsWith: WinsWith,
     val filters: List<RoleFilter>,
-    val actions: List<WGRoleAction>
+    val actions: List<WGRoleAction>,
 )
 
 enum class PlaysWith {
@@ -92,6 +92,74 @@ enum class WGRole {
     WOLF_FAN,
     WOLF_KITTEN,
     WOLF;
+
+    fun isWolf(): Boolean {
+        return this in listOf(
+            BIG_BAD_WOLF,
+            BLACK_WOLF,
+            BLUE_WOLF,
+            WHITE_WOLF,
+            WOLF_BERSERK,
+            WOLF_KITTEN,
+            WOLF
+        )
+    }
+
+    fun isVillager(): Boolean {
+        return this in listOf(
+            ASTRONOMER,
+            BEAR_HANDLER,
+            BERSERK,
+            BLACKSMITH,
+            BULLY,
+            COMEDIAN,
+            CUPID,
+            DEFLECTOR,
+            DEMONIAC_SOUL,
+            DRUGGIST,
+            DUELISTS,
+            FOX,
+            GENTLEMAN,
+            GUARD,
+            HUNTER,
+            IDIOT,
+            LITTLE_GIRL,
+            MARSHALL,
+            MOON_SON,
+            NOCTAMBUL,
+            OLD_KNIGHT,
+            PEASANT,
+            PRIEST,
+            PYROMANIAC,
+            RANGER,
+            SEER,
+            SORCERER,
+            THIEF,
+            THREE_BROTHERS,
+            TRAITOR,
+            TWO_SISTERS,
+            VILLAGE_ELDER,
+            WHITE_SOOTHSAYER,
+            WILD_KID,
+            WIZARD,
+            WOLF_FAN,
+            WOLF_DOG,
+          )
+    }
+
+    fun isSolo(): Boolean {
+        return this in listOf(
+            ANGEL,
+            ASSASSIN,
+            BERSERK,
+            CASSANDRA, //?
+            CORRUPTER,
+            GURU,
+            HITMAN,
+            PIED_PIPER,
+            TRAITOR
+        )
+    }
 
     companion object {
         val DEFAULT = PEASANT

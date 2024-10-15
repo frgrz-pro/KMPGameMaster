@@ -19,9 +19,10 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleAction
 import org.frgrz.kmpgamemaster.material.theme.AppTheme
 import org.jetbrains.compose.resources.stringResource
 
+
 //TODO ViewModel
 @Composable
-fun WGRoleActionItem(roleAction: WGRoleAction) {
+fun WGRoleActionBox(roleAction: WGRoleAction) {
     Box(
         modifier = Modifier.padding(bottom = 12.dp)
     ) {
@@ -76,6 +77,6 @@ fun WGRoleActionItem(roleAction: WGRoleAction) {
 @Preview
 fun WGRoleActionItem_Preview() {
     AppTheme {
-        WGRoleActionItem(PreviewData.sampleWGRoleAction)
+        WGRoleActionBox(PreviewData.rolaAction)
     }
 }

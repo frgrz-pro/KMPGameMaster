@@ -1,5 +1,6 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.presentation
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
@@ -21,8 +22,9 @@ class WGRoleViewModel(
     var selectedFilterIndex = mutableStateOf(0)
     var filters: List<RoleFilter> = RoleFilter.entries
 
-    private var _filteredRoles: MutableRoles = mutableStateOf(RequestState.Idle)
-    val filteredRoles: Roles = _filteredRoles
+    private var _filteredRoles: MutableState<RequestState<List<WGRoleModel>>> =
+        mutableStateOf(RequestState.Idle)
+    val filteredRoles: MutableState<RequestState<List<WGRoleModel>>> = _filteredRoles
 
     init {
         applyFilter(RoleFilter.entries[selectedFilterIndex.value])

@@ -15,6 +15,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CacheGameSettin
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CachePlayersUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetCachedPlayersUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetGameSettingsUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleDeckUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.UpdateRoleSelectionUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGGameViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGSetupViewModel
@@ -55,6 +56,7 @@ val wgModule = module {
     factory { GetCachedPlayersUseCase(repository = get()) }
     factory { CacheGameSettingsUseCase(repository = get()) }
     factory { GetGameSettingsUseCase(repository = get()) }
+    factory { GetRoleDeckUseCase(mapper = get()) }
 
     //region ViewModels
 
@@ -81,7 +83,8 @@ val wgModule = module {
 
     factory {
         WGGameViewModel(
-            getGameSettingsUseCase = get()
+            getGameSettingsUseCase = get(),
+            getRoleDeckUseCase = get()
         )
     }
 
