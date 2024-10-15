@@ -1,23 +1,26 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.data
 
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
 
 class WGGameCache {
 
     private val gameSettings = GameSettings()
 
-    val players: List<String>
-        get() = gameSettings.players
+    private val _players = MutableStateFlow<List<String>>(emptyList())
+    val players: StateFlow<List<String>> = _players.asStateFlow()
 
-    val wolvesCount: Int
-        get() = gameSettings.wolvesCount
-
-    val selectedRoles: List<WGRole>
-        get() = gameSettings.selectedRoles
+    init {
+        _players.value = gameSettings.players
+    }
 
     fun savePlayers(players: List<String>) {
         gameSettings.players = players
+        _players.value = players
     }
+
 
     fun saveWolvesCount(wolvesCount: Int) {
         gameSettings.wolvesCount = wolvesCount
@@ -31,7 +34,6 @@ class WGGameCache {
         return gameSettings
     }
 
-    fun test()
 
 }
 

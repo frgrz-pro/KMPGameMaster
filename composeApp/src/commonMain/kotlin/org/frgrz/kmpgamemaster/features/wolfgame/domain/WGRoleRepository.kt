@@ -1,6 +1,7 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.domain
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import org.frgrz.kmpgamemaster.core.RequestState
 import org.frgrz.kmpgamemaster.data.entities.WGRoleDBEntity
@@ -23,7 +24,7 @@ interface WGRoleRepository {
 
     fun cachePlayers(players: List<String>)
 
-    fun readCachePlayers(): List<String>
+    fun readCachePlayers(): StateFlow<List<String>>
 
     fun saveGameSettings(roles:List<WGRole>, wolvesCount: Int)
 
@@ -73,7 +74,7 @@ class WGRoleRepositoryImpl(
         cache.savePlayers(players)
     }
 
-    override fun readCachePlayers(): List<String> {
+    override fun readCachePlayers(): StateFlow<List<String>>  {
         return cache.players
     }
 

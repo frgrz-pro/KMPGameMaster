@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.frgrz.kmpgamemaster.core.RequestState
@@ -20,20 +21,21 @@ typealias Roles = MutableState<RequestState<List<WGRoleModel>>>
 
 class WGSetupViewModel(
     private val getRoleSelectionUseCase: GetRoleSelectionUseCase,
-    private val getCachedPlayersUseCase: GetCachedPlayersUseCase,
-    private val cacheGameSettingsUseCase: CacheGameSettingsUseCase
+    getCachedPlayersUseCase: GetCachedPlayersUseCase,
+    private val cacheGameSettingsUseCase: CacheGameSettingsUseCase,
 ) : ScreenModel {
 
-    var playerCount = mutableStateOf(WGRules.OPTIMAL_PLAYER_COUNT)
+    private val players: StateFlow<List<String>> = getCachedPlayersUseCase.invoke()
+    private var playerCount = mutableStateOf(WGRules.OPTIMAL_PLAYER_COUNT)
     var playerLabel = mutableStateOf("Joueurs : " + playerCount.value.toString())
-    var wolvesCount = mutableStateOf(WGRules.OPTIMAL_WOLVES_COUNT)
-    var wolvesLabel = mutableStateOf("${wolvesCount.value} Loups")
-    var canAddWolves = mutableStateOf(true)
-    var canRemoveWolves = mutableStateOf(true)
-
 
     private var _selectedRoles: MutableRoles = mutableStateOf(RequestState.Idle)
     val selectedRoles: Roles = _selectedRoles
+
+    private var wolvesCount = mutableStateOf(WGRules.OPTIMAL_WOLVES_COUNT)
+    var wolvesLabel = mutableStateOf("${wolvesCount.value} Loups")
+    var canAddWolves = mutableStateOf(true)
+    var canRemoveWolves = mutableStateOf(true)
 
     init {
         _selectedRoles.value = RequestState.Loading
@@ -44,9 +46,11 @@ class WGSetupViewModel(
                 }
         }
 
-        //TODO Should Listen to cache
-        val players = getCachedPlayersUseCase.invoke()
-        onPlayerCountChanged(players.size)
+        screenModelScope.launch(Dispatchers.Main) {
+            players.collectLatest {
+                onPlayerCountChanged(it.size)
+            }
+        }
     }
 
     fun onAddWolvesClicked() {
