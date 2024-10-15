@@ -23,6 +23,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
+import org.frgrz.kmpgamemaster.material.components.TextBadge
 import org.jetbrains.compose.resources.stringResource
 
 

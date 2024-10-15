@@ -1,6 +1,5 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases
 
-import org.frgrz.kmpgamemaster.core.RequestState
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepository
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 

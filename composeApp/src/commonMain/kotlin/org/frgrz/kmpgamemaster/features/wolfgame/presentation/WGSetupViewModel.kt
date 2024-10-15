@@ -9,15 +9,11 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.frgrz.kmpgamemaster.core.RequestState
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.WGRules
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleSelectionUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CacheGameSettingsUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetCachedPlayersUseCase
-
-typealias MutableRoles = MutableState<RequestState<List<WGRoleModel>>>
-typealias Roles = MutableState<RequestState<List<WGRoleModel>>>
-
 
 class WGSetupViewModel(
     private val getRoleSelectionUseCase: GetRoleSelectionUseCase,
@@ -30,8 +26,9 @@ class WGSetupViewModel(
     var playerLabel = mutableStateOf("Joueurs : " + playerCount.value.toString())
     var canStartGame = mutableStateOf(playerCount.value > WGRules.MIN_PLAYER)
 
-    private var _selectedRoles: MutableRoles = mutableStateOf(RequestState.Idle)
-    val selectedRoles: Roles = _selectedRoles
+    private var _selectedRoles: MutableState<RequestState<List<WGRoleModel>>> =
+        mutableStateOf(RequestState.Idle)
+    val selectedRoles: MutableState<RequestState<List<WGRoleModel>>> = _selectedRoles
 
     private var wolvesCount = mutableStateOf(WGRules.OPTIMAL_WOLVES_COUNT)
     var wolvesLabel = mutableStateOf("${wolvesCount.value} Loups")
