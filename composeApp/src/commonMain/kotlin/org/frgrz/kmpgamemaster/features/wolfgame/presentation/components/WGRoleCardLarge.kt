@@ -24,6 +24,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.jetbrains.compose.resources.stringResource
 
 
+//TODO ViewModel
 @Composable
 fun WGRoleCard(model: WGRoleModel, onWGRoleSelected: (WGRoleModel, Boolean) -> Unit) {
 

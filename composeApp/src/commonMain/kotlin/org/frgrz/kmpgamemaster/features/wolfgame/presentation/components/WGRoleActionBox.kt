@@ -19,7 +19,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleAction
 import org.frgrz.kmpgamemaster.material.theme.AppTheme
 import org.jetbrains.compose.resources.stringResource
 
-
+//TODO ViewModel
 @Composable
 fun WGRoleActionItem(roleAction: WGRoleAction) {
     Box(

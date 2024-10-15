@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -19,8 +18,8 @@ import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
@@ -43,14 +42,16 @@ import org.frgrz.kmpgamemaster.material.components.icons.Remove
 import org.jetbrains.compose.resources.stringResource
 
 
-class WGHomeScreen : Screen {
+class WGSetupScreen() : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
 
         val navigator = LocalNavigator.currentOrThrow
-        val viewModel = getScreenModel<WGHomeViewModel>()
+        val viewModel = getScreenModel<WGSetupViewModel>()
+
+        //TODO : viewModel.onPlayerCountChanged(players.size)
 
         Scaffold(
             topBar = {
@@ -67,16 +68,6 @@ class WGHomeScreen : Screen {
                     Text(
                         text = viewModel.playerLabel.value,
                         style = MaterialTheme.typography.headlineMedium
-                    )
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Slider(
-                        value = viewModel.playerCount.value.toFloat(),
-                        onValueChange = { viewModel.onPlayerCountChanged(it.toInt()) },
-                        valueRange = viewModel.minPlayers.toFloat()..viewModel.maxPlayers.toFloat(),
-                        steps = viewModel.maxPlayers - viewModel.minPlayers,
-                        modifier = Modifier.width(240.dp)
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -174,12 +165,27 @@ class WGHomeScreen : Screen {
 
                     Spacer(modifier = Modifier.height(48.dp))
 
-                    FilledTonalButton(
+                    OutlinedButton(
                         onClick = {
                             navigator.push(WGPlayersScreen())
                         },
                         modifier = Modifier.fillMaxWidth()
                             .padding(12.dp)
+                    ) {
+                        Text(
+                            text = "Modifier les joueurs",
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                    }
+
+
+                    FilledTonalButton(
+                        onClick = {
+                            viewModel.saveGameSettings()
+                            navigator.push(WGGameScreen())
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(6.dp)
                     ) {
                         Text(
                             text = stringResource(Res.string.start_game),

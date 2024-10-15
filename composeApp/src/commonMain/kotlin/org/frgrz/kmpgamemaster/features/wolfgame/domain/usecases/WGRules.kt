@@ -1,5 +1,7 @@
-package org.frgrz.kmpgamemaster.features.wolfgame
+package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases
 
+
+//TODO: transform in use case
 object WGRules {
 
     const val MAX_PLAYER_COUNT = 18

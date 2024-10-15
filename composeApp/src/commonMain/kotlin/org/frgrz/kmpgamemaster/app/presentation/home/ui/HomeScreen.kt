@@ -17,7 +17,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGHomeScreen
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGPlayersScreen
 import org.frgrz.kmpgamemaster.material.components.icons.ColorsScreen
 
 class HomeScreen : Screen {
@@ -41,7 +41,7 @@ class HomeScreen : Screen {
                         .padding(paddingValues), // Use padding values from the Scaffold
                 ) {
                     FilledTonalButton(
-                        onClick = { navigator.push(WGHomeScreen()) },
+                        onClick = { navigator.push(WGPlayersScreen()) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight()

@@ -4,10 +4,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.frgrz.kmpgamemaster.core.RequestState
 import org.frgrz.kmpgamemaster.data.entities.WGRoleDBEntity
+import org.frgrz.kmpgamemaster.features.wolfgame.data.GameSettings
+import org.frgrz.kmpgamemaster.features.wolfgame.data.WGGameCache
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleLocalDataSource
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleFilterMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleModelMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleFilter
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 
 interface WGRoleRepository {
@@ -17,12 +20,21 @@ interface WGRoleRepository {
     fun getAllFiltered(filter: RoleFilter): Flow<RequestState<List<WGRoleModel>>>
 
     fun updateRoleSelection(model: WGRoleModel, isChecked: Boolean)
+
+    fun cachePlayers(players: List<String>)
+
+    fun readCachePlayers(): List<String>
+
+    fun saveGameSettings(roles:List<WGRole>, wolvesCount: Int)
+
+    fun getGameSettings(): GameSettings
 }
 
 class WGRoleRepositoryImpl(
     private val roleLocalDataSource: WGRoleLocalDataSource,
     private val roleModelMapper: WGRoleModelMapper,
     private val roleFilterMapper: WGRoleFilterMapper,
+    private val cache: WGGameCache,
 ) : WGRoleRepository {
 
     override fun getAllChecked(isChecked: Boolean): Flow<RequestState<List<WGRoleModel>>> {
@@ -56,4 +68,22 @@ class WGRoleRepositoryImpl(
         roleLocalDataSource.updateRole(role, isChecked)
 
     }
+
+    override fun cachePlayers(players: List<String>) {
+        cache.savePlayers(players)
+    }
+
+    override fun readCachePlayers(): List<String> {
+        return cache.players
+    }
+
+    override fun saveGameSettings(roles: List<WGRole>, wolvesCount: Int) {
+        cache.saveWolvesCount(wolvesCount)
+        cache.saveGameRoles(roles)
+    }
+
+    override fun getGameSettings(): GameSettings {
+        return cache.getGameSettings()
+    }
+
 }

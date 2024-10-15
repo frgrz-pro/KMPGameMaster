@@ -8,19 +8,24 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.frgrz.kmpgamemaster.core.RequestState
-import org.frgrz.kmpgamemaster.features.wolfgame.WGRules
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.WGRules
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleSelectionUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CacheGameSettingsUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetCachedPlayersUseCase
 
 typealias MutableRoles = MutableState<RequestState<List<WGRoleModel>>>
 typealias Roles = MutableState<RequestState<List<WGRoleModel>>>
 
-class WGHomeViewModel(private val getRoleSelectionUseCase: GetRoleSelectionUseCase) : ScreenModel {
+
+class WGSetupViewModel(
+    private val getRoleSelectionUseCase: GetRoleSelectionUseCase,
+    private val getCachedPlayersUseCase: GetCachedPlayersUseCase,
+    private val cacheGameSettingsUseCase: CacheGameSettingsUseCase
+) : ScreenModel {
 
     var playerCount = mutableStateOf(WGRules.OPTIMAL_PLAYER_COUNT)
     var playerLabel = mutableStateOf("Joueurs : " + playerCount.value.toString())
-    val maxPlayers = WGRules.MAX_PLAYER_COUNT
-    val minPlayers = WGRules.MIN_PLAYER
     var wolvesCount = mutableStateOf(WGRules.OPTIMAL_WOLVES_COUNT)
     var wolvesLabel = mutableStateOf("${wolvesCount.value} Loups")
     var canAddWolves = mutableStateOf(true)
@@ -38,13 +43,10 @@ class WGHomeViewModel(private val getRoleSelectionUseCase: GetRoleSelectionUseCa
                     _selectedRoles.value = it
                 }
         }
-    }
 
-    fun onPlayerCountChanged(count: Int) {
-        playerCount.value = count
-        playerLabel.value = "Joueurs : " + playerCount.value
-        val optimalWolvesCount = WGRules.getOptimalWolvesCount(count)
-        updateWolvesCount(optimalWolvesCount)
+        //TODO Should Listen to cache
+        val players = getCachedPlayersUseCase.invoke()
+        onPlayerCountChanged(players.size)
     }
 
     fun onAddWolvesClicked() {
@@ -59,6 +61,17 @@ class WGHomeViewModel(private val getRoleSelectionUseCase: GetRoleSelectionUseCa
             return
 
         updateWolvesCount(wolvesCount.value - 1)
+    }
+
+    fun saveGameSettings() {
+        cacheGameSettingsUseCase.invoke(selectedRoles.value.getSuccessData(), wolvesCount.value)
+    }
+
+    private fun onPlayerCountChanged(count: Int) {
+        playerCount.value = count
+        playerLabel.value = "Joueurs : " + playerCount.value
+        val optimalWolvesCount = WGRules.getOptimalWolvesCount(count)
+        updateWolvesCount(optimalWolvesCount)
     }
 
     private fun updateWolvesCount(wolves: Int) {
