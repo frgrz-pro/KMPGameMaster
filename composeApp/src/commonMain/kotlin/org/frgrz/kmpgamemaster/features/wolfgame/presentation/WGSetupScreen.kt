@@ -42,7 +42,7 @@ import org.frgrz.kmpgamemaster.material.components.icons.Remove
 import org.jetbrains.compose.resources.stringResource
 
 
-class WGSetupScreen() : Screen {
+class WGSetupScreen : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable

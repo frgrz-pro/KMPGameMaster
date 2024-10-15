@@ -1,5 +1,6 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.domain
 
+import androidx.compose.runtime.State
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -28,7 +29,7 @@ interface WGRoleRepository {
 
     fun saveGameSettings(roles:List<WGRole>, wolvesCount: Int)
 
-    fun getGameSettings(): GameSettings
+    fun getGameSettings(): StateFlow<GameSettings>
 }
 
 class WGRoleRepositoryImpl(
@@ -83,8 +84,8 @@ class WGRoleRepositoryImpl(
         cache.saveGameRoles(roles)
     }
 
-    override fun getGameSettings(): GameSettings {
-        return cache.getGameSettings()
+    override fun getGameSettings(): StateFlow<GameSettings> {
+        return cache.gameSettings
     }
 
 }

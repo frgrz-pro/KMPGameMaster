@@ -3,9 +3,9 @@ package org.frgrz.kmpgamemaster.features.wolfgame.presentation
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -17,16 +17,19 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import cafe.adriel.voyager.core.model.ScreenModel
+import cafe.adriel.voyager.core.model.screenModelScope
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
+import kotlinx.coroutines.launch
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetGameSettingsUseCase
-import kotlin.collections.addAll
 import kotlin.collections.indexOfFirst
 
 class WGGameScreen : Screen {
@@ -42,54 +45,84 @@ class WGGameScreen : Screen {
                 TopAppBar(title = { Text("Game") })
             },
             content = { innerPadding ->
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    items(viewModel.cards) { card ->
-                        Card(
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .clickable(enabled = card.isClickable) {
-                                    viewModel.onCardClick(card.id)
-                                },
-                            //elevation = 2.dp
-                        ) {
-                            // Empty card content for now
-                            Box(
-                                modifier = Modifier
-                                    .size(100.dp)
-                                    .background(if (card.isClickable) Color.White else Color.DarkGray)
-                            )
+                ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+                    val grid = createRef()
+
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .constrainAs(grid) {
+                                top.linkTo(parent.top)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                                bottom.linkTo(parent.bottom)
+                                verticalBias = 0f
+                            }
+                    ) {
+                        items(viewModel.cards) { card ->
+                            CardItem(card)
                         }
                     }
                 }
+
             }
         )
     }
 }
 
-class WGGameViewModel(private val getGameSettingsUseCase: GetGameSettingsUseCase) : ScreenModel {
+class WGGameViewModel(getGameSettingsUseCase: GetGameSettingsUseCase) : ScreenModel {
     private val gameSettings = getGameSettingsUseCase.invoke()
 
-    private val _cards = mutableStateListOf<CardItem>()
-    val cards: List<CardItem> = _cards
+    private val _cards = mutableStateListOf<CardItemViewModel>()
+    val cards: List<CardItemViewModel> = _cards
 
     init {
-        // Initialize with some initial cards
-        _cards.addAll((1..10).map { CardItem(it) })
-    }
-
-    fun onCardClick(cardId: Int) {
-        val cardIndex = _cards.indexOfFirst { it.id == cardId }
-        if (cardIndex != -1 && _cards[cardIndex].isClickable) {
-            val card = _cards.removeAt(cardIndex)
-            card.isClickable = false
-            _cards.add(card)
+        screenModelScope.launch {
+            _cards.addAll(List(gameSettings.value.players.size) { index ->
+                CardItemViewModel(index, onCardClicked = { cardId ->
+                    onCardClick(cardId)
+                })
+            })
         }
     }
 
-
+    private fun onCardClick(cardId: Int) {
+        val cardIndex = _cards.indexOfFirst { it.id == cardId }
+        if (cardIndex != -1 && _cards[cardIndex].isClickable.value) {
+            _cards[cardIndex].isClickable.value = false
+        }
+    }
 }
 
-data class CardItem(val id: Int, var isClickable: Boolean = true)
+data class CardItemViewModel(
+    val id: Int,
+    val isClickable: MutableState<Boolean> = mutableStateOf(true),
+    val onCardClicked: (Int) -> Unit,
+)
+
+
+@Composable
+fun CardItem(viewModel: CardItemViewModel) {
+    Card(
+        modifier = Modifier
+            .padding(8.dp)
+            .clickable(enabled = viewModel.isClickable.value) {
+                viewModel.onCardClicked(viewModel.id)
+            }
+    ) {
+        Box(
+            modifier = Modifier
+                .height(72.dp)
+                .fillMaxWidth()
+                .background(
+                    if (viewModel.isClickable.value) {
+                        Color.White
+                    } else {
+                        Color.DarkGray
+                    }
+                )
+        ) {
+        }
+    }
+}

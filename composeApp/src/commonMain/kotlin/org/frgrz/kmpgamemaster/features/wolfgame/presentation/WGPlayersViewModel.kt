@@ -6,10 +6,10 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CachePlayersUseCase
 
 class WGPlayersViewModel(private val cachePlayersUseCase: CachePlayersUseCase) : ScreenModel {
+
     private val _entries = mutableStateListOf<String>()
     val entries: List<String> = _entries
     var currentInput = mutableStateOf("")
-
 
     fun addEntry() {
         if (currentInput.value.length >= 3) {
