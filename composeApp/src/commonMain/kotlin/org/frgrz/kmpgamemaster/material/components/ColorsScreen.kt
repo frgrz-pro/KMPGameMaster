@@ -1,4 +1,4 @@
-package org.frgrz.kmpgamemaster.material.components.icons
+package org.frgrz.kmpgamemaster.material.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.ImageVector.Builder
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.unit.dp
+import org.frgrz.kmpgamemaster.material.components.IconPack
 
 /*
 * Generated class with `SVG to Compose` plugin

@@ -18,7 +18,7 @@ import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGPlayersScreen
-import org.frgrz.kmpgamemaster.material.components.icons.ColorsScreen
+import org.frgrz.kmpgamemaster.material.components.ColorsScreen
 
 class HomeScreen : Screen {
 

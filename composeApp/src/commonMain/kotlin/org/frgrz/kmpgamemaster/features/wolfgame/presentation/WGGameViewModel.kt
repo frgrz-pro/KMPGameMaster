@@ -14,7 +14,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGPlaye
 
 class WGGameViewModel(
     getGameSettingsUseCase: GetGameSettingsUseCase,
-    getRoleDeckUseCase: GetRoleDeckUseCase
+    getRoleDeckUseCase: GetRoleDeckUseCase,
 ) : ScreenModel {
 
     private val gameSettings = getGameSettingsUseCase.invoke()
@@ -32,16 +32,19 @@ class WGGameViewModel(
     var playerDialogViewModel = WGPlayerNameViewModel(playerToCall) {
         isPlayerDialogVisible.value = false
     }
-    var roles: List<WGRoleModel> = listOf()
+
+   private var roles: List<WGRoleModel> = listOf()
     var selectedRole: WGRoleModel? = null
 
     init {
         screenModelScope.launch {
-            getRoleDeckUseCase.setRoles(gameSettings.value.selectedRoles)
-            roles = getRoleDeckUseCase.drawRoles(
-                gameSettings.value.players.size,
+            getRoleDeckUseCase.setRoles(
+                gameSettings.value.selectedRoles, gameSettings.value.players.size,
                 gameSettings.value.wolvesCount
             )
+
+            val deck = getRoleDeckUseCase.drawRoles()
+            roles = deck.roles
 
             _cardItems.addAll(createCardItems())
         }
@@ -60,7 +63,7 @@ class WGGameViewModel(
 
         callNextPlayer()
     }
-    
+
     private fun callNextPlayer() {
         orderedPlayers = orderedPlayers.drop(1)
         if (orderedPlayers.isNotEmpty()) {

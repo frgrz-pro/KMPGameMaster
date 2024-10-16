@@ -17,10 +17,6 @@ class WGPlayersViewModel(private val cachePlayersUseCase: CachePlayersUseCase) :
             currentInput.value = ""
             return
         }
-
-        if (_entries.size == 0) {
-            seed()
-        }
     }
 
     fun removeEntry(index: Int) {

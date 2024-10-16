@@ -37,7 +37,7 @@ import kmpgamemaster.composeapp.generated.resources.more_roles
 import kmpgamemaster.composeapp.generated.resources.start_game
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleCardSmall
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleExtrasCardSmall
-import org.frgrz.kmpgamemaster.material.components.icons.IconPack
+import org.frgrz.kmpgamemaster.material.components.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.Remove
 import org.jetbrains.compose.resources.stringResource
 

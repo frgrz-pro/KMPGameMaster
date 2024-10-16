@@ -1,6 +1,8 @@
-package org.frgrz.kmpgamemaster.material.components.icons
+package org.frgrz.kmpgamemaster.material.components
 
 import androidx.compose.ui.graphics.vector.ImageVector
+import org.frgrz.kmpgamemaster.material.components.icons.Remove
+import org.frgrz.kmpgamemaster.material.components.icons.SelectAll
 import kotlin.collections.List as ____KtList
 
 object IconPack
@@ -12,6 +14,6 @@ val IconPack.Icons: ____KtList<ImageVector>
     if (__Icons != null) {
       return __Icons!!
     }
-    __Icons= listOf(Remove)
+    __Icons = listOf(Remove, SelectAll)
     return __Icons!!
   }

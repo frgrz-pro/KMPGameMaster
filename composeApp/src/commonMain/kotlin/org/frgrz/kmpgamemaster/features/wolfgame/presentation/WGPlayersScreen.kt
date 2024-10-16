@@ -2,7 +2,6 @@ package org.frgrz.kmpgamemaster.features.wolfgame.presentation
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,7 +39,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import org.frgrz.kmpgamemaster.material.components.icons.IconPack
+import org.frgrz.kmpgamemaster.material.components.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.Remove
 
 
@@ -56,7 +55,14 @@ class WGPlayersScreen : Screen {
 
         Scaffold(
             topBar = {
-                TopAppBar(title = { Text("Players") })
+                TopAppBar(title = { Text("Players") },
+                    actions = {
+                        IconButton(
+                            onClick = { viewModel.seed() },
+                        ) {
+                            Icon(imageVector = Icons.Filled.Add, contentDescription = "")
+                        }
+                    })
             },
             content = { innerPadding ->
                 ConstraintLayout(
@@ -97,10 +103,6 @@ class WGPlayersScreen : Screen {
                                     .aspectRatio(1f) // Ensure aspect ratio for square
                                     .padding(start = 16.dp)
                                     .align(Alignment.CenterVertically)
-                                    .combinedClickable(
-                                        onClick = { viewModel.addEntry() },
-                                        onLongClick = { viewModel.seed() }
-                                    )
                             ) {
                                 Icon(
                                     imageVector = Icons.Filled.Add, // Replace with your icon
