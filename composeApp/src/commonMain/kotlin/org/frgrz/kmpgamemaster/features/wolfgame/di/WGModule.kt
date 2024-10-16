@@ -11,6 +11,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.db.GetRolesForF
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.db.GetRoleSelectionUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepository
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepositoryImpl
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.ValidateEntryUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.CacheGameSettingsUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.CachePlayersUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.GetCachedPlayersUseCase
@@ -69,7 +70,6 @@ val wgModule = module {
 
     //region Deck UseCases
 
-
     factory { CategorizeRolesUseCase() }
     factory { MapRolesToViewModelUseCase(mapper = get()) }
     factory { SelectExtraRolesUseCase() }
@@ -88,6 +88,10 @@ val wgModule = module {
             selectExtraRolesUseCase = get()
         )
     }
+
+    //region Other Use Cases
+
+    factory { ValidateEntryUseCase() }
 
     //region ViewModels
 
@@ -108,7 +112,8 @@ val wgModule = module {
 
     factory {
         WGPlayersViewModel(
-            cachePlayersUseCase = get()
+            cachePlayersUseCase = get(),
+            validateEntryUseCase = get()
         )
     }
 

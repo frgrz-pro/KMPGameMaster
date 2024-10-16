@@ -3,24 +3,37 @@ package org.frgrz.kmpgamemaster.features.wolfgame.presentation
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.WGRules
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.CachePlayersUseCase
 
-class WGPlayersViewModel(private val cachePlayersUseCase: CachePlayersUseCase) : ScreenModel {
+class WGPlayersViewModel(
+    private val cachePlayersUseCase: CachePlayersUseCase,
+    private val validateEntryUseCase:ValidateEntryUseCase
+) : ScreenModel {
 
     private val _entries = mutableStateListOf<String>()
     val entries: List<String> = _entries
     var currentInput = mutableStateOf("")
+    val isValidateButtonEnabled = mutableStateOf(false)
+
+    private fun updateValidateButtonVisibility() {
+        isValidateButtonEnabled.value = _entries.size >= WGRules.MIN_PLAYER
+
+    }
 
     fun addEntry() {
-        if (currentInput.value.length >= 3) {
-            _entries.add(currentInput.value)
-            currentInput.value = ""
-            return
+        validateEntryUseCase(currentInput.value) { isValid ->
+            if (isValid) {
+                _entries.add(currentInput.value)
+                updateValidateButtonVisibility()
+                currentInput.value = ""
+            }
         }
     }
 
     fun removeEntry(index: Int) {
         _entries.removeAt(index)
+        updateValidateButtonVisibility()
     }
 
     fun seed() {
@@ -36,6 +49,7 @@ class WGPlayersViewModel(private val cachePlayersUseCase: CachePlayersUseCase) :
         _entries.add("Tom")
         _entries.add("Kelly")
         _entries.add("Amaïa")
+        updateValidateButtonVisibility()
     }
 
     fun savePlayers() {
@@ -43,3 +57,4 @@ class WGPlayersViewModel(private val cachePlayersUseCase: CachePlayersUseCase) :
     }
 
 }
+
