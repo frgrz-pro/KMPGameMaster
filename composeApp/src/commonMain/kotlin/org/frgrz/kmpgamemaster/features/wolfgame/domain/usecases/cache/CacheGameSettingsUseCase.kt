@@ -1,8 +1,8 @@
-package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases
+package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache
 
 import kotlinx.coroutines.flow.StateFlow
-import org.frgrz.kmpgamemaster.features.wolfgame.data.GameSettings
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepository
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.GameSettings
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 
 class CacheGameSettingsUseCase(private val repository: WGRoleRepository) {

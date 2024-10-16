@@ -7,16 +7,23 @@ import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleFilterMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleLocalDataSource
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleLocalDataSourceImpl
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleModelMapper
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRolesForFilterUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleSelectionUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.db.GetRolesForFilterUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.db.GetRoleSelectionUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepository
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepositoryImpl
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CacheGameSettingsUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CachePlayersUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetCachedPlayersUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetGameSettingsUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleDeckUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.UpdateRoleSelectionUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.CacheGameSettingsUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.CachePlayersUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.GetCachedPlayersUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.GetGameSettingsUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GenerateRoleDeckUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.db.UpdateRoleSelectionUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.CategorizeRolesUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.MapRolesToViewModelUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectExtraRolesUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectSoloUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectVillagersUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectWolvesUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.VerifyRoleCompatibilityUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGGameViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGSetupViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGPlayersViewModel
@@ -47,16 +54,40 @@ val wgModule = module {
         )
     }
 
-    //region UseCases
+    //region DB UseCases
 
     factory { GetRolesForFilterUseCase(repository = get()) }
     factory { UpdateRoleSelectionUseCase(repository = get()) }
     factory { GetRoleSelectionUseCase(repository = get()) }
+
+    //region Cache UseCases
+
     factory { CachePlayersUseCase(repository = get()) }
     factory { GetCachedPlayersUseCase(repository = get()) }
     factory { CacheGameSettingsUseCase(repository = get()) }
     factory { GetGameSettingsUseCase(repository = get()) }
-    factory { GetRoleDeckUseCase(mapper = get()) }
+
+    //region Deck UseCases
+
+
+    factory { CategorizeRolesUseCase() }
+    factory { MapRolesToViewModelUseCase(mapper = get()) }
+    factory { SelectExtraRolesUseCase() }
+    factory { SelectSoloUseCase() }
+    factory { SelectVillagersUseCase() }
+    factory { SelectWolvesUseCase() }
+    factory { VerifyRoleCompatibilityUseCase() }
+    factory {
+        GenerateRoleDeckUseCase(
+            verifyRoleCompatibilityUseCase = get(),
+            categorizeRolesUseCase = get(),
+            mapRolesToViewModelUseCase = get(),
+            selectWolvesUseCase = get(),
+            selectSoloUseCase = get(),
+            selectVillagersUseCase = get(),
+            selectExtraRolesUseCase = get()
+        )
+    }
 
     //region ViewModels
 

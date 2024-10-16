@@ -1,4 +1,4 @@
-package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases
+package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache
 
 import kotlinx.coroutines.flow.StateFlow
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepository

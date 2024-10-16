@@ -1,4 +1,4 @@
-package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases
+package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.db
 
 import kotlinx.coroutines.flow.Flow
 import org.frgrz.kmpgamemaster.core.RequestState

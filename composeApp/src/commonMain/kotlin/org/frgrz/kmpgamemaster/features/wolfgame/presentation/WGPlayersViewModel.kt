@@ -3,7 +3,7 @@ package org.frgrz.kmpgamemaster.features.wolfgame.presentation
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CachePlayersUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.CachePlayersUseCase
 
 class WGPlayersViewModel(private val cachePlayersUseCase: CachePlayersUseCase) : ScreenModel {
 

@@ -7,14 +7,14 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.coroutines.launch
 import org.frgrz.kmpgamemaster.core.moveItemsBeforeIndexToEnd
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetGameSettingsUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleDeckUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.GetGameSettingsUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GenerateRoleDeckUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.CardItemViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGPlayerNameViewModel
 
 class WGGameViewModel(
     getGameSettingsUseCase: GetGameSettingsUseCase,
-    getRoleDeckUseCase: GetRoleDeckUseCase,
+    getRoleDeckUseCase: GenerateRoleDeckUseCase,
 ) : ScreenModel {
 
     private val isDebug = mutableStateOf(true)
@@ -45,7 +45,7 @@ class WGGameViewModel(
                 gameSettings.value.wolvesCount
             )
 
-            val deck = getRoleDeckUseCase.buildDeck()
+            val deck = getRoleDeckUseCase.generateRoleDeck()
             roles = deck.roles
             _cardItems.addAll(createCardItems())
 

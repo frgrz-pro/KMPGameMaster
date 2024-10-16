@@ -54,7 +54,7 @@ open class WGRoleDBEntity : RealmObject {
         MARSHALL,
         MAYOR,
         MOON_SON,
-        NOCTAMBULIST, //TODO Rename SLEEP_WALKER
+        NOCTAMBULIST, //TODO Rename INSOMNIAC
         OLD_KNIGHT,
         PEASANT,
         PIED_PIPER,

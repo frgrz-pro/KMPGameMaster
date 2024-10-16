@@ -35,6 +35,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import kmpgamemaster.composeapp.generated.resources.Res
 import kmpgamemaster.composeapp.generated.resources.more_roles
 import kmpgamemaster.composeapp.generated.resources.start_game
+import kmpgamemaster.composeapp.generated.resources.werewolf
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleCardSmall
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleExtrasCardSmall
 import org.frgrz.kmpgamemaster.material.components.IconPack
@@ -55,7 +56,7 @@ class WGSetupScreen : Screen {
 
         Scaffold(
             topBar = {
-                TopAppBar(title = { Text("Loup Garou") })
+                TopAppBar(title = { Text(stringResource(Res.string.werewolf)) })
             },
             content = { innerPadding ->
                 Column(

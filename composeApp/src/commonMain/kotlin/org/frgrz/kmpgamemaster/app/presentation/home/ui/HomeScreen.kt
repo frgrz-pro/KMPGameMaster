@@ -17,8 +17,13 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import kmpgamemaster.composeapp.generated.resources.Res
+import kmpgamemaster.composeapp.generated.resources.sporz
+import kmpgamemaster.composeapp.generated.resources.two_rooms_and_a_boom
+import kmpgamemaster.composeapp.generated.resources.werewolf
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGPlayersScreen
 import org.frgrz.kmpgamemaster.material.components.ColorsScreen
+import org.jetbrains.compose.resources.stringResource
 
 class HomeScreen : Screen {
 
@@ -46,10 +51,10 @@ class HomeScreen : Screen {
                             .fillMaxWidth()
                             .wrapContentHeight()
                     ) {
-                        Text("Loup Garou")
+                        Text(stringResource(Res.string.werewolf))
                     }
 
-                    //TODO: Not Implemented
+                    //TODO: Implement Two Rooms & a boom
                     FilledTonalButton(
                         onClick = {},
                         modifier = Modifier
@@ -57,10 +62,10 @@ class HomeScreen : Screen {
                             .wrapContentHeight(),
                         enabled = false
                     ) {
-                        Text("Two rooms and a boom")
+                        Text(stringResource(Res.string.two_rooms_and_a_boom))
                     }
 
-                    //TODO: Not Implemented
+                    //TODO: Implement Sporz
                     FilledTonalButton(
                         onClick = {},
                         modifier = Modifier
@@ -68,17 +73,17 @@ class HomeScreen : Screen {
                             .wrapContentHeight(),
                         enabled = false
                     ) {
-                        Text("Sporz")
+                        Text(stringResource(Res.string.sporz))
                     }
 
-                    //TODO: Not Implemented
+                    //TODO: Implement Reset Database
                     OutlinedButton(
                         onClick = { viewModel.onResetDatabaseClicked()},
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight()
                     ) {
-                        Text("Reset Database")
+                        Text("Reset Database") //TODO Add string reset database
                     }
 
                     OutlinedButton(
@@ -87,7 +92,7 @@ class HomeScreen : Screen {
                             .fillMaxWidth()
                             .wrapContentHeight()
                     ) {
-                        Text("Colors")
+                        Text("Colors") //TODO Add string colors
                     }
                 }
             }

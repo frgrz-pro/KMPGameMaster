@@ -31,6 +31,6 @@ object WGRules {
     }
 
     fun canRemoveWolves(wolvesCount: Int): Boolean {
-        return wolvesCount != 1
+        return wolvesCount > 1
     }
 }

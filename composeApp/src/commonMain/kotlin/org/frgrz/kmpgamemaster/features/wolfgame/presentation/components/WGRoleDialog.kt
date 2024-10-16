@@ -22,10 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
+import kmpgamemaster.composeapp.generated.resources.Res
+import kmpgamemaster.composeapp.generated.resources.close
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.material.components.TextBadge
 import org.jetbrains.compose.resources.stringResource
-
 
 
 @Composable
@@ -127,7 +128,7 @@ fun WGRoleDialog(model: WGRoleModel, onDialogDismissRequested:(Boolean)->Unit) {
                                 bottom.linkTo(parent.bottom)
                                 top.linkTo(actions.bottom)
                             }) {
-                        Text("Fermer") //TODO Add String
+                        Text(stringResource(Res.string.close))
                     }
                 }
             }

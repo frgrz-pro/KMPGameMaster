@@ -1,4 +1,4 @@
-package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases
+package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.db
 
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepository
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
