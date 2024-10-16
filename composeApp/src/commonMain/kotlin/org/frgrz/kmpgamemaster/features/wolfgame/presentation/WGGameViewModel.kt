@@ -17,12 +17,14 @@ class WGGameViewModel(
     getRoleDeckUseCase: GetRoleDeckUseCase,
 ) : ScreenModel {
 
+    private val isDebug = mutableStateOf(true)
+
     private val gameSettings = getGameSettingsUseCase.invoke()
 
     private val _cardItems = mutableStateListOf<CardItemViewModel>()
     val cardItems: List<CardItemViewModel> = _cardItems
 
-    var isPlayerDialogVisible = mutableStateOf(true)
+    var isPlayerDialogVisible = mutableStateOf(!isDebug.value)
     var isRoleDialogVisible = mutableStateOf(false)
 
     private val startingPlayerIndex = getStartingPlayerIndex()
@@ -33,7 +35,7 @@ class WGGameViewModel(
         isPlayerDialogVisible.value = false
     }
 
-   private var roles: List<WGRoleModel> = listOf()
+    private var roles: List<WGRoleModel> = listOf()
     var selectedRole: WGRoleModel? = null
 
     init {
@@ -43,10 +45,21 @@ class WGGameViewModel(
                 gameSettings.value.wolvesCount
             )
 
-            val deck = getRoleDeckUseCase.drawRoles()
+            val deck = getRoleDeckUseCase.buildDeck()
             roles = deck.roles
-
             _cardItems.addAll(createCardItems())
+
+            if (isDebug.value) {
+                autoDealRoles()
+            }
+        }
+    }
+
+    private fun autoDealRoles() {
+        orderedPlayers.forEachIndexed { index, player ->
+            _cardItems[index].playerName.value = player
+            _cardItems[index].role.value = roles[index]
+            _cardItems[index].isClickable.value = false
         }
     }
 
@@ -77,12 +90,18 @@ class WGGameViewModel(
 
     private fun createCardItems(): List<CardItemViewModel> {
         return List(gameSettings.value.players.size) { index ->
-            CardItemViewModel(index, role = roles[index], onCardClicked = { cardId ->
-                selectedRole = roles[cardId]
-                isRoleDialogVisible.value = true
-                onRoleDrawn(cardId)
-            })
+            CardItemViewModel(
+                index,
+                role = mutableStateOf(roles[index]),
+                isDebug = isDebug,
+                onCardClicked = { cardId ->
+                    if (!isDebug.value) {
+                        selectedRole = roles[cardId]
+                        isRoleDialogVisible.value = true
+                        onRoleDrawn(cardId)
+                    }
+                }
+            )
         }
     }
-
 }

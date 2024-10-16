@@ -144,7 +144,7 @@ enum class WGRole {
             WIZARD,
             WOLF_FAN,
             WOLF_DOG,
-          )
+        )
     }
 
     fun isSolo(): Boolean {
@@ -158,6 +158,25 @@ enum class WGRole {
             HITMAN,
             PIED_PIPER,
             TRAITOR
+        )
+    }
+
+    fun isTeam(): Boolean {
+        return this in listOf(
+            TWO_SISTERS,
+            THREE_BROTHERS,
+            DUELISTS
+        )
+    }
+
+    fun addsWolf(): Boolean {
+        return this in listOf(
+            WOLF_KITTEN,
+            WOLF_DOG,
+            WOLF_FAN,
+            BLACK_WOLF,
+            WILD_KID,
+            GENTLEMAN
         )
     }
 

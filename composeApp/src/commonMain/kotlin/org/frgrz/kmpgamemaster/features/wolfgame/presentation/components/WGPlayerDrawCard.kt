@@ -4,6 +4,9 @@ import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,9 +16,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.material.theme.AppTheme
 
@@ -24,8 +28,9 @@ data class CardItemViewModel(
     val id: Int,
     val playerName: MutableState<String> = mutableStateOf(""),
     val isClickable: MutableState<Boolean> = mutableStateOf(true),
-    val role: WGRoleModel,
+    val role: MutableState<WGRoleModel>,
     val onCardClicked: (Int) -> Unit,
+    val isDebug: MutableState<Boolean>,
 )
 
 @Composable
@@ -49,17 +54,70 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
                     }
                 )
         ) {
-            Text(
-                text = viewModel.playerName.value,
-                modifier = Modifier.align(Alignment.Center),
-                style = MaterialTheme.typography.titleLarge,
-                color = if (viewModel.isClickable.value) {
-                    MaterialTheme.colorScheme.onPrimaryContainer
-                } else {
-                    MaterialTheme.colorScheme.primaryContainer
-                }
-            )
+            ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+                val text = createRef()
+                val image = createRef()
+                val text2 = createRef()
 
+                if (viewModel.isDebug.value) {
+                    WGRoleImageLarge(
+                        role = viewModel.role.value.role,
+                        modifier = Modifier.fillMaxHeight()
+                            .aspectRatio(1f)
+                            .constrainAs(image) {
+                                top.linkTo(parent.top)
+                                start.linkTo(parent.start)
+                                bottom.linkTo(parent.bottom)
+                            }
+                    )
+                }
+
+                Text(
+                    text = viewModel.playerName.value,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .constrainAs(text) {
+                            top.linkTo(parent.top)
+                            end.linkTo(parent.end)
+                            bottom.linkTo(parent.bottom)
+                            if(viewModel.isDebug.value) {
+                                start.linkTo(image.end)
+                            } else {
+                                start.linkTo(parent.start)
+                            }
+                        },
+                    style = MaterialTheme.typography.titleLarge,
+                    color = if (viewModel.isClickable.value) {
+                        MaterialTheme.colorScheme.onPrimaryContainer
+                    } else {
+                        MaterialTheme.colorScheme.primaryContainer
+                    },
+                )
+                if (viewModel.isDebug.value) {
+                    Text(
+                        text = viewModel.role.value.role.name,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .constrainAs(text2) {
+                                top.linkTo(parent.top)
+                                end.linkTo(parent.end)
+                                bottom.linkTo(parent.bottom)
+                                verticalBias = 1f
+                                if(viewModel.isDebug.value) {
+                                    start.linkTo(image.end)
+                                } else {
+                                    start.linkTo(parent.start)
+                                }
+                            },
+                        style = MaterialTheme.typography.labelMedium,
+                        color = if (viewModel.isClickable.value) {
+                            MaterialTheme.colorScheme.onPrimaryContainer
+                        } else {
+                            MaterialTheme.colorScheme.primaryContainer
+                        },
+                    )
+                }
+            }
         }
     }
 }
@@ -73,8 +131,9 @@ fun WGPlayerDrawCard_Unselected_Preview() {
                 id = 0,
                 playerName = mutableStateOf("Card 1"),
                 isClickable = mutableStateOf(true),
-                role = PreviewData.roleModel,
-                onCardClicked = {}
+                role = mutableStateOf(PreviewData.roleModel),
+                onCardClicked = {},
+                isDebug = mutableStateOf(true)
             )
         )
     }
@@ -89,8 +148,9 @@ fun WGPlayerDrawCard_Selected_Preview() {
                 id = 0,
                 playerName = mutableStateOf("Player 1"),
                 isClickable = mutableStateOf(false),
-                role = PreviewData.roleModel,
-                onCardClicked = {}
+                role = mutableStateOf(PreviewData.roleModel),
+                onCardClicked = {},
+                isDebug = mutableStateOf(true)
             )
         )
     }

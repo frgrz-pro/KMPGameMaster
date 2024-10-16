@@ -6,29 +6,171 @@ import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleModelMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 
+
+data class RoleCategories(
+    val wolves: List<WGRole> = listOf(),
+    val villagers: List<WGRole> = listOf(),
+    val solos: List<WGRole> = listOf(),
+    val notPlayed: List<WGRole> = listOf(),
+)
+
+class CategorizeRolesUseCase {
+    operator fun invoke(roles: List<WGRole>): RoleCategories {
+        val (wolves, remaining) = roles.partition { it.isWolf() }
+        val (villagers, remaining2) = remaining.partition { it.isVillager() }
+        val (solos, notPlayed) = remaining2.partition { it.isSolo() }
+        val notPlayedFinal = notPlayed.filter { it == WGRole.MAYOR }
+
+        return RoleCategories(wolves, villagers, solos, notPlayedFinal)
+    }
+}
+
+class MapRolesToViewModelUseCase(private val mapper: WGRoleModelMapper) {
+    operator fun invoke(roles: List<WGRole>): List<WGRoleModel> {
+        return roles.map { mapper.map(it) }
+    }
+}
+
+data class RoleDeck(
+    val roles: List<WGRoleModel>,
+    val extraRoles: List<WGRoleModel>,
+)
+
+
 class GetRoleDeckUseCase(
-    private val mapper: WGRoleModelMapper,
+    private val verifyRoleCompatibilityUseCase: VerifyRoleCompatibilityUseCase,
+    private val categorizeRolesUseCase: CategorizeRolesUseCase,
+    private val mapRolesToViewModelUseCase: MapRolesToViewModelUseCase,
 ) {
 
-    private val roleDeck: MutableList<WGRole> = mutableListOf()
-
-    private var gameRoles: List<WGRole> = listOf()
-    private var wolvesRoles: List<WGRole> = listOf()
-    private var villagersRoles: List<WGRole> = listOf()
-    private var solosRoles: List<WGRole> = listOf()
-    private var notPlayedRole: List<WGRole> = listOf()
-
+    private var roleDeck: List<WGRole> = listOf()
+    private var categorizedRoles = RoleCategories()
     private var playersCount: Int = 0
     private var wolvesCount: Int = 0
 
     fun setRoles(roles: List<WGRole>, playersCount: Int, wolvesCount: Int) {
         this.playersCount = playersCount
         this.wolvesCount = wolvesCount
-        gameRoles = verifyRoleCompatibility(roles)
-        sliceRoles()
+        val verifiedGameRoles = verifyRoleCompatibilityUseCase(roles, playersCount, wolvesCount)
+        categorizedRoles = categorizeRolesUseCase(verifiedGameRoles)
     }
 
-    private fun verifyRoleCompatibility(roles: List<WGRole>): List<WGRole> {
+    fun buildDeck(): RoleDeck {
+        roleDeck = buildList {
+            addAll(drawWolves(wolvesCount))
+            add(drawSolo())
+            addAll(drawVillagers(playersCount - wolvesCount - 1)) //TODO check solo count
+        }
+
+        return RoleDeck(
+            mapRolesToViewModelUseCase(roleDeck.shuffled()),
+            mapRolesToViewModelUseCase(drawExtraRoles())
+        )
+    }
+
+    private fun drawExtraRoles(): List<WGRole> {
+        val extraRolesCount = when {
+            roleDeck.contains(WGRole.THIEF) -> 2
+            roleDeck.contains(WGRole.COMEDIAN) -> 3
+            else -> 0
+        }
+
+        val result = mutableListOf<WGRole>()
+
+        repeat(extraRolesCount) {
+            result.add(
+                drawRandom(
+                    if (canAddHiddenWolf()) {
+                        categorizedRoles.villagers.filterNot {
+                            it.addsWolf()
+                                    && it.isTeam()
+                                    && it in roleDeck
+                                    && it in result
+                        }
+                    } else {
+                        categorizedRoles.villagers.filterNot {
+                            it.isTeam()
+                                    && it in roleDeck
+                                    && it in result
+                        }
+                    }
+                )
+            )
+
+        }
+
+        return result
+    }
+
+    private fun canAddHiddenWolf(): Boolean {
+        val canAddWolves = WGRules.canAddWolves(playersCount, wolvesCount)
+        val hasHiddenWolves = categorizedRoles.villagers.any { it.addsWolf() }
+        return canAddWolves && !hasHiddenWolves
+    }
+
+    private fun drawWolves(count: Int): List<WGRole> {
+        val result = mutableListOf<WGRole>()
+
+        repeat(count) {
+            result.add(
+                if (roleDeck.none { it == WGRole.WOLF }) {
+                    WGRole.WOLF
+                } else {
+                    drawRandom(
+                        if (canAddHiddenWolf()) {
+                            categorizedRoles.wolves.filterNot {
+                                it in result
+                            }
+                        } else {
+                            categorizedRoles.wolves.filterNot {
+                                it.addsWolf() && it in result
+                            }
+                        }
+                    )
+                }
+            )
+        }
+
+        return result
+    }
+
+    private fun drawVillagers(count: Int): List<WGRole> {
+        val result = mutableListOf<WGRole>()
+
+        repeat(count) {
+            result.add(
+                if (roleDeck.none { it == WGRole.PEASANT }) {
+                    WGRole.PEASANT
+                } else {
+                    drawRandom(
+                        if (canAddHiddenWolf()) {
+                            categorizedRoles.villagers.filterNot {
+                                it in result
+                            }
+                        } else {
+                            categorizedRoles.villagers.filterNot {
+                                it.addsWolf() && it in result
+                            }
+                        }
+                    )
+                }
+            )
+        }
+
+        return result
+    }
+
+    private fun drawSolo(): WGRole {
+        return drawRandom(categorizedRoles.solos)
+    }
+
+    private fun drawRandom(set: List<WGRole>): WGRole {
+        return set.filterNot { it in roleDeck }.random()
+    }
+}
+
+class VerifyRoleCompatibilityUseCase {
+    operator fun invoke(roles: List<WGRole>, wolvesCount: Int, playersCount: Int): List<WGRole> {
         var correctedRoles = roles
 
         val rules = listOf(
@@ -43,108 +185,8 @@ class GetRoleDeckUseCase(
 
         return correctedRoles
     }
-
-    data class RoleDeck(
-        val roles: List<WGRoleModel>,
-        val extraRoles: List<WGRoleModel>,
-    )
-
-    fun drawRoles(): RoleDeck {
-        drawWolves(wolvesCount)
-        drawSolo()
-        drawVillagers(playersCount - wolvesCount - 1) //TODO check solo count
-        val extraRoles = drawExtraRoles()
-
-        return RoleDeck(
-            roleDeck.shuffled().map { mapper.map(it) },
-            extraRoles.map { mapper.map(it) }
-        )
-    }
-
-    private fun drawExtraRoles(): List<WGRole> {
-        val extraRolesCount = if (roleDeck.contains(WGRole.THIEF)) {
-            2
-        } else if (roleDeck.contains(WGRole.COMEDIAN)) {
-            3
-        } else {
-            0
-        }
-
-        val extraRoles = mutableListOf<WGRole>()
-        var filteredVillagersRoles = villagersRoles.removeAllFromAnotherList(
-            listOf(
-                WGRole.THREE_BROTHERS,
-                WGRole.DUELISTS,
-                WGRole.TWO_SISTERS
-            )
-        )
-
-        repeat(extraRolesCount) {
-            val item = filteredVillagersRoles.random()
-            extraRoles.add(item)
-            filteredVillagersRoles = filteredVillagersRoles.removeByFilter { it == item }
-        }
-
-        return extraRoles.toList()
-    }
-
-    private fun drawWolves(count: Int) {
-        repeat(count) { _ ->
-            if (roleDeck.none { it == WGRole.WOLF }) {
-                addRole(WGRole.WOLF, false)
-            } else if (roleDeck.any { it != WGRole.WOLF }) {
-                drawRole(wolvesRoles)
-            } else {
-                addRole(WGRole.WOLF, false)
-            }
-        }
-
-    }
-
-    private fun drawSolo() {
-        drawRole(solosRoles)
-    }
-
-    private fun drawVillagers(count: Int) {
-        repeat(count) { _ ->
-            if (roleDeck.none { it == WGRole.PEASANT }) {
-                addRole(WGRole.PEASANT)
-            } else {
-                drawRole(villagersRoles)
-            }
-
-        }
-    }
-
-    private fun addRole(role: WGRole, shouldRemove: Boolean = true) {
-        roleDeck.add(role)
-        if (shouldRemove) {
-            wolvesRoles = wolvesRoles.removeByFilter { it == role }
-            villagersRoles = villagersRoles.removeByFilter { it == role }
-            solosRoles = solosRoles.removeByFilter { it == role }
-        }
-    }
-
-    private fun drawRole(set: List<WGRole>) {
-        val item = set.random()
-        roleDeck.add(item)
-        wolvesRoles = wolvesRoles.removeByFilter { it == item }
-        villagersRoles = villagersRoles.removeByFilter { it == item }
-        solosRoles = solosRoles.removeByFilter { it == item }
-    }
-
-    private fun sliceRoles() {
-        var gameRolesCopy: List<WGRole> = gameRoles
-        wolvesRoles = gameRolesCopy.filter { it.isWolf() }
-        gameRolesCopy = gameRolesCopy.removeAllFromAnotherList(wolvesRoles)
-        villagersRoles = gameRolesCopy.filter { it.isVillager() }
-        gameRolesCopy = gameRolesCopy.removeAllFromAnotherList(villagersRoles)
-        solosRoles = gameRolesCopy.filter { it.isSolo() }
-        gameRolesCopy = gameRolesCopy.removeAllFromAnotherList(solosRoles)
-        notPlayedRole = gameRolesCopy.filter { it == WGRole.MAYOR }
-    }
-
 }
+
 
 interface RoleCompatibilityRule {
     fun verify(roles: List<WGRole>, wolvesCount: Int, playersCount: Int): List<WGRole>
@@ -194,3 +236,6 @@ class GuruCompatibilityRule : RoleCompatibilityRule {
         return correctedRoles
     }
 }
+
+//Only one transform to wolf
+//if Gentleman => cupidon
