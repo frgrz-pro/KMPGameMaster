@@ -10,8 +10,8 @@ import kotlinx.coroutines.launch
 import org.frgrz.kmpgamemaster.core.RequestState
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleFilter
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.db.GetRolesForFilterUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.db.UpdateRoleSelectionUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRolesForFilterUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.UpdateRoleSelectionUseCase
 
 
 class WGRoleViewModel(

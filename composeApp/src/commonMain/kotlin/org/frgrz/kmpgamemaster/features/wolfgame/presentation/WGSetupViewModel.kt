@@ -11,14 +11,14 @@ import kotlinx.coroutines.launch
 import org.frgrz.kmpgamemaster.core.RequestState
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.WGRules
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.db.GetRoleSelectionUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.CacheGameSettingsUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.GetCachedPlayersUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleSelectionUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CacheGameConfigurationUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetCachedPlayersUseCase
 
 class WGSetupViewModel(
     private val getRoleSelectionUseCase: GetRoleSelectionUseCase,
     getCachedPlayersUseCase: GetCachedPlayersUseCase,
-    private val cacheGameSettingsUseCase: CacheGameSettingsUseCase,
+    private val cacheGameSettingsUseCase: CacheGameConfigurationUseCase,
 ) : ScreenModel {
 
     private val players: StateFlow<List<String>> = getCachedPlayersUseCase.invoke()

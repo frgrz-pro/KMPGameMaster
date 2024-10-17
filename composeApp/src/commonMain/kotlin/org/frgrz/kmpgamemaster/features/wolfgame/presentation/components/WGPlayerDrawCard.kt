@@ -35,6 +35,27 @@ data class CardItemViewModel(
 
 @Composable
 fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
+    val bg = with(viewModel.role.value.role) {
+        when {
+           isWolf() && !isWolfAndAddsWolf() -> MaterialTheme.colorScheme.onPrimaryContainer
+            isVillager() && !isVillagerAndAddsWolf()-> MaterialTheme.colorScheme.primaryContainer
+            isWolfAndAddsWolf() || isVillagerAndAddsWolf()-> MaterialTheme.colorScheme.secondaryContainer
+            isSolo() -> MaterialTheme.colorScheme.tertiaryContainer
+            else -> MaterialTheme.colorScheme.surfaceBright
+        }
+    }
+
+    val tx = with(viewModel.role.value.role)  {
+        when {
+            isWolf() && !isWolfAndAddsWolf() -> MaterialTheme.colorScheme.primaryContainer
+            isVillager() && !isVillagerAndAddsWolf()-> MaterialTheme.colorScheme.onPrimaryContainer
+            isWolfAndAddsWolf() || isVillagerAndAddsWolf()-> MaterialTheme.colorScheme.onSecondaryContainer
+            isSolo() -> MaterialTheme.colorScheme.onTertiaryContainer
+            else -> MaterialTheme.colorScheme.onSurface
+        }
+    }
+
+
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -47,11 +68,12 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
                 .height(72.dp)
                 .fillMaxWidth()
                 .background(
-                    if (viewModel.isClickable.value) {
+                    bg
+                    /*if (viewModel.isClickable.value) {
                         MaterialTheme.colorScheme.primaryContainer
                     } else {
                         MaterialTheme.colorScheme.onPrimaryContainer
-                    }
+                    }*/
                 )
         ) {
             ConstraintLayout(modifier = Modifier.fillMaxSize()) {
@@ -87,11 +109,11 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
                             }
                         },
                     style = MaterialTheme.typography.titleLarge,
-                    color = if (viewModel.isClickable.value) {
+                    color = tx/*if (viewModel.isClickable.value) {
                         MaterialTheme.colorScheme.onPrimaryContainer
                     } else {
                         MaterialTheme.colorScheme.primaryContainer
-                    },
+                    }*/,
                 )
                 if (viewModel.isDebug.value) {
                     Text(
@@ -110,11 +132,11 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
                                 }
                             },
                         style = MaterialTheme.typography.labelMedium,
-                        color = if (viewModel.isClickable.value) {
+                        color = tx /*if (viewModel.isClickable.value) {
                             MaterialTheme.colorScheme.onPrimaryContainer
                         } else {
                             MaterialTheme.colorScheme.primaryContainer
-                        },
+                        },*/
                     )
                 }
             }

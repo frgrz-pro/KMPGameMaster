@@ -7,19 +7,19 @@ import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.coroutines.launch
 import org.frgrz.kmpgamemaster.core.moveItemsBeforeIndexToEnd
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.GetGameSettingsUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetGameConfigurationUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GenerateRoleDeckUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.CardItemViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGPlayerNameViewModel
 
 class WGGameViewModel(
-    getGameSettingsUseCase: GetGameSettingsUseCase,
+    getGameConfigurationUseCase: GetGameConfigurationUseCase,
     getRoleDeckUseCase: GenerateRoleDeckUseCase,
 ) : ScreenModel {
 
     private val isDebug = mutableStateOf(true)
 
-    private val gameSettings = getGameSettingsUseCase.invoke()
+    private val gameConfiguration = getGameConfigurationUseCase.invoke()
 
     private val _cardItems = mutableStateListOf<CardItemViewModel>()
     val cardItems: List<CardItemViewModel> = _cardItems
@@ -40,10 +40,7 @@ class WGGameViewModel(
 
     init {
         screenModelScope.launch {
-            getRoleDeckUseCase.setRoles(
-                gameSettings.value.selectedRoles, gameSettings.value.players.size,
-                gameSettings.value.wolvesCount
-            )
+            getRoleDeckUseCase.setGameConfiguration(gameConfiguration.value)
 
             val deck = getRoleDeckUseCase.generateRoleDeck()
             roles = deck.roles
@@ -63,10 +60,10 @@ class WGGameViewModel(
         }
     }
 
-    private fun getStartingPlayerIndex() = (0..gameSettings.value.players.size).random()
+    private fun getStartingPlayerIndex() = (0..gameConfiguration.value.players.size).random()
 
     private fun orderPlayerList() =
-        gameSettings.value.players.moveItemsBeforeIndexToEnd(startingPlayerIndex)
+        gameConfiguration.value.players.moveItemsBeforeIndexToEnd(startingPlayerIndex)
 
     private fun onRoleDrawn(cardId: Int) {
         if (cardId in _cardItems.indices && _cardItems[cardId].isClickable.value) {
@@ -89,7 +86,7 @@ class WGGameViewModel(
     }
 
     private fun createCardItems(): List<CardItemViewModel> {
-        return List(gameSettings.value.players.size) { index ->
+        return List(gameConfiguration.value.players.size) { index ->
             CardItemViewModel(
                 index,
                 role = mutableStateOf(roles[index]),

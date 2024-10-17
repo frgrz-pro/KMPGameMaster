@@ -1,7 +1,8 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases
 
 
-class ValidateEntryUseCase {
+class PlayerNameValidationUseCase {
+
     operator fun invoke(input:String, onValidation: (Boolean) -> Unit) {
         onValidation.invoke(input.length >= MIN_NAME_LENGTH)
     }

@@ -7,17 +7,17 @@ import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleFilterMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleLocalDataSource
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleLocalDataSourceImpl
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleModelMapper
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.db.GetRolesForFilterUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.db.GetRoleSelectionUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRolesForFilterUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleSelectionUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepository
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepositoryImpl
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.ValidateEntryUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.CacheGameSettingsUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.CachePlayersUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.GetCachedPlayersUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.GetGameSettingsUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.PlayerNameValidationUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CacheGameConfigurationUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CachePlayersUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetCachedPlayersUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetGameConfigurationUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GenerateRoleDeckUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.db.UpdateRoleSelectionUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.UpdateRoleSelectionUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.CategorizeRolesUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.MapRolesToViewModelUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectExtraRolesUseCase
@@ -65,8 +65,8 @@ val wgModule = module {
 
     factory { CachePlayersUseCase(repository = get()) }
     factory { GetCachedPlayersUseCase(repository = get()) }
-    factory { CacheGameSettingsUseCase(repository = get()) }
-    factory { GetGameSettingsUseCase(repository = get()) }
+    factory { CacheGameConfigurationUseCase(repository = get()) }
+    factory { GetGameConfigurationUseCase(repository = get()) }
 
     //region Deck UseCases
 
@@ -91,7 +91,7 @@ val wgModule = module {
 
     //region Other Use Cases
 
-    factory { ValidateEntryUseCase() }
+    factory { PlayerNameValidationUseCase() }
 
     //region ViewModels
 
@@ -119,7 +119,7 @@ val wgModule = module {
 
     factory {
         WGGameViewModel(
-            getGameSettingsUseCase = get(),
+            getGameConfigurationUseCase = get(),
             getRoleDeckUseCase = get()
         )
     }

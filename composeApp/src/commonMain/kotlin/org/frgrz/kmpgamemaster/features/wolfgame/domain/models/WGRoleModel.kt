@@ -105,6 +105,13 @@ enum class WGRole {
         )
     }
 
+    fun isWolfAndAddsWolf():Boolean {
+        return this in listOf(
+            BLACK_WOLF,
+            WOLF_KITTEN,
+        )
+    }
+
     fun isVillager(): Boolean {
         return this in listOf(
             ASTRONOMER,
@@ -117,7 +124,6 @@ enum class WGRole {
             DEFLECTOR,
             DEMONIAC_SOUL,
             DRUGGIST,
-            DUELISTS,
             FOX,
             GENTLEMAN,
             GUARD,
@@ -135,15 +141,19 @@ enum class WGRole {
             SEER,
             SORCERER,
             THIEF,
-            THREE_BROTHERS,
-            TRAITOR,
-            TWO_SISTERS,
             VILLAGE_ELDER,
             WHITE_SOOTHSAYER,
-            WILD_KID,
             WIZARD,
-            WOLF_FAN,
+        )
+    }
+
+    fun isVillagerAndAddsWolf():Boolean {
+        return this in listOf(
             WOLF_DOG,
+            WOLF_FAN,
+            WILD_KID,
+            GENTLEMAN,
+            TRAITOR
         )
     }
 
@@ -156,8 +166,7 @@ enum class WGRole {
             CORRUPTER,
             GURU,
             HITMAN,
-            PIED_PIPER,
-            TRAITOR
+            PIED_PIPER
         )
     }
 
@@ -169,18 +178,4 @@ enum class WGRole {
         )
     }
 
-    fun addsWolf(): Boolean {
-        return this in listOf(
-            WOLF_KITTEN,
-            WOLF_DOG,
-            WOLF_FAN,
-            BLACK_WOLF,
-            WILD_KID,
-            GENTLEMAN
-        )
-    }
-
-    companion object {
-        val DEFAULT = PEASANT
-    }
 }

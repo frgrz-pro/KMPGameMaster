@@ -18,3 +18,5 @@ fun <T> List<T>.moveItemsBeforeIndexToEnd(randomIndex: Int): List<T> {
     }
     return this.subList(randomIndex, this.size) + this.subList(0, randomIndex)
 }
+
+fun Boolean.toInt() = if (this) 1 else 0

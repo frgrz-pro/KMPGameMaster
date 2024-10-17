@@ -1,14 +1,14 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck
 
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.GameConfiguration
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.deck.RoleCategories
 
 
 class SelectExtraRolesUseCase {
-    operator fun invoke(selectedRoles: List<WGRole>, roleCategories: RoleCategories): List<WGRole> {
+    operator fun invoke(config: GameConfiguration): List<WGRole> {
         val extraRolesCount = when {
-            selectedRoles.contains(WGRole.THIEF) -> 2
-            selectedRoles.contains(WGRole.COMEDIAN) -> 3
+            config.roles.contains(WGRole.THIEF) -> 2
+            config.roles.contains(WGRole.COMEDIAN) -> 3
             else -> 0
         }
 
@@ -17,9 +17,9 @@ class SelectExtraRolesUseCase {
         repeat(extraRolesCount) {
             result.add(
                 drawRandom(
-                    selectedRoles,
-                    roleCategories.villagers.filterNot {
-                        (it.addsWolf() || it.isTeam()) && it in result
+                    config.roles,
+                    config.roleCategories.villagers.filterNot {
+                        (it.isVillagerAndAddsWolf() || it.isTeam()) && it in result
                     }
                 )
             )

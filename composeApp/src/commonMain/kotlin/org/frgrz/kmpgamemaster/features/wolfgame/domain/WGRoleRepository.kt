@@ -9,11 +9,13 @@ import org.frgrz.kmpgamemaster.features.wolfgame.data.WGGameCache
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleLocalDataSource
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleFilterMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleModelMapper
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.GameSettings
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.GameConfiguration
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleFilter
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 
+
+//TODO Split ? Create another repository for game configuration
 interface WGRoleRepository {
 
     fun getAllChecked(isChecked: Boolean): Flow<RequestState<List<WGRoleModel>>>
@@ -22,13 +24,13 @@ interface WGRoleRepository {
 
     fun updateRoleSelection(model: WGRoleModel, isChecked: Boolean)
 
-    fun cachePlayers(players: List<String>)
+    fun cachePlayerConfiguration(players: List<String>)
 
-    fun readCachePlayers(): StateFlow<List<String>>
+    fun getCachePlayerConfiguration(): StateFlow<List<String>>
 
-    fun saveGameSettings(roles:List<WGRole>, wolvesCount: Int)
+    fun cacheRoleConfiguration(roles:List<WGRole>, wolvesCount: Int)
 
-    fun getGameSettings(): StateFlow<GameSettings>
+    fun getCacheGameConfiguration(): StateFlow<GameConfiguration>
 }
 
 class WGRoleRepositoryImpl(
@@ -70,21 +72,20 @@ class WGRoleRepositoryImpl(
 
     }
 
-    override fun cachePlayers(players: List<String>) {
-        cache.savePlayers(players)
-    }
-
-    override fun readCachePlayers(): StateFlow<List<String>>  {
+    override fun getCachePlayerConfiguration(): StateFlow<List<String>>  {
         return cache.players
     }
 
-    override fun saveGameSettings(roles: List<WGRole>, wolvesCount: Int) {
-        cache.saveWolvesCount(wolvesCount)
-        cache.saveGameRoles(roles)
+    override fun getCacheGameConfiguration(): StateFlow<GameConfiguration> {
+        return cache.gameConfiguration
     }
 
-    override fun getGameSettings(): StateFlow<GameSettings> {
-        return cache.gameSettings
+    override fun cachePlayerConfiguration(players: List<String>) {
+        cache.savePlayers(players)
+    }
+
+    override fun cacheRoleConfiguration(roles: List<WGRole>, wolvesCount: Int) {
+        cache.saveRolesConfiguration(roles, wolvesCount)
     }
 
 }

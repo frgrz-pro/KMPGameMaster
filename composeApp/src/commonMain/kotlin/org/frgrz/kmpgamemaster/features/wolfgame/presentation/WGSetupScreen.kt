@@ -83,7 +83,7 @@ class WGSetupScreen : Screen {
                             val icon = rememberVectorPainter(image = IconPack.Remove)
                             Icon(
                                 painter = icon,
-                                contentDescription = "Remove"
+                                contentDescription = "Remove"  //TODO String resource
                             )
                         }
 
@@ -100,7 +100,7 @@ class WGSetupScreen : Screen {
                             val icon = rememberVectorPainter(image = Icons.Filled.Add)
                             Icon(
                                 painter = icon,
-                                contentDescription = "Remove"
+                                contentDescription = "Remove"  //TODO String resource
                             )
                         }
                     }
@@ -111,7 +111,7 @@ class WGSetupScreen : Screen {
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
-                            text = "Rôles",
+                            text = "Rôles",  //TODO String resource
                             modifier = Modifier.padding(end = 8.dp),
                             style = MaterialTheme.typography.headlineMedium
                         )
@@ -125,6 +125,7 @@ class WGSetupScreen : Screen {
                         onSuccess = { items ->
                             if (items.isNotEmpty()) {
 
+                                //TODO Move logic to VM
                                 val exceedDisplayableLimit = items.size > 15
                                 val extraItems = items.size - 15
                                 val displayedItems = if (exceedDisplayableLimit) {
@@ -174,7 +175,7 @@ class WGSetupScreen : Screen {
                             .padding(horizontal = 6.dp)
                     ) {
                         Text(
-                            text = "Modifier les joueurs",
+                            text = "Modifier les joueurs",  //TODO String resource
                             style = MaterialTheme.typography.titleMedium
                         )
                     }

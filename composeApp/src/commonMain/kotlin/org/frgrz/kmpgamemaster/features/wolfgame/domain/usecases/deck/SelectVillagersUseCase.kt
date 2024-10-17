@@ -1,34 +1,35 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck
 
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.GameConfiguration
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleCategories
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.WGRules
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.deck.RoleCategories
+
 
 class SelectVillagersUseCase {
-    operator fun invoke(
-        villagersCount: Int,
-        roleCategories: RoleCategories,
-        selectedRoles: List<WGRole>,
-        playersCount: Int,
-        wolvesCount: Int
-    ): List<WGRole> {
+    operator fun invoke(config: GameConfiguration, hasHiddenWolf:Boolean): List<WGRole> {
         val result = mutableListOf<WGRole>()
-        repeat(villagersCount) {
+        repeat(config.villagersCount) {
             result.add(
                 if (result.none { it == WGRole.PEASANT }) {
                     WGRole.PEASANT
                 } else {
                     drawRandom(
-                        result,
-                        if (canAddHiddenWolf(playersCount,wolvesCount, roleCategories)) {
-                            roleCategories.villagers.filterNot {
+                        if (canAddHiddenWolf(
+                                config.playersCount,
+                                config.wolvesCount,
+                            result,
+                            hasHiddenWolf
+                            )
+                        ) {
+                            config.roleCategories.villagers.filterNot {
                                 it in result
                             }
                         } else {
-                            roleCategories.villagers.filterNot {
-                                it.addsWolf() && it in result
+                            config.roleCategories.villagers.filterNot {
+                                it.isVillagerAndAddsWolf() && it in result
                             }
-                        }
+                        },result
                     )
                 }
             )
@@ -41,11 +42,13 @@ class SelectVillagersUseCase {
     private fun canAddHiddenWolf(
         playersCount: Int,
         wolvesCount: Int,
-        availableRoles: RoleCategories,
+        selectedRoles: List<WGRole>,
+        hasHiddenWolf: Boolean
     ): Boolean {
         val canAddWolves = WGRules.canAddWolves(playersCount, wolvesCount)
-        val hasHiddenWolves = availableRoles.villagers.any { it.addsWolf() } //TODO Ou il y a un transformer dans les loups
-        return canAddWolves && !hasHiddenWolves
+        val hasHiddenWolves =
+            selectedRoles.any { it.isVillagerAndAddsWolf() }
+        return canAddWolves && !hasHiddenWolves && !hasHiddenWolf
     }
 
     private fun drawRandom(set: List<WGRole>, selectedRoles: List<WGRole>): WGRole {

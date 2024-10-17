@@ -3,12 +3,13 @@ package org.frgrz.kmpgamemaster.features.wolfgame.presentation
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.PlayerNameValidationUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.WGRules
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.cache.CachePlayersUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CachePlayersUseCase
 
 class WGPlayersViewModel(
     private val cachePlayersUseCase: CachePlayersUseCase,
-    private val validateEntryUseCase:ValidateEntryUseCase
+    private val validateEntryUseCase: PlayerNameValidationUseCase
 ) : ScreenModel {
 
     private val _entries = mutableStateListOf<String>()
@@ -57,4 +58,3 @@ class WGPlayersViewModel(
     }
 
 }
-

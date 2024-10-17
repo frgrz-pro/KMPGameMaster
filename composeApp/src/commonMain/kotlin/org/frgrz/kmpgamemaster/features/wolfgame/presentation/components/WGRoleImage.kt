@@ -171,7 +171,7 @@ fun WGRoleImageMedium(role: WGRole, modifier: Modifier) {
 
     Image(
         painter = imagePainter,
-        contentDescription = "My Image", //TODO
+        contentDescription = "My Image", //TODO String resource
         modifier = modifier
     )
 }
@@ -222,7 +222,7 @@ fun WGRoleImageLarge(role: WGRole, modifier: Modifier) {
         WGRole.THREE_BROTHERS -> Res.drawable.three_brothers_large
         WGRole.TRAITOR -> Res.drawable.traitor_large
         WGRole.TWO_SISTERS -> Res.drawable.two_sisters_large
-        WGRole.VILLAGE_ELDER -> Res.drawable.village_elder_medium //TODO Large
+        WGRole.VILLAGE_ELDER -> Res.drawable.village_elder_medium //TODO Large asset resource
         WGRole.WHITE_SOOTHSAYER -> Res.drawable.white_soothsayer_large
         WGRole.WHITE_WOLF -> Res.drawable.white_wolf_large
         WGRole.WILD_KID -> Res.drawable.wild_kid_large
@@ -237,7 +237,7 @@ fun WGRoleImageLarge(role: WGRole, modifier: Modifier) {
 
     Image(
         painter = imagePainter,
-        contentDescription = "My Image", //TODO
+        contentDescription = "My Image", //TODO String resource
         modifier = modifier
     )
 }

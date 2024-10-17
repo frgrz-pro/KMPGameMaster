@@ -2,6 +2,7 @@ package org.frgrz.kmpgamemaster.features.wolfgame.domain.models
 
 import org.jetbrains.compose.resources.StringResource
 
+
 data class WGRoleAction(
     val name: StringResource,
     val desc: StringResource,
@@ -10,6 +11,7 @@ data class WGRoleAction(
     val condition: WGRoleActionCondition = WGRoleActionCondition.NONE,
     val cancels: WGRoleActionCancel = WGRoleActionCancel.NONE,
 )
+
 
 enum class WGRoleActionType {
     SPY,
@@ -30,6 +32,7 @@ enum class WGRoleActionType {
     REFILL_POTION
 }
 
+
 enum class WGRoleActionFrequency {
     EVERY_NIGHT,
     EVERY_TWO_NIGHTS,
@@ -43,12 +46,14 @@ enum class WGRoleActionFrequency {
     UNTIL_FAIL
 }
 
+
 enum class WGRoleActionCondition {
     NONE,
     IF_NO_WOLF_DEAD,
     IF_FIRST_VOTE,
     IF_NOT_SUCCESSFUL_NIGHT_BEFORE
 }
+
 
 enum class WGRoleActionCancel {
     NONE,
