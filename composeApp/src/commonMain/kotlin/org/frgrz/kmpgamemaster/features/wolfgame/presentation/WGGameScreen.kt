@@ -19,7 +19,7 @@ import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGPlayerDrawCard
-import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGPlayerNameDialog
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.SimpleTextDialog
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleDialog
 import org.frgrz.kmpgamemaster.material.components.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.Eye
@@ -46,7 +46,9 @@ class WGGameScreen : Screen {
                         }
                         IconButton(
                             onClick = {
-                                navigator.push(WGGameLogScreen())
+                                viewModel.onAccessLogClicked {
+                                    navigator.push(WGGameLogScreen())
+                                }
                             },
                         ) {
                             Icon(imageVector = IconPack.Notes, contentDescription = "")
@@ -81,13 +83,17 @@ class WGGameScreen : Screen {
 
 
         if (viewModel.isPlayerDialogVisible.value) {
-            WGPlayerNameDialog(viewModel.playerDialogViewModel)
+            SimpleTextDialog(viewModel.playerDialogViewModel)
         }
 
         if (viewModel.isRoleDialogVisible.value) {
             WGRoleDialog(viewModel.selectedRole!!) {
                 viewModel.isRoleDialogVisible.value = false
             }
+        }
+
+        if(viewModel.isWarningDialogVisible.value) {
+            SimpleTextDialog(viewModel.warningDialogViewModel)
         }
     }
 }

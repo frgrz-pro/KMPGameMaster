@@ -15,7 +15,7 @@ class WGGameLogScreen : Screen {
     override fun Content() {
         Scaffold(
             topBar = {
-                TopAppBar(title = { Text("Game") })
+                TopAppBar(title = { Text("Game Log") })
             },
             content = { _ ->
             }

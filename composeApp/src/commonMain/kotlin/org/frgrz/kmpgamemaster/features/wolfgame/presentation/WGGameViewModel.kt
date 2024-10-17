@@ -11,7 +11,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetGameConfigurationUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GenerateRoleDeckUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.CardItemViewModel
-import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGPlayerNameViewModel
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.SimpleTextDialogViewModel
 
 class WGGameViewModel(
     getGameConfigurationUseCase: GetGameConfigurationUseCase,
@@ -19,7 +19,8 @@ class WGGameViewModel(
 ) : ScreenModel {
 
     private val isDebug = mutableStateOf(true)
-    private val state = mutableStateOf(State.NORMAL)
+    private val state = mutableStateOf(if (isDebug.value) State.REVEAL else State.NORMAL)
+
 
     private val gameConfiguration = getGameConfigurationUseCase.invoke()
     private var deck = RoleDeck()
@@ -34,12 +35,13 @@ class WGGameViewModel(
     private var orderedPlayers = orderPlayerList()
     private var playerToCall = orderedPlayers.first()
 
-    var playerDialogViewModel = WGPlayerNameViewModel(playerToCall) {
+    var playerDialogViewModel = SimpleTextDialogViewModel(playerToCall) {
         isPlayerDialogVisible.value = false
     }
 
     private var roles: List<WGRoleModel> = listOf()
     var selectedRole: WGRoleModel? = null
+
 
     init {
         screenModelScope.launch {
@@ -91,7 +93,7 @@ class WGGameViewModel(
         orderedPlayers = orderedPlayers.drop(1)
         if (orderedPlayers.isNotEmpty()) {
             playerToCall = orderedPlayers.first()
-            playerDialogViewModel = WGPlayerNameViewModel(playerToCall) {
+            playerDialogViewModel = SimpleTextDialogViewModel(playerToCall) {
                 isPlayerDialogVisible.value = false
             }
             isPlayerDialogVisible.value = true
@@ -110,9 +112,34 @@ class WGGameViewModel(
         }
     }
 
+    private var revealClickCount = 0
+    val isWarningDialogVisible = mutableStateOf(false)
+    val warningDialogViewModel = SimpleTextDialogViewModel("Accès réservé au maitre du jeu") {
+        isWarningDialogVisible.value = false
+    }
+
+    private var accessLogClickCount = 0
+
+    fun onAccessLogClicked(onAccessAuthorized: () -> Unit) {
+        accessLogClickCount++
+        if (accessLogClickCount == 5 || isDebug.value) {
+            accessLogClickCount = 0
+            onAccessAuthorized.invoke()
+        } else {
+            isWarningDialogVisible.value = true
+        }
+
+    }
+
     fun toggleState() {
         if (state.value == State.NORMAL) {
-            state.value = State.REVEAL
+            revealClickCount++
+            if (revealClickCount == 5 || isDebug.value) {
+                revealClickCount = 0
+                state.value = State.REVEAL
+            } else {
+                isWarningDialogVisible.value = true
+            }
         } else {
             state.value = State.NORMAL
         }

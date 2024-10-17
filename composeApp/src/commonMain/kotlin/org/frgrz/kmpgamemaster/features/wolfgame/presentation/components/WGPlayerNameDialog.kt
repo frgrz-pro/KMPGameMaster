@@ -25,15 +25,27 @@ import org.frgrz.kmpgamemaster.material.theme.AppTheme
 import org.jetbrains.compose.resources.stringResource
 
 
-data class WGPlayerNameViewModel(
-    val name: String,
+data class SimpleTextDialogViewModel(
+    val text: String,
+    var dismissClickCount: Int = 1,
     val onDismiss: () -> Unit,
-)
+) {
+
+    private var clickCount = 0
+
+    fun dismiss() {
+        clickCount++
+        if(clickCount >= dismissClickCount) {
+            clickCount = 0
+            onDismiss.invoke()
+        }
+    }
+}
 
 @Composable
-fun WGPlayerNameDialog(viewModel: WGPlayerNameViewModel) {
+fun SimpleTextDialog(viewModel: SimpleTextDialogViewModel) {
     Dialog(
-        onDismissRequest = viewModel.onDismiss,
+        onDismissRequest = {viewModel.dismiss()},
         properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
     ) {
         Card(
@@ -45,14 +57,14 @@ fun WGPlayerNameDialog(viewModel: WGPlayerNameViewModel) {
                     .padding(16.dp)
             ) {
                 Text(
-                    text = viewModel.name,
+                    text = viewModel.text,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
                     style = MaterialTheme.typography.headlineSmall
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = viewModel.onDismiss,
+                    onClick = { viewModel.dismiss() },
                     modifier = Modifier.align(Alignment.CenterHorizontally)
                 ) {
                     Text(
@@ -69,9 +81,9 @@ fun WGPlayerNameDialog(viewModel: WGPlayerNameViewModel) {
 @Preview
 fun WGPlayerNameDialog_Preview() {
     AppTheme {
-        WGPlayerNameDialog(
-            WGPlayerNameViewModel(
-                name = "Player 1"
+        SimpleTextDialog(
+            SimpleTextDialogViewModel(
+                text = "Player 1"
             ) {}
         )
     }
