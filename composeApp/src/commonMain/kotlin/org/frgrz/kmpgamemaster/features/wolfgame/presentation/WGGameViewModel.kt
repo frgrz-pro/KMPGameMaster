@@ -6,6 +6,7 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.coroutines.launch
 import org.frgrz.kmpgamemaster.core.moveItemsBeforeIndexToEnd
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleDeck
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetGameConfigurationUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GenerateRoleDeckUseCase
@@ -20,6 +21,7 @@ class WGGameViewModel(
     private val isDebug = mutableStateOf(true)
 
     private val gameConfiguration = getGameConfigurationUseCase.invoke()
+    private var deck = RoleDeck()
 
     private val _cardItems = mutableStateListOf<CardItemViewModel>()
     val cardItems: List<CardItemViewModel> = _cardItems
@@ -42,12 +44,14 @@ class WGGameViewModel(
         screenModelScope.launch {
             getRoleDeckUseCase.setGameConfiguration(gameConfiguration.value)
 
-            val deck = getRoleDeckUseCase.generateRoleDeck()
+            deck = getRoleDeckUseCase.generateRoleDeck()
             roles = deck.roles
-            _cardItems.addAll(createCardItems())
+            _cardItems.addAll(createPlayerCardItems())
 
             if (isDebug.value) {
                 autoDealRoles()
+
+
             }
         }
     }
@@ -58,6 +62,18 @@ class WGGameViewModel(
             _cardItems[index].role.value = roles[index]
             _cardItems[index].isClickable.value = false
         }
+
+        if (deck.extraRoles.isNotEmpty()) {
+            _cardItems.addAll(addExtraRolesCardItems())
+
+            for (i in roles.size  until _cardItems.size) {
+                _cardItems[i].playerName.value = "Extra #${i-roles.size+1}"
+                _cardItems[i].role.value = deck.extraRoles[i - roles.size]
+                _cardItems[i].isClickable.value = false
+            }
+        }
+
+
     }
 
     private fun getStartingPlayerIndex() = (0..gameConfiguration.value.players.size).random()
@@ -85,7 +101,19 @@ class WGGameViewModel(
         }
     }
 
-    private fun createCardItems(): List<CardItemViewModel> {
+    private fun addExtraRolesCardItems(): List<CardItemViewModel> {
+        return List(deck.extraRoles.size) { index ->
+            CardItemViewModel(
+                index + _cardItems.size,
+                role = mutableStateOf(deck.extraRoles[index]),
+                isDebug = isDebug,
+                onCardClicked = {},
+                isExtraRole = true
+            )
+        }
+    }
+
+    private fun createPlayerCardItems(): List<CardItemViewModel> {
         return List(gameConfiguration.value.players.size) { index ->
             CardItemViewModel(
                 index,

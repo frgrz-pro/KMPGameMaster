@@ -30,12 +30,27 @@ class GenerateRoleDeckUseCase(
         val solo = selectSoloUseCase(config)
         solo?.let { selectedRoles.add(it) }
 
-        selectedRoles.addAll(selectVillagersUseCase(config,selectedRoles.any { it.isWolfAndAddsWolf() }), )
+        selectedRoles.addAll(
+            selectVillagersUseCase(
+                config,
+                selectedRoles.any { it.isWolfAndAddsWolf() }),
+        )
 
+        val extraRoles = mutableListOf<WGRole>()
+        if (selectedRoles.any { it.isExtraRole() }) {
+            val rolesWithExtra = selectedRoles.first { it.isExtraRole() }
+            extraRoles.addAll(
+                selectExtraRolesUseCase(
+                    config,
+                    selectedRoles.any { it.isWolfAndAddsWolf() },
+                    rolesWithExtra
+                )
+            )
+        }
 
         return RoleDeck(
             mapRolesToViewModelUseCase(selectedRoles.shuffled()),
-            mapRolesToViewModelUseCase(selectExtraRolesUseCase(config))
+            mapRolesToViewModelUseCase(extraRoles)
         )
     }
 }

@@ -178,4 +178,11 @@ enum class WGRole {
         )
     }
 
+    fun isExtraRole():Boolean {
+        return this in listOf(
+            THIEF,
+            COMEDIAN
+        )
+    }
+
 }

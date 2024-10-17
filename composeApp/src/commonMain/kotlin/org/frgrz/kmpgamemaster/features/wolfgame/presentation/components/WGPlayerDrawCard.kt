@@ -31,27 +31,48 @@ data class CardItemViewModel(
     val role: MutableState<WGRoleModel>,
     val onCardClicked: (Int) -> Unit,
     val isDebug: MutableState<Boolean>,
+    val isExtraRole: Boolean = false,
 )
 
 @Composable
 fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
-    val bg = with(viewModel.role.value.role) {
-        when {
-           isWolf() && !isWolfAndAddsWolf() -> MaterialTheme.colorScheme.onPrimaryContainer
-            isVillager() && !isVillagerAndAddsWolf()-> MaterialTheme.colorScheme.primaryContainer
-            isWolfAndAddsWolf() || isVillagerAndAddsWolf()-> MaterialTheme.colorScheme.secondaryContainer
-            isSolo() -> MaterialTheme.colorScheme.tertiaryContainer
-            else -> MaterialTheme.colorScheme.surfaceBright
+    val bg = if (viewModel.isDebug.value) {
+        with(viewModel.role.value.role) {
+            when {
+                isWolf() && !isWolfAndAddsWolf() -> MaterialTheme.colorScheme.onPrimaryContainer
+                isVillager() && !(isVillagerAndAddsWolf() || isExtraRole()) -> MaterialTheme.colorScheme.primaryContainer
+                isVillager() && isVillagerAndAddsWolf() -> MaterialTheme.colorScheme.primary
+                (isVillager() && isExtraRole()) || viewModel.isExtraRole -> MaterialTheme.colorScheme.secondary
+                isWolfAndAddsWolf() || isVillagerAndAddsWolf() -> MaterialTheme.colorScheme.secondaryContainer
+                isSolo() -> MaterialTheme.colorScheme.tertiaryContainer
+                else -> MaterialTheme.colorScheme.surfaceBright
+            }
+        }
+    } else {
+        if (viewModel.isClickable.value) {
+            MaterialTheme.colorScheme.primaryContainer
+        } else {
+            MaterialTheme.colorScheme.onPrimaryContainer
         }
     }
 
-    val tx = with(viewModel.role.value.role)  {
-        when {
-            isWolf() && !isWolfAndAddsWolf() -> MaterialTheme.colorScheme.primaryContainer
-            isVillager() && !isVillagerAndAddsWolf()-> MaterialTheme.colorScheme.onPrimaryContainer
-            isWolfAndAddsWolf() || isVillagerAndAddsWolf()-> MaterialTheme.colorScheme.onSecondaryContainer
-            isSolo() -> MaterialTheme.colorScheme.onTertiaryContainer
-            else -> MaterialTheme.colorScheme.onSurface
+    val tx = if (viewModel.isDebug.value) {
+        with(viewModel.role.value.role) {
+            when {
+                isWolf() && !isWolfAndAddsWolf() -> MaterialTheme.colorScheme.primaryContainer
+                isVillager() && !(isVillagerAndAddsWolf() || isExtraRole()) -> MaterialTheme.colorScheme.onPrimaryContainer
+                isVillager() && isVillagerAndAddsWolf() -> MaterialTheme.colorScheme.onPrimary
+                (isVillager() && isExtraRole()) || viewModel.isExtraRole -> MaterialTheme.colorScheme.onSecondary
+                isWolfAndAddsWolf() || isVillagerAndAddsWolf() -> MaterialTheme.colorScheme.onSecondaryContainer
+                isSolo() -> MaterialTheme.colorScheme.onTertiaryContainer
+                else -> MaterialTheme.colorScheme.onSurface
+            }
+        }
+    } else {
+        if (viewModel.isClickable.value) {
+            MaterialTheme.colorScheme.onPrimaryContainer
+        } else {
+            MaterialTheme.colorScheme.primaryContainer
         }
     }
 
@@ -67,14 +88,7 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
             modifier = Modifier
                 .height(72.dp)
                 .fillMaxWidth()
-                .background(
-                    bg
-                    /*if (viewModel.isClickable.value) {
-                        MaterialTheme.colorScheme.primaryContainer
-                    } else {
-                        MaterialTheme.colorScheme.onPrimaryContainer
-                    }*/
-                )
+                .background(bg)
         ) {
             ConstraintLayout(modifier = Modifier.fillMaxSize()) {
                 val text = createRef()
@@ -102,18 +116,14 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
                             top.linkTo(parent.top)
                             end.linkTo(parent.end)
                             bottom.linkTo(parent.bottom)
-                            if(viewModel.isDebug.value) {
+                            if (viewModel.isDebug.value) {
                                 start.linkTo(image.end)
                             } else {
                                 start.linkTo(parent.start)
                             }
                         },
                     style = MaterialTheme.typography.titleLarge,
-                    color = tx/*if (viewModel.isClickable.value) {
-                        MaterialTheme.colorScheme.onPrimaryContainer
-                    } else {
-                        MaterialTheme.colorScheme.primaryContainer
-                    }*/,
+                    color = tx
                 )
                 if (viewModel.isDebug.value) {
                     Text(
@@ -125,7 +135,7 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
                                 end.linkTo(parent.end)
                                 bottom.linkTo(parent.bottom)
                                 verticalBias = 1f
-                                if(viewModel.isDebug.value) {
+                                if (viewModel.isDebug.value) {
                                     start.linkTo(image.end)
                                 } else {
                                     start.linkTo(parent.start)
