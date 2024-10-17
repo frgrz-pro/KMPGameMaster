@@ -6,6 +6,8 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -14,9 +16,14 @@ import androidx.compose.ui.Modifier
 import androidx.constraintlayout.compose.ConstraintLayout
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGPlayerDrawCard
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGPlayerNameDialog
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleDialog
+import org.frgrz.kmpgamemaster.material.components.IconPack
+import org.frgrz.kmpgamemaster.material.components.icons.Eye
+import org.frgrz.kmpgamemaster.material.components.icons.Notes
 
 class WGGameScreen : Screen {
 
@@ -24,11 +31,28 @@ class WGGameScreen : Screen {
     @Composable
     override fun Content() {
 
+        val navigator = LocalNavigator.currentOrThrow
         val viewModel = getScreenModel<WGGameViewModel>()
 
         Scaffold(
             topBar = {
-                TopAppBar(title = { Text("Game") })
+                TopAppBar(
+                    title = { Text("Game") },
+                    actions = {
+                        IconButton(
+                            onClick = { viewModel.toggleState() },
+                        ) {
+                            Icon(imageVector = IconPack.Eye, contentDescription = "")
+                        }
+                        IconButton(
+                            onClick = {
+                                navigator.push(WGGameLogScreen())
+                            },
+                        ) {
+                            Icon(imageVector = IconPack.Notes, contentDescription = "")
+                        }
+                    }
+                )
             },
             content = { innerPadding ->
                 ConstraintLayout(modifier = Modifier.fillMaxSize()) {
@@ -67,9 +91,4 @@ class WGGameScreen : Screen {
         }
     }
 }
-
-
-
-
-
 

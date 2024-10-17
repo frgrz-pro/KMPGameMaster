@@ -25,6 +25,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectSolo
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectVillagersUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectWolvesUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.VerifyRoleCompatibilityUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGGameLogViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGGameViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGSetupViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGPlayersViewModel
@@ -122,6 +123,10 @@ val wgModule = module {
             getGameConfigurationUseCase = get(),
             getRoleDeckUseCase = get()
         )
+    }
+
+    factory {
+        WGGameLogViewModel()
     }
 
 }

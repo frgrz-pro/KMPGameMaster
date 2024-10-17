@@ -19,6 +19,7 @@ class WGGameViewModel(
 ) : ScreenModel {
 
     private val isDebug = mutableStateOf(true)
+    private val state = mutableStateOf(State.NORMAL)
 
     private val gameConfiguration = getGameConfigurationUseCase.invoke()
     private var deck = RoleDeck()
@@ -50,8 +51,6 @@ class WGGameViewModel(
 
             if (isDebug.value) {
                 autoDealRoles()
-
-
             }
         }
     }
@@ -66,14 +65,12 @@ class WGGameViewModel(
         if (deck.extraRoles.isNotEmpty()) {
             _cardItems.addAll(addExtraRolesCardItems())
 
-            for (i in roles.size  until _cardItems.size) {
-                _cardItems[i].playerName.value = "Extra #${i-roles.size+1}"
+            for (i in roles.size until _cardItems.size) {
+                _cardItems[i].playerName.value = "Extra #${i - roles.size + 1}"
                 _cardItems[i].role.value = deck.extraRoles[i - roles.size]
                 _cardItems[i].isClickable.value = false
             }
         }
-
-
     }
 
     private fun getStartingPlayerIndex() = (0..gameConfiguration.value.players.size).random()
@@ -106,10 +103,18 @@ class WGGameViewModel(
             CardItemViewModel(
                 index + _cardItems.size,
                 role = mutableStateOf(deck.extraRoles[index]),
-                isDebug = isDebug,
+                state = state,
                 onCardClicked = {},
                 isExtraRole = true
             )
+        }
+    }
+
+    fun toggleState() {
+        if (state.value == State.NORMAL) {
+            state.value = State.REVEAL
+        } else {
+            state.value = State.NORMAL
         }
     }
 
@@ -118,7 +123,7 @@ class WGGameViewModel(
             CardItemViewModel(
                 index,
                 role = mutableStateOf(roles[index]),
-                isDebug = isDebug,
+                state = state,
                 onCardClicked = { cardId ->
                     if (!isDebug.value) {
                         selectedRole = roles[cardId]
@@ -128,5 +133,9 @@ class WGGameViewModel(
                 }
             )
         }
+    }
+
+    enum class State {
+        NORMAL, REVEAL
     }
 }

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGGameViewModel
 import org.frgrz.kmpgamemaster.material.theme.AppTheme
 
 
@@ -30,22 +32,28 @@ data class CardItemViewModel(
     val isClickable: MutableState<Boolean> = mutableStateOf(true),
     val role: MutableState<WGRoleModel>,
     val onCardClicked: (Int) -> Unit,
-    val isDebug: MutableState<Boolean>,
+    val state: MutableState<WGGameViewModel.State>,
     val isExtraRole: Boolean = false,
 )
 
 @Composable
 fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
-    val bg = if (viewModel.isDebug.value) {
+    val bg = if (viewModel.state.value == WGGameViewModel.State.REVEAL) {
         with(viewModel.role.value.role) {
-            when {
-                isWolf() && !isWolfAndAddsWolf() -> MaterialTheme.colorScheme.onPrimaryContainer
-                isVillager() && !(isVillagerAndAddsWolf() || isExtraRole()) -> MaterialTheme.colorScheme.primaryContainer
-                isVillager() && isVillagerAndAddsWolf() -> MaterialTheme.colorScheme.primary
-                (isVillager() && isExtraRole()) || viewModel.isExtraRole -> MaterialTheme.colorScheme.secondary
-                isWolfAndAddsWolf() || isVillagerAndAddsWolf() -> MaterialTheme.colorScheme.secondaryContainer
-                isSolo() -> MaterialTheme.colorScheme.tertiaryContainer
-                else -> MaterialTheme.colorScheme.surfaceBright
+
+
+            if(viewModel.isExtraRole){
+                MaterialTheme.colorScheme.secondary
+            } else {
+                when {
+                    isWolf() && !isWolfAndAddsWolf() -> MaterialTheme.colorScheme.onPrimaryContainer
+                    isVillager() && !(isVillagerAndAddsWolf() || isExtraRole()) -> MaterialTheme.colorScheme.primaryContainer
+                    isVillager() && isVillagerAndAddsWolf() -> MaterialTheme.colorScheme.primary
+                    (isVillager() && isExtraRole()) || viewModel.isExtraRole -> MaterialTheme.colorScheme.secondary
+                    isWolfAndAddsWolf() || isVillagerAndAddsWolf() -> MaterialTheme.colorScheme.secondaryContainer
+                    isSolo() -> MaterialTheme.colorScheme.tertiaryContainer
+                    else -> MaterialTheme.colorScheme.surfaceBright
+                }
             }
         }
     } else {
@@ -56,16 +64,20 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
         }
     }
 
-    val tx = if (viewModel.isDebug.value) {
+    val tx = if (viewModel.state.value == WGGameViewModel.State.REVEAL) {
         with(viewModel.role.value.role) {
-            when {
-                isWolf() && !isWolfAndAddsWolf() -> MaterialTheme.colorScheme.primaryContainer
-                isVillager() && !(isVillagerAndAddsWolf() || isExtraRole()) -> MaterialTheme.colorScheme.onPrimaryContainer
-                isVillager() && isVillagerAndAddsWolf() -> MaterialTheme.colorScheme.onPrimary
-                (isVillager() && isExtraRole()) || viewModel.isExtraRole -> MaterialTheme.colorScheme.onSecondary
-                isWolfAndAddsWolf() || isVillagerAndAddsWolf() -> MaterialTheme.colorScheme.onSecondaryContainer
-                isSolo() -> MaterialTheme.colorScheme.onTertiaryContainer
-                else -> MaterialTheme.colorScheme.onSurface
+            if(viewModel.isExtraRole){
+                MaterialTheme.colorScheme.onSecondary
+            } else {
+                when {
+                    isWolf() && !isWolfAndAddsWolf() -> MaterialTheme.colorScheme.primaryContainer
+                    isVillager() && !(isVillagerAndAddsWolf() || isExtraRole()) -> MaterialTheme.colorScheme.onPrimaryContainer
+                    isVillager() && isVillagerAndAddsWolf() -> MaterialTheme.colorScheme.onPrimary
+                    (isVillager() && isExtraRole()) || viewModel.isExtraRole -> MaterialTheme.colorScheme.onSecondary
+                    isWolfAndAddsWolf() || isVillagerAndAddsWolf() -> MaterialTheme.colorScheme.onSecondaryContainer
+                    isSolo() -> MaterialTheme.colorScheme.onTertiaryContainer
+                    else -> MaterialTheme.colorScheme.onSurface
+                }
             }
         }
     } else {
@@ -76,13 +88,21 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
         }
     }
 
+    val heightModifier = when {
+        viewModel.state.value == WGGameViewModel.State.NORMAL && viewModel.isExtraRole -> Modifier.height(0.dp)
+        viewModel.state.value == WGGameViewModel.State.NORMAL && !viewModel.isExtraRole -> Modifier.wrapContentHeight()
+        viewModel.state.value == WGGameViewModel.State.REVEAL && viewModel.isExtraRole -> Modifier.wrapContentHeight()
+        viewModel.state.value == WGGameViewModel.State.REVEAL && !viewModel.isExtraRole -> Modifier.wrapContentHeight()
+        else -> Modifier.wrapContentHeight()
+    }
 
     Card(
         modifier = Modifier
             .padding(8.dp)
             .clickable(enabled = viewModel.isClickable.value) {
                 viewModel.onCardClicked(viewModel.id)
-            }
+            }.then(heightModifier)
+
     ) {
         Box(
             modifier = Modifier
@@ -95,7 +115,7 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
                 val image = createRef()
                 val text2 = createRef()
 
-                if (viewModel.isDebug.value) {
+                if (viewModel.state.value == WGGameViewModel.State.REVEAL) {
                     WGRoleImageLarge(
                         role = viewModel.role.value.role,
                         modifier = Modifier.fillMaxHeight()
@@ -116,7 +136,7 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
                             top.linkTo(parent.top)
                             end.linkTo(parent.end)
                             bottom.linkTo(parent.bottom)
-                            if (viewModel.isDebug.value) {
+                            if (viewModel.state.value == WGGameViewModel.State.REVEAL) {
                                 start.linkTo(image.end)
                             } else {
                                 start.linkTo(parent.start)
@@ -125,7 +145,7 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
                     style = MaterialTheme.typography.titleLarge,
                     color = tx
                 )
-                if (viewModel.isDebug.value) {
+                if (viewModel.state.value == WGGameViewModel.State.REVEAL) {
                     Text(
                         text = viewModel.role.value.role.name,
                         textAlign = TextAlign.Center,
@@ -134,7 +154,7 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
                                 top.linkTo(text.bottom)
                                 end.linkTo(parent.end)
                                 bottom.linkTo(parent.bottom)
-                                if (viewModel.isDebug.value) {
+                                if (viewModel.state.value == WGGameViewModel.State.REVEAL) {
                                     start.linkTo(image.end)
                                 } else {
                                     start.linkTo(parent.start)
@@ -149,6 +169,7 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
     }
 }
 
+
 @Composable
 @Preview
 fun WGPlayerDrawCard_Unselected_Preview() {
@@ -160,7 +181,7 @@ fun WGPlayerDrawCard_Unselected_Preview() {
                 isClickable = mutableStateOf(true),
                 role = mutableStateOf(PreviewData.roleModel),
                 onCardClicked = {},
-                isDebug = mutableStateOf(true)
+                state = mutableStateOf(WGGameViewModel.State.NORMAL)
             )
         )
     }
@@ -177,7 +198,7 @@ fun WGPlayerDrawCard_Selected_Preview() {
                 isClickable = mutableStateOf(false),
                 role = mutableStateOf(PreviewData.roleModel),
                 onCardClicked = {},
-                isDebug = mutableStateOf(true)
+                state = mutableStateOf(WGGameViewModel.State.NORMAL)
             )
         )
     }
