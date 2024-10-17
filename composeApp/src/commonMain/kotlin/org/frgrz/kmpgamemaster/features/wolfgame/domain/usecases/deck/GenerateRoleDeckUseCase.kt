@@ -43,7 +43,8 @@ class GenerateRoleDeckUseCase(
                 selectExtraRolesUseCase(
                     config,
                     selectedRoles.any { it.isWolfAndAddsWolf() },
-                    rolesWithExtra
+                    rolesWithExtra,
+                    selectedRoles
                 )
             )
         }

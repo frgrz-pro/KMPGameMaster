@@ -11,6 +11,7 @@ class SelectExtraRolesUseCase {
         config: GameConfiguration,
         hasHiddenWolf: Boolean,
         extraRole: WGRole,
+        selectedRoles: List<WGRole>
     ): List<WGRole> {
         val extraRolesCount = when (extraRole) {
             WGRole.THIEF -> 2
@@ -29,7 +30,8 @@ class SelectExtraRolesUseCase {
                     config.playersCount,
                     config.wolvesCount,
                     hasHiddenWolves,
-                    result
+                    result,
+                    selectedRoles
                 )
             )
         }
@@ -42,12 +44,15 @@ class SelectExtraRolesUseCase {
         playersCount: Int,
         wolvesCount: Int,
         hasHiddenWolf: Boolean,
+        extraRoles: List<WGRole>,
         selectedRoles: List<WGRole>,
     ): WGRole {
         val canAddWolves = WGRules.canAddWolves(playersCount, wolvesCount)
 
         var mySet = set
-        mySet = mySet.filter { it !in selectedRoles }
+        mySet = mySet.filterNot { it in extraRoles }
+
+        mySet = mySet.filterNot { it in selectedRoles }
 
         if (canAddWolves && !hasHiddenWolf) {
             mySet = mySet.filterNot { it.isVillagerAndAddsWolf() }
