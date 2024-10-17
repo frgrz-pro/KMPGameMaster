@@ -46,7 +46,7 @@ class WGRolesScreen : Screen {
                 TopAppBar(title = { Text("Roles") },
                     actions = {
                         IconButton(
-                            onClick = { /* Select All/unselect all */ },
+                            onClick = { viewModel.onToggleAllClicked() },
                         ) {
                             Icon(imageVector = IconPack.SelectAll, contentDescription = "")
                         }
@@ -102,16 +102,15 @@ class WGRolesScreen : Screen {
                     filteredRoles.DisplayResult(
                         onLoading = { /*TODO*/ },
                         onError = { /*TODO*/ },
-                        onSuccess = {
-                            if (it.isNotEmpty()) {
-
+                        onSuccess = { items ->
+                            if (items.isNotEmpty()) {
                                 LazyVerticalGrid(
                                     columns = GridCells.Fixed(3),
                                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                                     verticalArrangement = Arrangement.spacedBy(4.dp),
                                     modifier = Modifier.padding(12.dp)
                                 ) {
-                                    itemsIndexed(it) { _, item ->
+                                    itemsIndexed(items = items, key = { _, item -> item.role }) { _, item ->
                                         WGRoleCard(item) { model, isChecked ->
                                             viewModel.onRoleCheckedChanged(model,isChecked)
                                         }

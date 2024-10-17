@@ -22,6 +22,7 @@ class WGRoleViewModel(
     var selectedFilterIndex = mutableStateOf(0)
     var filters: List<RoleFilter> = RoleFilter.entries
 
+    //TODO Remove Request State
     private var _filteredRoles: MutableState<RequestState<List<WGRoleModel>>> =
         mutableStateOf(RequestState.Idle)
     val filteredRoles: MutableState<RequestState<List<WGRoleModel>>> = _filteredRoles
@@ -49,6 +50,20 @@ class WGRoleViewModel(
     fun onRoleCheckedChanged(role: WGRoleModel, isChecked: Boolean) {
         screenModelScope.launch {
             updateRoleCheckUseCase.invoke(role, isChecked)
+        }
+    }
+
+    fun onToggleAllClicked() {
+        with(_filteredRoles.value.getSuccessData()) {
+            if (any { !it.isSelected }) {
+                forEach { role ->
+                    onRoleCheckedChanged(role, true)
+                }
+            } else {
+                forEach { role ->
+                    onRoleCheckedChanged(role, false)
+                }
+            }
         }
     }
 }
