@@ -131,10 +131,9 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .constrainAs(text2) {
-                                top.linkTo(parent.top)
+                                top.linkTo(text.bottom)
                                 end.linkTo(parent.end)
                                 bottom.linkTo(parent.bottom)
-                                verticalBias = 1f
                                 if (viewModel.isDebug.value) {
                                     start.linkTo(image.end)
                                 } else {
@@ -142,11 +141,7 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
                                 }
                             },
                         style = MaterialTheme.typography.labelMedium,
-                        color = tx /*if (viewModel.isClickable.value) {
-                            MaterialTheme.colorScheme.onPrimaryContainer
-                        } else {
-                            MaterialTheme.colorScheme.primaryContainer
-                        },*/
+                        color = tx
                     )
                 }
             }
