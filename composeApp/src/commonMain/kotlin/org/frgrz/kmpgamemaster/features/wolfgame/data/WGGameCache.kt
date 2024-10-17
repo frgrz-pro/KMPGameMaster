@@ -15,12 +15,8 @@ class WGGameCache {
     private val _players = MutableStateFlow<List<String>>(emptyList())
     val players: StateFlow<List<String>> = _players.asStateFlow()
 
-    init {
-        _players.value = configuration.value.players
-    }
-
     fun savePlayers(players: List<String>) {
-        _players.value = configuration.value.players
+        _players.value = players
         configuration.value.players = players
         configuration.value.playersCount = players.size
     }
