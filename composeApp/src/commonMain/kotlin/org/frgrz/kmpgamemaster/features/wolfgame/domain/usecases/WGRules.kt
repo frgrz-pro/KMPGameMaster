@@ -4,13 +4,12 @@ package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases
 //TODO: transform in use case
 object WGRules {
 
-    const val MAX_PLAYER_COUNT = 18
 
     const val MIN_PLAYER = 5
     const val MIN_WOLVES = 1
 
     const val OPTIMAL_PLAYER_COUNT = 9
-    const val OPTIMAL_WOLVES_COUNT = 2
+    const val MIN_SPECIALISTS = 3
 
     fun getOptimalWolvesCount(playersCount: Int): Int {
         return when {
@@ -32,5 +31,18 @@ object WGRules {
 
     fun canRemoveWolves(wolvesCount: Int): Boolean {
         return wolvesCount > 1
+    }
+
+    fun canRemovePeasant( peasantCount: Int): Boolean {
+        return peasantCount > 1
+    }
+
+    fun canAddPeasant(playersCount: Int, wolvesCount: Int, peasantCount: Int): Boolean {
+       return playersCount - (wolvesCount + MIN_SPECIALISTS +peasantCount) > 0
+    }
+
+    fun getMaxPeasant(playersCount: Int, wolvesCount: Int):Int {
+        return playersCount - (wolvesCount + MIN_SPECIALISTS)
+
     }
 }

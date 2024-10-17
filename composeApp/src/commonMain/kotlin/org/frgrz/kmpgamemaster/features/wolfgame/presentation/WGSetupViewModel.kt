@@ -30,10 +30,28 @@ class WGSetupViewModel(
         mutableStateOf(RequestState.Idle)
     val selectedRoles: MutableState<RequestState<List<WGRoleModel>>> = _selectedRoles
 
-    private var wolvesCount = mutableStateOf(WGRules.OPTIMAL_WOLVES_COUNT)
-    var wolvesLabel = mutableStateOf("${wolvesCount.value} Loups")
-    var canAddWolves = mutableStateOf(true)
-    var canRemoveWolves = mutableStateOf(true)
+    private var wolvesCount = 1
+    private var peasantCount = 1
+
+    val wolvesModel = AddRemoveRowModel(
+        unit = "Loups",
+        canAddRule = { WGRules.canAddWolves(playerCount.value, wolvesCount) },
+        canRemoveRule = { WGRules.canRemoveWolves(wolvesCount) },
+        onCountChanged = {
+            wolvesCount = it
+            if (peasantCount > WGRules.getMaxPeasant(playerCount.value, wolvesCount)) {
+                peasantCount = WGRules.getMaxPeasant(playerCount.value, wolvesCount)
+                peasantModel.updateCount(peasantCount)
+            }
+        }
+    )
+
+    val peasantModel = AddRemoveRowModel(
+        unit = "Paysans",
+        canAddRule = { WGRules.canAddPeasant(playerCount.value, wolvesCount, peasantCount) },
+        canRemoveRule = { WGRules.canRemovePeasant(peasantCount) },
+        onCountChanged = { peasantCount = it }
+    )
 
     init {
         _selectedRoles.value = RequestState.Loading
@@ -49,43 +67,23 @@ class WGSetupViewModel(
                 onPlayerCountChanged(it.size)
             }
         }
+
+        wolvesModel.updateCount(WGRules.getOptimalWolvesCount(playerCount.value))
     }
 
-    fun onAddWolvesClicked() {
-        if (!canAddWolves.value)
-            return
-
-        updateWolvesCount(wolvesCount.value + 1)
-    }
-
-    fun onRemoveWolvesClicked() {
-        if (!canRemoveWolves.value)
-            return
-
-        updateWolvesCount(wolvesCount.value - 1)
-    }
 
     fun saveGameSettings() {
-        cacheGameSettingsUseCase.invoke(selectedRoles.value.getSuccessData(), wolvesCount.value)
+        cacheGameSettingsUseCase.invoke(selectedRoles.value.getSuccessData(), wolvesCount, peasantCount)
     }
 
     private fun onPlayerCountChanged(count: Int) {
         playerCount.value = count
         playerLabel.value = "Joueurs : " + playerCount.value
         canStartGame.value = playerCount.value > WGRules.MIN_PLAYER
-        val optimalWolvesCount = WGRules.getOptimalWolvesCount(count)
-        updateWolvesCount(optimalWolvesCount)
+
+        wolvesModel.updateCount(wolvesCount)
+        peasantModel.updateCount(peasantCount)
     }
 
-    private fun updateWolvesCount(wolves: Int) {
-        wolvesCount.value = wolves
-        wolvesLabel.value = "${wolvesCount.value} Loups"
-        updateAddRemoveWolves()
-    }
-
-    private fun updateAddRemoveWolves() {
-        canAddWolves.value = WGRules.canAddWolves(playerCount.value, wolvesCount.value)
-        canRemoveWolves.value = WGRules.canRemoveWolves(wolvesCount.value)
-    }
 
 }

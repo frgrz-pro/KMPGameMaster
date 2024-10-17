@@ -8,8 +8,8 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 
 class CacheGameConfigurationUseCase(private val repository: WGRoleRepository) {
 
-    fun invoke(roles: List<WGRoleModel>, wolvesCount: Int) {
-        repository.cacheRoleConfiguration(roles.map { it.role }, wolvesCount)
+    fun invoke(roles: List<WGRoleModel>, wolvesCount: Int, peasantCount:Int) {
+        repository.cacheRoleConfiguration(roles.map { it.role }, wolvesCount, peasantCount)
     }
 }
 

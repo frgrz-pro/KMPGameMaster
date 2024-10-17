@@ -21,12 +21,11 @@ class WGGameCache {
         configuration.value.playersCount = players.size
     }
 
-    fun saveRolesConfiguration(roles: List<WGRole>, wolvesCount: Int) {
+    fun saveRolesConfiguration(roles: List<WGRole>, wolvesCount: Int, peasantCount:Int) {
         configuration.value.wolvesCount = wolvesCount
+        configuration.value.peasantCount = peasantCount
         configuration.value.roles = roles
         configuration.value.soloCount = roles.any { it.isSolo() }.toInt()
         configuration.value.villagersCount = configuration.value.players.size - wolvesCount - configuration.value.soloCount
     }
-
-
 }

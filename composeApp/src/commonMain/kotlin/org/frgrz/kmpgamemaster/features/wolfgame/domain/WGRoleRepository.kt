@@ -28,7 +28,7 @@ interface WGRoleRepository {
 
     fun getCachePlayerConfiguration(): StateFlow<List<String>>
 
-    fun cacheRoleConfiguration(roles:List<WGRole>, wolvesCount: Int)
+    fun cacheRoleConfiguration(roles: List<WGRole>, wolvesCount: Int, peasantCount: Int)
 
     fun getCacheGameConfiguration(): StateFlow<GameConfiguration>
 }
@@ -72,7 +72,7 @@ class WGRoleRepositoryImpl(
 
     }
 
-    override fun getCachePlayerConfiguration(): StateFlow<List<String>>  {
+    override fun getCachePlayerConfiguration(): StateFlow<List<String>> {
         return cache.players
     }
 
@@ -84,8 +84,8 @@ class WGRoleRepositoryImpl(
         cache.savePlayers(players)
     }
 
-    override fun cacheRoleConfiguration(roles: List<WGRole>, wolvesCount: Int) {
-        cache.saveRolesConfiguration(roles, wolvesCount)
+    override fun cacheRoleConfiguration(roles: List<WGRole>, wolvesCount: Int, peasantCount: Int) {
+        cache.saveRolesConfiguration(roles, wolvesCount, peasantCount)
     }
 
 }

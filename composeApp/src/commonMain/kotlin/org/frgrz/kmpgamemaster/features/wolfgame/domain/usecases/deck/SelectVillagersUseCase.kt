@@ -10,7 +10,7 @@ class SelectVillagersUseCase {
         val result = mutableListOf<WGRole>()
         repeat(config.villagersCount) {
             result.add(
-                if (result.none { it == WGRole.PEASANT }) {
+                if (result.count { it == WGRole.PEASANT } < config.peasantCount) {
                     WGRole.PEASANT
                 } else {
                     val hasExtraRoleCharacter = result.any { it.isExtraRole() }
