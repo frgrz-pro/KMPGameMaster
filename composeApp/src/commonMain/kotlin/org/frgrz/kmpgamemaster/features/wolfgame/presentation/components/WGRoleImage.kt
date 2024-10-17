@@ -123,7 +123,7 @@ fun WGRoleImageMedium(role: WGRole, modifier: Modifier) {
         WGRole.SORCERER -> Res.drawable.sorcerer_medium
         WGRole.THIEF -> Res.drawable.thief_medium
         WGRole.ANGEL -> Res.drawable.angel_medium
-        WGRole.ASSASSIN -> Res.drawable.assassin_medium
+        WGRole.ASSASSIN -> Res.drawable.hitman_medium
         WGRole.ASTRONOMER -> Res.drawable.astronomist_medium
         WGRole.BEAR_HANDLER -> Res.drawable.bear_handler_medium
         WGRole.BERSERK -> Res.drawable.berserk_medium
@@ -189,7 +189,7 @@ fun WGRoleImageLarge(role: WGRole, modifier: Modifier) {
         WGRole.SORCERER -> Res.drawable.sorcerer_large
         WGRole.THIEF -> Res.drawable.thief_large
         WGRole.ANGEL -> Res.drawable.angel_large
-        WGRole.ASSASSIN -> Res.drawable.assassin_large
+        WGRole.ASSASSIN -> Res.drawable.hitman_large
         WGRole.ASTRONOMER -> Res.drawable.astronomist_large
         WGRole.BEAR_HANDLER -> Res.drawable.bear_handler_large
         WGRole.BERSERK -> Res.drawable.berserk_large
@@ -208,7 +208,7 @@ fun WGRoleImageLarge(role: WGRole, modifier: Modifier) {
         WGRole.FOX -> Res.drawable.fox_large
         WGRole.GENTLEMAN -> Res.drawable.gentleman_large
         WGRole.GUARD -> Res.drawable.guard_large
-        WGRole.GURU -> Res.drawable.guru_large
+        WGRole.GURU -> Res.drawable.guru_large // Use illustration in Ankou
         WGRole.HITMAN -> Res.drawable.hitman_large
         WGRole.IDIOT -> Res.drawable.idiot_large
         WGRole.MARSHALL -> Res.drawable.marshall_large

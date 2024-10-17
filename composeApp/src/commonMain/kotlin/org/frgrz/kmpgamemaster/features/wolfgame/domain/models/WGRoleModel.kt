@@ -124,6 +124,7 @@ enum class WGRole {
             DEFLECTOR,
             DEMONIAC_SOUL,
             DRUGGIST,
+            DUELISTS,
             FOX,
             GENTLEMAN,
             GUARD,
@@ -141,6 +142,8 @@ enum class WGRole {
             SEER,
             SORCERER,
             THIEF,
+            THREE_BROTHERS,
+            TWO_SISTERS,
             VILLAGE_ELDER,
             WHITE_SOOTHSAYER,
             WIZARD,
@@ -170,13 +173,27 @@ enum class WGRole {
         )
     }
 
-    fun isTeam(): Boolean {
+    fun isDuo(): Boolean {
         return this in listOf(
             TWO_SISTERS,
-            THREE_BROTHERS,
             DUELISTS
         )
     }
+
+    fun isTrio(): Boolean {
+        return this in listOf(
+            THREE_BROTHERS
+        )
+    }
+
+    fun isTeam(): Boolean {
+        return this in listOf(
+            TWO_SISTERS,
+            DUELISTS,
+            THREE_BROTHERS
+        )
+    }
+
 
     fun isExtraRole():Boolean {
         return this in listOf(
