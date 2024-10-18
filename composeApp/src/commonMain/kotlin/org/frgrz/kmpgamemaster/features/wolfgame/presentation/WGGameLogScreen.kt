@@ -24,6 +24,8 @@ import cafe.adriel.voyager.koin.getScreenModel
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.LogEntry
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.GetLogUseCase
 import org.frgrz.kmpgamemaster.material.components.IconPack
+import org.frgrz.kmpgamemaster.material.components.icons.Assign
+import org.frgrz.kmpgamemaster.material.components.icons.Deck
 import org.frgrz.kmpgamemaster.material.components.icons.PersonAdd
 import org.frgrz.kmpgamemaster.material.components.icons.PersonRemove
 import org.frgrz.kmpgamemaster.material.components.icons.Settings
@@ -75,6 +77,8 @@ class WGGameLogScreen : Screen {
             LogEntry.Type.ADD_PLAYER -> IconPack.PersonAdd
             LogEntry.Type.REMOVE_PLAYER -> IconPack.PersonRemove
             LogEntry.Type.GAME_CONFIGURATION -> IconPack.Settings
+            LogEntry.Type.ROLE_DECK -> IconPack.Deck
+            LogEntry.Type.ROLE_ASSIGNED -> IconPack.Assign
         }
     }
 }

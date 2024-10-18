@@ -1,7 +1,9 @@
 package org.frgrz.kmpgamemaster.material.components
 
 import androidx.compose.ui.graphics.vector.ImageVector
+import org.frgrz.kmpgamemaster.material.components.icons.Assign
 import org.frgrz.kmpgamemaster.material.components.icons.Bug
+import org.frgrz.kmpgamemaster.material.components.icons.Deck
 import org.frgrz.kmpgamemaster.material.components.icons.Eye
 import org.frgrz.kmpgamemaster.material.components.icons.Notes
 import org.frgrz.kmpgamemaster.material.components.icons.PersonAdd
@@ -28,7 +30,9 @@ val IconPack.Icons: ____KtList<ImageVector>
             PersonRemove,
             Remove,
             SelectAll,
-            Settings
+            Settings,
+            Assign,
+            Deck
         )
         return __Icons!!
     }

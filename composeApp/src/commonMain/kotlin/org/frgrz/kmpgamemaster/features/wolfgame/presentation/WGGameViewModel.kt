@@ -11,13 +11,15 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetGameConfigurationUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GenerateRoleDeckUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogCacheGameSettingsUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogRoleAssignedUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.CardItemViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.SimpleTextDialogViewModel
 
 class WGGameViewModel(
     getGameConfigurationUseCase: GetGameConfigurationUseCase,
     getRoleDeckUseCase: GenerateRoleDeckUseCase,
-    private val log: LogCacheGameSettingsUseCase
+    private val logCacheGameSettingsUseCase: LogCacheGameSettingsUseCase,
+    private val logRoleAssignedUseCase: LogRoleAssignedUseCase,
 ) : ScreenModel {
 
     private val isDebug = mutableStateOf(true)
@@ -48,7 +50,7 @@ class WGGameViewModel(
     init {
         screenModelScope.launch {
             getRoleDeckUseCase.setGameConfiguration(gameConfiguration.value)
-log.logGameConfiguration(gameConfiguration.value)
+            logCacheGameSettingsUseCase.log(gameConfiguration.value)
             deck = getRoleDeckUseCase.generateRoleDeck()
             roles = deck.roles
             _cardItems.addAll(createPlayerCardItems())
@@ -63,6 +65,7 @@ log.logGameConfiguration(gameConfiguration.value)
         orderedPlayers.forEachIndexed { index, player ->
             _cardItems[index].playerName.value = player
             _cardItems[index].role.value = roles[index]
+            logRoleAssignedUseCase.log(player, roles[index].role)
             _cardItems[index].isClickable.value = false
         }
 
@@ -72,6 +75,8 @@ log.logGameConfiguration(gameConfiguration.value)
             for (i in roles.size until _cardItems.size) {
                 _cardItems[i].playerName.value = "Extra #${i - roles.size + 1}"
                 _cardItems[i].role.value = deck.extraRoles[i - roles.size]
+                logRoleAssignedUseCase.log(_cardItems[i].playerName.value, _cardItems[i].role.value.role)
+
                 _cardItems[i].isClickable.value = false
             }
         }
@@ -86,6 +91,7 @@ log.logGameConfiguration(gameConfiguration.value)
         if (cardId in _cardItems.indices && _cardItems[cardId].isClickable.value) {
             _cardItems[cardId].isClickable.value = false
             _cardItems[cardId].playerName.value = playerToCall
+            logRoleAssignedUseCase.log(playerToCall, _cardItems[cardId].role.value.role)
         }
 
         callNextPlayer()

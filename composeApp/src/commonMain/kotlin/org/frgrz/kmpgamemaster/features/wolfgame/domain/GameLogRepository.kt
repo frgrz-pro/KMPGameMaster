@@ -26,7 +26,9 @@ data class LogEntry(
     enum class Type {
         ADD_PLAYER,
         REMOVE_PLAYER,
-        GAME_CONFIGURATION
+        GAME_CONFIGURATION,
+        ROLE_DECK,
+        ROLE_ASSIGNED
     }
 }
 

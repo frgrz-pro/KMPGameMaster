@@ -3,6 +3,7 @@ package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.GameConfiguration
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleDeck
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogRoleDeckUseCase
 
 
 class GenerateRoleDeckUseCase(
@@ -13,6 +14,7 @@ class GenerateRoleDeckUseCase(
     private val selectSoloUseCase: SelectSoloUseCase,
     private val selectVillagersUseCase: SelectVillagersUseCase,
     private val selectExtraRolesUseCase: SelectExtraRolesUseCase,
+    private val logger: LogRoleDeckUseCase
 ) {
     private var config: GameConfiguration = GameConfiguration()
 
@@ -49,9 +51,13 @@ class GenerateRoleDeckUseCase(
             )
         }
 
-        return RoleDeck(
+        val deck = RoleDeck(
             mapRolesToViewModelUseCase(selectedRoles.shuffled()),
             mapRolesToViewModelUseCase(extraRoles)
         )
+
+        logger.log(deck)
+
+        return deck
     }
 }

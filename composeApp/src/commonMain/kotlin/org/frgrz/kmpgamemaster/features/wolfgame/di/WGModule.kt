@@ -31,6 +31,8 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.VerifyRole
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.CacheLogPlayerChangedUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.GetLogUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogCacheGameSettingsUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogRoleAssignedUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogRoleDeckUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGGameLogViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGGameViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGSetupViewModel
@@ -100,7 +102,8 @@ val wgModule = module {
             selectWolvesUseCase = get(),
             selectSoloUseCase = get(),
             selectVillagersUseCase = get(),
-            selectExtraRolesUseCase = get()
+            selectExtraRolesUseCase = get(),
+            logger = get()
         )
     }
 
@@ -110,6 +113,8 @@ val wgModule = module {
     factory { GetLogUseCase(repository = get()) }
     factory { CacheLogPlayerChangedUseCase(repository = get()) }
     factory { LogCacheGameSettingsUseCase(repository = get()) }
+    factory { LogRoleDeckUseCase(repository = get()) }
+    factory { LogRoleAssignedUseCase(repository = get()) }
 
     //region ViewModels
 
@@ -140,7 +145,8 @@ val wgModule = module {
         WGGameViewModel(
             getGameConfigurationUseCase = get(),
             getRoleDeckUseCase = get(),
-            log = get()
+            logCacheGameSettingsUseCase = get(),
+            logRoleAssignedUseCase = get()
         )
     }
 
