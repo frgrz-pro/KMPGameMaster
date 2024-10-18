@@ -1,5 +1,6 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.presentation
 
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
@@ -13,6 +14,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GenerateRo
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogCacheGameSettingsUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogRoleAssignedUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.CardItemViewModel
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.RoleDialogViewModel
 import org.frgrz.kmpgamemaster.material.components.TextDialogViewModel
 
 class GameScreenViewModel(
@@ -22,7 +24,7 @@ class GameScreenViewModel(
     private val logRoleAssignedUseCase: LogRoleAssignedUseCase,
 ) : ScreenModel {
 
-    private val isDebug = mutableStateOf(true)
+    private val isDebug = mutableStateOf(false)
     private val state = mutableStateOf(if (isDebug.value) ScreenState.REVEAL else ScreenState.NORMAL)
 
 
@@ -44,7 +46,11 @@ class GameScreenViewModel(
     }
 
     private var roles: List<WGRoleModel> = listOf()
-    var selectedRole: WGRoleModel? = null
+
+
+
+    private val _roleDialogModel = mutableStateOf<RoleDialogViewModel?>(null)
+    val roleDialogModel: State<RoleDialogViewModel?> = _roleDialogModel
 
 
     init {
@@ -161,8 +167,8 @@ class GameScreenViewModel(
                 state = state,
                 onCardClicked = { cardId ->
                     if (!isDebug.value) {
-                        selectedRole = roles[cardId]
-                        isRoleDialogVisible.value = true
+                        _roleDialogModel.value = RoleDialogViewModel(roles[cardId], ::dismissRoleDialog)
+                        showRoleDialog()
                         onRoleDrawn(cardId)
                     }
                 }
@@ -170,7 +176,13 @@ class GameScreenViewModel(
         }
     }
 
-    
+    private fun dismissRoleDialog() {
+        isRoleDialogVisible.value = false
+    }
+
+    private fun showRoleDialog() {
+        isRoleDialogVisible.value = true
+    }
 
     enum class ScreenState {
         NORMAL, REVEAL
