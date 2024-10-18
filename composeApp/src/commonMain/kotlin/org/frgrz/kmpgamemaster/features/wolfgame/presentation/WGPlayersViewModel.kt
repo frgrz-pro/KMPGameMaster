@@ -6,12 +6,12 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.PlayerNameValidationUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.WGRules
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CachePlayersUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.CacheLogPlayerChangedUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogPlayerChangedUseCase
 
 class WGPlayersViewModel(
     private val cachePlayersUseCase: CachePlayersUseCase,
     private val validateEntryUseCase: PlayerNameValidationUseCase,
-    private val log: CacheLogPlayerChangedUseCase,
+    private val log: LogPlayerChangedUseCase,
 ) : ScreenModel {
 
     private val _entries = mutableStateListOf<String>()

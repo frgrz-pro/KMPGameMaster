@@ -28,7 +28,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectSolo
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectVillagersUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectWolvesUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.VerifyRoleCompatibilityUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.CacheLogPlayerChangedUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogPlayerChangedUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.GetLogUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogCacheGameSettingsUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogRoleAssignedUseCase
@@ -39,7 +39,6 @@ import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGSetupViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGPlayersViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGRoleViewModel
 import org.koin.dsl.module
-import kotlin.math.log
 
 val wgModule = module {
 
@@ -111,7 +110,7 @@ val wgModule = module {
 
     factory { PlayerNameValidationUseCase() }
     factory { GetLogUseCase(repository = get()) }
-    factory { CacheLogPlayerChangedUseCase(repository = get()) }
+    factory { LogPlayerChangedUseCase(repository = get()) }
     factory { LogCacheGameSettingsUseCase(repository = get()) }
     factory { LogRoleDeckUseCase(repository = get()) }
     factory { LogRoleAssignedUseCase(repository = get()) }
