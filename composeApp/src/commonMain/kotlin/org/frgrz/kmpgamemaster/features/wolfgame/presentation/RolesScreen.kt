@@ -29,7 +29,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleCard
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleFilterCard
-import org.frgrz.kmpgamemaster.material.components.IconPack
+import org.frgrz.kmpgamemaster.material.components.icons.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.SelectAll
 
 class RolesScreen : Screen {

@@ -25,7 +25,7 @@ import kmpgamemaster.composeapp.generated.resources.two_rooms_and_a_boom
 import kmpgamemaster.composeapp.generated.resources.werewolf
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.PlayersScreen
 import org.frgrz.kmpgamemaster.material.components.ColorsScreen
-import org.frgrz.kmpgamemaster.material.components.IconPack
+import org.frgrz.kmpgamemaster.material.components.icons.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.Bug
 import org.jetbrains.compose.resources.stringResource
 

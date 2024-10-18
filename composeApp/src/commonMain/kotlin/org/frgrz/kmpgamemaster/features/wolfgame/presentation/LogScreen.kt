@@ -18,12 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.LogEntry
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.GetLogUseCase
-import org.frgrz.kmpgamemaster.material.components.IconPack
+import org.frgrz.kmpgamemaster.material.components.icons.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.Assign
 import org.frgrz.kmpgamemaster.material.components.icons.Deck
 import org.frgrz.kmpgamemaster.material.components.icons.PersonAdd

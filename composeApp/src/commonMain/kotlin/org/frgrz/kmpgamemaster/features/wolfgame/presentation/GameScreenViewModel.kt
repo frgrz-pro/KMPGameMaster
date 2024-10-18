@@ -13,7 +13,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GenerateRo
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogCacheGameSettingsUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogRoleAssignedUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.CardItemViewModel
-import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.SimpleTextDialogViewModel
+import org.frgrz.kmpgamemaster.material.components.TextDialogViewModel
 
 class GameScreenViewModel(
     getGameConfigurationUseCase: GetGameConfigurationUseCase,
@@ -39,7 +39,7 @@ class GameScreenViewModel(
     private var orderedPlayers = orderPlayerList()
     private var playerToCall = orderedPlayers.first()
 
-    var playerDialogViewModel = SimpleTextDialogViewModel(playerToCall) {
+    var playerDialogViewModel = TextDialogViewModel(playerToCall) {
         isPlayerDialogVisible.value = false
     }
 
@@ -101,7 +101,7 @@ class GameScreenViewModel(
         orderedPlayers = orderedPlayers.drop(1)
         if (orderedPlayers.isNotEmpty()) {
             playerToCall = orderedPlayers.first()
-            playerDialogViewModel = SimpleTextDialogViewModel(playerToCall) {
+            playerDialogViewModel = TextDialogViewModel(playerToCall) {
                 isPlayerDialogVisible.value = false
             }
             isPlayerDialogVisible.value = true
@@ -122,7 +122,7 @@ class GameScreenViewModel(
 
     private var revealClickCount = 0
     val isWarningDialogVisible = mutableStateOf(false)
-    val warningDialogViewModel = SimpleTextDialogViewModel("Accès réservé au maitre du jeu") {
+    val warningDialogViewModel = TextDialogViewModel("Accès réservé au maitre du jeu") {
         isWarningDialogVisible.value = false
     }
 
