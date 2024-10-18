@@ -1,9 +1,9 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck
 
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.GameConfiguration
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.GuruCompatibilityRule
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.PiedPiperCompatibilityRule
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.compatibility.GuruCompatibilityRule
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.compatibility.PiedPiperCompatibilityRule
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.compatibility.WhiteWolfCompatibilityRule
 
 
