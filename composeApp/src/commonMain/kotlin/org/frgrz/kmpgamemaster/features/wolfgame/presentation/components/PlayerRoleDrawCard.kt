@@ -26,7 +26,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.presentation.GameScreenViewMode
 import org.frgrz.kmpgamemaster.material.theme.AppTheme
 
 
-data class CardItemViewModel(
+data class PlayerRoleCardDrawViewModel(
     val id: Int,
     val playerName: MutableState<String> = mutableStateOf(""),
     val isClickable: MutableState<Boolean> = mutableStateOf(true),
@@ -37,7 +37,7 @@ data class CardItemViewModel(
 )
 
 @Composable
-fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
+fun PlayerRoleDrawCard(viewModel: PlayerRoleCardDrawViewModel) {
     val bg = if (viewModel.state.value == GameScreenViewModel.ScreenState.REVEAL) {
         with(viewModel.role.value.role) {
 
@@ -174,8 +174,8 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
 @Preview
 fun WGPlayerDrawCard_Unselected_Preview() {
     AppTheme {
-        WGPlayerDrawCard(
-            CardItemViewModel(
+        PlayerRoleDrawCard(
+            PlayerRoleCardDrawViewModel(
                 id = 0,
                 playerName = mutableStateOf("Card 1"),
                 isClickable = mutableStateOf(true),
@@ -191,8 +191,8 @@ fun WGPlayerDrawCard_Unselected_Preview() {
 @Preview
 fun WGPlayerDrawCard_Selected_Preview() {
     AppTheme {
-        WGPlayerDrawCard(
-            CardItemViewModel(
+        PlayerRoleDrawCard(
+            PlayerRoleCardDrawViewModel(
                 id = 0,
                 playerName = mutableStateOf("Player 1"),
                 isClickable = mutableStateOf(false),

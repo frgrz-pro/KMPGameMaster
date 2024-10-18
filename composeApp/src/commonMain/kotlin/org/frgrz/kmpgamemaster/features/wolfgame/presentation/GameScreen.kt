@@ -19,7 +19,7 @@ import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.RoleDialog
-import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGPlayerDrawCard
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.PlayerRoleDrawCard
 import org.frgrz.kmpgamemaster.material.components.TextDialog
 import org.frgrz.kmpgamemaster.material.components.icons.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.Eye
@@ -73,7 +73,7 @@ class GameScreen : Screen {
                             }
                     ) {
                         items(viewModel.cardItems) { item ->
-                            WGPlayerDrawCard(item)
+                            PlayerRoleDrawCard(item)
                         }
                     }
                 }

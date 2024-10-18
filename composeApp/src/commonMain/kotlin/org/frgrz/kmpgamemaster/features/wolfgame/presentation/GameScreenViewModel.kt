@@ -13,7 +13,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetGameConfigur
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GenerateRoleDeckUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogCacheGameSettingsUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogRoleAssignedUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.CardItemViewModel
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.PlayerRoleCardDrawViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.RoleDialogViewModel
 import org.frgrz.kmpgamemaster.material.components.TextDialogViewModel
 
@@ -31,8 +31,8 @@ class GameScreenViewModel(
     private val gameConfiguration = getGameConfigurationUseCase.invoke()
     private var deck = RoleDeck()
 
-    private val _cardItems = mutableStateListOf<CardItemViewModel>()
-    val cardItems: List<CardItemViewModel> = _cardItems
+    private val _cardItems = mutableStateListOf<PlayerRoleCardDrawViewModel>()
+    val cardItems: List<PlayerRoleCardDrawViewModel> = _cardItems
 
     var isPlayerDialogVisible = mutableStateOf(!isDebug.value)
     var isRoleDialogVisible = mutableStateOf(false)
@@ -114,9 +114,9 @@ class GameScreenViewModel(
         }
     }
 
-    private fun addExtraRolesCardItems(): List<CardItemViewModel> {
+    private fun addExtraRolesCardItems(): List<PlayerRoleCardDrawViewModel> {
         return List(deck.extraRoles.size) { index ->
-            CardItemViewModel(
+            PlayerRoleCardDrawViewModel(
                 index + _cardItems.size,
                 role = mutableStateOf(deck.extraRoles[index]),
                 state = state,
@@ -159,9 +159,9 @@ class GameScreenViewModel(
         }
     }
 
-    private fun createPlayerCardItems(): List<CardItemViewModel> {
+    private fun createPlayerCardItems(): List<PlayerRoleCardDrawViewModel> {
         return List(gameConfiguration.value.players.size) { index ->
-            CardItemViewModel(
+            PlayerRoleCardDrawViewModel(
                 index,
                 role = mutableStateOf(roles[index]),
                 state = state,
