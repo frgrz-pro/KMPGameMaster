@@ -1,4 +1,4 @@
-package org.frgrz.kmpgamemaster.features.wolfgame.presentation.components
+package org.frgrz.kmpgamemaster.material.components
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Column
@@ -24,8 +24,7 @@ import kmpgamemaster.composeapp.generated.resources.close
 import org.frgrz.kmpgamemaster.material.theme.AppTheme
 import org.jetbrains.compose.resources.stringResource
 
-
-data class SimpleTextDialogViewModel(
+data class TextDialogViewModel(
     val text: String,
     var dismissClickCount: Int = 1,
     val onDismiss: () -> Unit,
@@ -43,7 +42,7 @@ data class SimpleTextDialogViewModel(
 }
 
 @Composable
-fun SimpleTextDialog(viewModel: SimpleTextDialogViewModel) {
+fun TextDialog(viewModel: TextDialogViewModel) {
     Dialog(
         onDismissRequest = {viewModel.dismiss()},
         properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
@@ -81,8 +80,8 @@ fun SimpleTextDialog(viewModel: SimpleTextDialogViewModel) {
 @Preview
 fun WGPlayerNameDialog_Preview() {
     AppTheme {
-        SimpleTextDialog(
-            SimpleTextDialogViewModel(
+        TextDialog(
+            TextDialogViewModel(
                 text = "Player 1"
             ) {}
         )
