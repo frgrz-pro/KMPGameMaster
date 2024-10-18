@@ -21,9 +21,15 @@ import androidx.compose.ui.unit.dp
 import org.frgrz.kmpgamemaster.material.components.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.Remove
 
+data class PlayerEntryCardModel(
+    val text: String,
+    val index: Int,
+    val onDelete: (Int) -> Unit
+)
 
 @Composable
 fun PlayerEntryCard(text: String, index: Int, onDelete: (Int) -> Unit) {
+
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         shape = RoundedCornerShape(4.dp),

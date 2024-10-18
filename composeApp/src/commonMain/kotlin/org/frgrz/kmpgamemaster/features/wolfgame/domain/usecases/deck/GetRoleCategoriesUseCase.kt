@@ -5,7 +5,8 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleCategories
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
 
 
-class CategorizeRolesUseCase {
+class GetRoleCategoriesUseCase {
+
     operator fun invoke(config: GameConfiguration): RoleCategories {
         val (wolves, remaining) = config.roles.partition { it.isWolf() }
         val (villagers, remaining2) = remaining.partition { it.isVillager() }

@@ -16,6 +16,9 @@ class WGPlayersViewModel(
 
     private val _entries = mutableStateListOf<String>()
     val entries: List<String> = _entries
+
+
+
     var currentInput = mutableStateOf("")
     val isValidateButtonEnabled = mutableStateOf(false)
 

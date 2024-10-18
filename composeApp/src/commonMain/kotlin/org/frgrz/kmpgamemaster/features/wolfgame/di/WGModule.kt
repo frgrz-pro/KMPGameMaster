@@ -21,12 +21,12 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetCachedPlayer
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetGameConfigurationUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GenerateRoleDeckUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.UpdateRoleSelectionUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.CategorizeRolesUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.MapRolesToViewModelUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectExtraRolesUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectSoloUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectVillagersUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectWolvesUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GetRoleCategoriesUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.MapRoleViewModelUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GetExtraRolesUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GetSoloRolesUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GetVillagerRolesUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GetWolfRolesUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.VerifyRoleCompatibilityUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogPlayerChangedUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.GetLogUseCase
@@ -86,12 +86,12 @@ val wgModule = module {
 
     //region Deck UseCases
 
-    factory { CategorizeRolesUseCase() }
-    factory { MapRolesToViewModelUseCase(mapper = get()) }
-    factory { SelectExtraRolesUseCase() }
-    factory { SelectSoloUseCase() }
-    factory { SelectVillagersUseCase() }
-    factory { SelectWolvesUseCase() }
+    factory { GetRoleCategoriesUseCase() }
+    factory { MapRoleViewModelUseCase(mapper = get()) }
+    factory { GetExtraRolesUseCase() }
+    factory { GetSoloRolesUseCase() }
+    factory { GetVillagerRolesUseCase() }
+    factory { GetWolfRolesUseCase() }
     factory { VerifyRoleCompatibilityUseCase() }
     factory {
         GenerateRoleDeckUseCase(

@@ -8,14 +8,15 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogRoleDeck
 
 class GenerateRoleDeckUseCase(
     private val verifyRoleCompatibilityUseCase: VerifyRoleCompatibilityUseCase,
-    private val categorizeRolesUseCase: CategorizeRolesUseCase,
-    private val mapRolesToViewModelUseCase: MapRolesToViewModelUseCase,
-    private val selectWolvesUseCase: SelectWolvesUseCase,
-    private val selectSoloUseCase: SelectSoloUseCase,
-    private val selectVillagersUseCase: SelectVillagersUseCase,
-    private val selectExtraRolesUseCase: SelectExtraRolesUseCase,
+    private val categorizeRolesUseCase: GetRoleCategoriesUseCase,
+    private val mapRolesToViewModelUseCase: MapRoleViewModelUseCase,
+    private val selectWolvesUseCase: GetWolfRolesUseCase,
+    private val selectSoloUseCase: GetSoloRolesUseCase,
+    private val selectVillagersUseCase: GetVillagerRolesUseCase,
+    private val selectExtraRolesUseCase: GetExtraRolesUseCase,
     private val logger: LogRoleDeckUseCase
 ) {
+
     private var config: GameConfiguration = GameConfiguration()
 
     fun setGameConfiguration(gameConfiguration: GameConfiguration) {

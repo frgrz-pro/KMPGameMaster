@@ -1,12 +1,11 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck
 
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.GameConfiguration
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleCategories
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.WGRules
 
 
-class SelectWolvesUseCase {
+class GetWolfRolesUseCase {
 
     operator fun invoke(config: GameConfiguration): List<WGRole> {
 

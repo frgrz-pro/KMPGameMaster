@@ -19,7 +19,8 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun AddPlayerField(text:String, onValueChanged: (String) -> Unit, onAddButtonClicked:()->Unit) {
+fun AddPlayerField(text: String, onValueChanged: (String) -> Unit, onAddButtonClicked: () -> Unit) {
+
     Row {
         TextField(
             value = text,
@@ -46,5 +47,4 @@ fun AddPlayerField(text:String, onValueChanged: (String) -> Unit, onAddButtonCli
             )
         }
     }
-
 }

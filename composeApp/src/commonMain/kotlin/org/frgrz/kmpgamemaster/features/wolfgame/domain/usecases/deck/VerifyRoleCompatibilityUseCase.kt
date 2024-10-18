@@ -4,7 +4,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.GameConfiguration
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.GuruCompatibilityRule
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.PiedPiperCompatibilityRule
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WhiteWolfCompatibilityRule
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.compatibility.WhiteWolfCompatibilityRule
 
 
 class VerifyRoleCompatibilityUseCase {
@@ -29,4 +29,3 @@ class VerifyRoleCompatibilityUseCase {
         return correctedRoles
     }
 }
-

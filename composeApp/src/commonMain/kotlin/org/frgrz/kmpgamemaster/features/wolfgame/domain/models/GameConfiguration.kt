@@ -11,10 +11,3 @@ data class GameConfiguration(
     var roles: List<WGRole> = listOf(),
     var roleCategories: RoleCategories = RoleCategories()
 )
-
-data class RoleCategories(
-    val wolves: List<WGRole> = listOf(),
-    val villagers: List<WGRole> = listOf(),
-    val solos: List<WGRole> = listOf(),
-    val notPlayed: List<WGRole> = listOf(),
-)

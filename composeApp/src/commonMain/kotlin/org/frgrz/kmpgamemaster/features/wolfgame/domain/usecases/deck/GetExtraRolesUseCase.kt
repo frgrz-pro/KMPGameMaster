@@ -5,7 +5,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.WGRules
 
 
-class SelectExtraRolesUseCase {
+class GetExtraRolesUseCase {
 
     operator fun invoke(
         config: GameConfiguration,

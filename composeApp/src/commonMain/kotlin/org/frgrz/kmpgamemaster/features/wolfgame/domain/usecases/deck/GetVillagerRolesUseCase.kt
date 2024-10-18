@@ -5,7 +5,8 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.WGRules
 
 
-class SelectVillagersUseCase {
+class GetVillagerRolesUseCase {
+
     operator fun invoke(config: GameConfiguration, hasHiddenWolf: Boolean): List<WGRole> {
         val result = mutableListOf<WGRole>()
        var availableRoles =  config.playersCount - config.wolvesCount - config.soloCount - result.size
@@ -46,7 +47,6 @@ class SelectVillagersUseCase {
         }
 
         return result
-
     }
 
     private fun drawRandom(
