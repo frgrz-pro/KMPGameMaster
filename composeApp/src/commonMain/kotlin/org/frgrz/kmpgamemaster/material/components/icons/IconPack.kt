@@ -13,16 +13,31 @@ val IconPack.Icons: ____KtList<ImageVector>
             return __Icons!!
         }
         __Icons = listOf(
+            AddVote,
+            Assign,
             Bug,
+            CancelRole,
+            ChangeSide,
+            Deck,
             Eye,
+            Health,
+            Hide,
+            Kill,
+            Link,
             Notes,
             PersonAdd,
             PersonRemove,
+            Potion,
+            Protect,
             Remove,
             SelectAll,
             Settings,
-            Assign,
-            Deck
+            Spy,
+            Team,
+            Transform,
+            Virus,
+            Vote,
+            Win
         )
         return __Icons!!
     }

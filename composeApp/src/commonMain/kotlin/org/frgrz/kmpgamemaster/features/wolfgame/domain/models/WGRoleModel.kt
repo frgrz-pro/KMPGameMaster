@@ -8,7 +8,8 @@ data class WGRoleModel(
     var isSelected: Boolean,
     val isDefault: Boolean,
     val playsWith: PlaysWith,
-    val winsWith: WinsWith,
+    //val winsWith: WinsWith,
+    val winCondition: WinCondition,
     val filters: List<RoleFilter>,
     val actions: List<WGRoleAction>,
 )
@@ -18,6 +19,17 @@ enum class PlaysWith {
     VILLAGE,
     WOLVES_OR_VILLAGE,
     SOLO;
+}
+
+data class WinCondition(
+    val type: WinConditionType,
+    val winsWith: WinsWith
+)
+
+enum class WinConditionType {
+    CLASSIC_WOLF,
+    CLASSIC_VILLAGE,
+
 }
 
 enum class WinsWith {

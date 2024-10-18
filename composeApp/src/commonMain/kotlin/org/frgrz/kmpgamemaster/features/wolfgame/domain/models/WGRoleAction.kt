@@ -13,8 +13,12 @@ data class WGRoleAction(
 )
 
 
+
 enum class WGRoleActionType {
     SPY,
+    VOTED,
+
+
     KILL,
     INFECT,
     KILL_PROTECTOR,
@@ -22,7 +26,6 @@ enum class WGRoleActionType {
     CANCEL_ABILITY,
     REVIVE,
     BOUND_FATE,
-    VOTED,
     NONE,
     TEAM,
     DOUBLE_VOTE,

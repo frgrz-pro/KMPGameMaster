@@ -1,22 +1,25 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.presentation.components
 
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -25,32 +28,35 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import kmpgamemaster.composeapp.generated.resources.Res
 import kmpgamemaster.composeapp.generated.resources.close
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleAction
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
-import org.frgrz.kmpgamemaster.material.components.TextBadge
+import kmpgamemaster.composeapp.generated.resources.little_girl
+import kmpgamemaster.composeapp.generated.resources.little_girl_action
+import kmpgamemaster.composeapp.generated.resources.little_girl_action_desc
+import kmpgamemaster.composeapp.generated.resources.little_girl_large
+import kmpgamemaster.composeapp.generated.resources.plays_with_village
+import kmpgamemaster.composeapp.generated.resources.wins_with_village
+import org.frgrz.kmpgamemaster.material.components.icons.IconPack
+import org.frgrz.kmpgamemaster.material.components.icons.Spy
+import org.frgrz.kmpgamemaster.material.components.icons.Team
+import org.frgrz.kmpgamemaster.material.components.icons.Win
+import org.frgrz.kmpgamemaster.material.theme.AppTheme
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
-/*data class RoleDialogViewModel(
-    val model: WGRoleModel,
-    val onDialogDismissRequested: () -> Unit,
-)*/
-
 
 data class RoleDialogViewModel(
-    val name:StringResource,
+    val name: StringResource,
     val imageDrawableResource: DrawableResource,
     val playsWith: StringResource,
-    val winsWith:StringResource,
-    val actions: List<WGRoleAction> //TODO VM
+    val winCondition: RoleActionItemViewModel,
+    val actions: List<RoleActionItemViewModel>
 ) {
 
     var onDialogDismissRequested: () -> Unit = {}
         private set
 
-    fun setOnDialogDismissRequested(onDialogDismissRequested: ()->Unit) {
+    fun setOnDialogDismissRequested(onDialogDismissRequested: () -> Unit) {
         this.onDialogDismissRequested = onDialogDismissRequested
     }
 }
@@ -67,10 +73,9 @@ fun RoleDialog(viewModel: RoleDialogViewModel) {
                         .width(360.dp)
                 ) {
                     val image = createRef()
-                    val button = createRef()
-                    val text = createRef()
-                    val badgeRow = createRef()
+                    val title = createRef()
                     val actions = createRef()
+                    val button = createRef()
 
                     Card(
                         elevation = CardDefaults.cardElevation(
@@ -89,7 +94,7 @@ fun RoleDialog(viewModel: RoleDialogViewModel) {
                         Image(
                             painter = imagePainter,
                             contentDescription = "My Image", //TODO String resource
-                            modifier =  Modifier.fillMaxSize()
+                            modifier = Modifier.fillMaxSize()
                                 .aspectRatio(1f)
                         )
                     }
@@ -101,7 +106,7 @@ fun RoleDialog(viewModel: RoleDialogViewModel) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 12.dp, bottom = 4.dp)
-                            .constrainAs(text) {
+                            .constrainAs(title) {
                                 top.linkTo(image.bottom)
                                 start.linkTo(parent.start)
                                 end.linkTo(parent.end)
@@ -109,40 +114,53 @@ fun RoleDialog(viewModel: RoleDialogViewModel) {
 
                     )
 
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .constrainAs(badgeRow) {
-                                top.linkTo(text.bottom)
-                                start.linkTo(parent.start)
-                                end.linkTo(parent.end)
-                            }) {
-                        TextBadge(
-                            stringResource( viewModel.playsWith),
-                            MaterialTheme.colorScheme.primaryContainer,
-                            MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                        Spacer(modifier = Modifier.width(4.dp))
-                        TextBadge(
-                            stringResource( viewModel.winsWith),
-                            MaterialTheme.colorScheme.secondaryContainer,
-                            MaterialTheme.colorScheme.onSecondaryContainer
-                        )
-                    }
-
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 12.dp, end = 12.dp, top = 24.dp)
+                            .padding(start = 12.dp, end = 12.dp, top = 12.dp)
                             .constrainAs(actions) {
-                                top.linkTo(badgeRow.bottom)
+                                top.linkTo(title.bottom)
                                 start.linkTo(parent.start)
                                 end.linkTo(parent.end)
                             }
                     ) {
+                        Row(modifier = Modifier.fillMaxWidth()) {
+                            Icon(
+                                imageVector = IconPack.Team,
+                                modifier = Modifier.height(32.dp)
+                                    .aspectRatio(1f),
+                                contentDescription = ""
+                            )
+                            Text(
+                                stringResource(viewModel.playsWith),
+                                modifier = Modifier.padding(start = 8.dp)
+                                    .align(Alignment.CenterVertically),
+
+                                style = MaterialTheme.typography.titleMedium,
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Row(modifier = Modifier.fillMaxWidth()) {
+                            Icon(
+                                imageVector = viewModel.winCondition.icon,
+                                modifier = Modifier.height(32.dp)
+                                    .aspectRatio(1f),
+                                contentDescription = ""
+                            )
+                            Text(
+                                stringResource(viewModel.winCondition.name),
+                                modifier = Modifier.padding(start = 8.dp)
+                                    .align(Alignment.CenterVertically),
+                                style = MaterialTheme.typography.titleMedium,
+                            )
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
                         viewModel.actions.forEach {
-                            WGRoleActionBox(it)
+                            RoleActionItem(it)
                         }
                     }
 
@@ -162,4 +180,36 @@ fun RoleDialog(viewModel: RoleDialogViewModel) {
             }
         }
     )
+}
+
+
+
+@Composable
+@Preview
+fun RoleDialog_Preview() {
+
+    val roleActionItemViewModel = RoleActionItemViewModel(
+        Res.string.little_girl_action,
+        Res.string.little_girl_action_desc,
+        IconPack.Spy,
+    )
+
+    val winCondition = RoleActionItemViewModel(
+        Res.string.wins_with_village,
+        null,
+        IconPack.Win,
+    )
+
+    val roleDialogViewModel = RoleDialogViewModel(
+        Res.string.little_girl,
+        Res.drawable.little_girl_large,
+        Res.string.plays_with_village,
+        winCondition,
+        listOf(roleActionItemViewModel)
+    )
+
+
+    AppTheme {
+        RoleDialog(roleDialogViewModel)
+    }
 }

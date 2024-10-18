@@ -25,7 +25,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.GameScreenViewModel
 import org.frgrz.kmpgamemaster.material.theme.AppTheme
 
-
+//TODO Mapper
 data class PlayerRoleCardDrawViewModel(
     val id: Int,
     val playerName: MutableState<String> = mutableStateOf(""),
@@ -40,8 +40,6 @@ data class PlayerRoleCardDrawViewModel(
 fun PlayerRoleDrawCard(viewModel: PlayerRoleCardDrawViewModel) {
     val bg = if (viewModel.state.value == GameScreenViewModel.ScreenState.REVEAL) {
         with(viewModel.role.value.role) {
-
-
             if(viewModel.isExtraRole){
                 MaterialTheme.colorScheme.secondary
             } else {
@@ -170,10 +168,11 @@ fun PlayerRoleDrawCard(viewModel: PlayerRoleCardDrawViewModel) {
 }
 
 
+//TODO Fix Preview Data
 @Composable
 @Preview
 fun WGPlayerDrawCard_Unselected_Preview() {
-    AppTheme {
+    /*AppTheme {
         PlayerRoleDrawCard(
             PlayerRoleCardDrawViewModel(
                 id = 0,
@@ -184,13 +183,13 @@ fun WGPlayerDrawCard_Unselected_Preview() {
                 state = mutableStateOf(GameScreenViewModel.ScreenState.NORMAL)
             )
         )
-    }
+    }*/
 }
 
 @Composable
 @Preview
 fun WGPlayerDrawCard_Selected_Preview() {
-    AppTheme {
+    /*AppTheme {
         PlayerRoleDrawCard(
             PlayerRoleCardDrawViewModel(
                 id = 0,
@@ -201,5 +200,5 @@ fun WGPlayerDrawCard_Selected_Preview() {
                 state = mutableStateOf(GameScreenViewModel.ScreenState.NORMAL)
             )
         )
-    }
+    }*/
 }

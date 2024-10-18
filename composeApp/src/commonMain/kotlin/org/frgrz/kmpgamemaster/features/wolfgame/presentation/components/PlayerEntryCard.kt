@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import org.frgrz.kmpgamemaster.material.components.icons.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.Remove
 
+//TODO VM + Mapper + Preview
 data class PlayerEntryCardModel(
     val text: String,
     val index: Int,

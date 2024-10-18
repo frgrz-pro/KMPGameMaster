@@ -194,6 +194,7 @@ import kmpgamemaster.composeapp.generated.resources.wolf_kitten_action_2
 import kmpgamemaster.composeapp.generated.resources.wolf_kitten_action_2_desc
 import kmpgamemaster.composeapp.generated.resources.wolf_kitten_action_desc
 import org.frgrz.kmpgamemaster.data.entities.WGRoleDBEntity
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.Mapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.PlaysWith
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleFilter
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
@@ -203,10 +204,26 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleActionCondi
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleActionFrequency
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleActionType
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WinCondition
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WinConditionType
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WinsWith
 import org.jetbrains.compose.resources.StringResource
 
-class WGRoleModelMapper {
+class WinConditionMapper: Mapper<WGRole, WinCondition> {
+    override fun map(input: WGRole): WinCondition {
+        return when (input) {
+            else -> WinCondition(
+                type = WinConditionType.CLASSIC_VILLAGE,
+                winsWith = WinsWith.VILLAGE
+            )
+        }
+    }
+
+}
+
+class WGRoleModelMapper(
+    private val winConditionMapper:WinConditionMapper
+) {
 
     fun map(role: WGRole): WGRoleModel {
         return WGRoleModel(
@@ -215,7 +232,7 @@ class WGRoleModelMapper {
             isSelected = true,
             isDefault = false, //TODO
             playsWith = mapPlaysWith(role),
-            winsWith = mapWinsWith(role),
+            winCondition = winConditionMapper.map(role),
             filters = mapRoleFilters(role),
             actions = mapRoleActions(role)
         )
@@ -231,7 +248,7 @@ class WGRoleModelMapper {
             isSelected = entity.selected,
             isDefault = entity.default,
             playsWith = mapPlaysWith(role),
-            winsWith = mapWinsWith(role),
+            winCondition = winConditionMapper.map(role),
             filters = mapRoleFilters(role),
             actions = mapRoleActions(role)
         )

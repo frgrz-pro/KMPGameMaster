@@ -130,8 +130,8 @@
     <string name="idiot_action_desc">Si le village vote contre vous, vous restez en vie mais perdez votre droit de vote.</string>
 
     <string name="little_girl">Petite Fille</string>
-    <string name="little_girl_action">Espionnez les loups</string>
-    <string name="little_girl_action_desc">Espionne les loups pendant la nuit. Cependant si elle sera la victime des loups.</string>
+    <string name="little_girl_action">Espionnage</string>
+    <string name="little_girl_action_desc">Espionnez les loups pendant la nuit.</string>
 
     <string name="marshall">Marshall</string>
     <string name="marshall_action">Ronde de nuit</string>
