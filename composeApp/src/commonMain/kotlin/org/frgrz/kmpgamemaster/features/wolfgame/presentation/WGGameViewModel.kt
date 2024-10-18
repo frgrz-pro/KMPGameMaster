@@ -10,12 +10,14 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleDeck
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetGameConfigurationUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GenerateRoleDeckUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogCacheGameSettingsUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.CardItemViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.SimpleTextDialogViewModel
 
 class WGGameViewModel(
     getGameConfigurationUseCase: GetGameConfigurationUseCase,
     getRoleDeckUseCase: GenerateRoleDeckUseCase,
+    private val log: LogCacheGameSettingsUseCase
 ) : ScreenModel {
 
     private val isDebug = mutableStateOf(true)
@@ -46,7 +48,7 @@ class WGGameViewModel(
     init {
         screenModelScope.launch {
             getRoleDeckUseCase.setGameConfiguration(gameConfiguration.value)
-
+log.logGameConfiguration(gameConfiguration.value)
             deck = getRoleDeckUseCase.generateRoleDeck()
             roles = deck.roles
             _cardItems.addAll(createPlayerCardItems())

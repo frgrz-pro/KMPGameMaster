@@ -17,25 +17,27 @@ class CacheLogPlayerChangedUseCase(
 
 }
 
-class CacheGameSettingsUseCase(
+class LogCacheGameSettingsUseCase(
     private val repository: GameLogRepository,
 ) {
     fun logGameConfiguration(gameSettings: GameConfiguration) {
         val entry = LogEntry(
             "Game Configuration Saved: \n"
                     + "Players: ${gameSettings.playersCount}\n"
-                    + "Wolves: ${gameSettings.wolvesCount}, ${gameSettings.roleCategories.wolves.joinToString (separator = ", "){ it.name }}\n"
-                    + "Villagers: ${gameSettings.villagersCount} (Peasants: ${gameSettings.peasantCount}), ${gameSettings.roleCategories.villagers.joinToString (separator = ", "){ it.name }}\n"
-                    + "Solos: ${gameSettings.soloCount}, ${gameSettings.roleCategories.solos.joinToString (separator = ", "){ it.name }}\n",
+                    + "\nWolves: ${gameSettings.wolvesCount}\n${gameSettings.roleCategories.wolves.joinToString (separator = ", "){ it.name }}\n"
+                    + "\nVillagers: ${gameSettings.villagersCount} (Peasants: ${gameSettings.peasantCount})\n${gameSettings.roleCategories.villagers.joinToString (separator = ", "){ it.name }}\n"
+                    + "\nSolos: ${gameSettings.soloCount}\n${gameSettings.roleCategories.solos.joinToString (separator = ", "){ it.name }}\n",
 
             LogEntry.Type.GAME_CONFIGURATION
         )
 
         repository.log(entry)
     }
-
-
 }
+
+class RoleDeckSelectionUseCase(
+
+)
 
 class GetLogUseCase(
     private val repository: GameLogRepository,
