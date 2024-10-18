@@ -30,13 +30,13 @@ import org.frgrz.kmpgamemaster.material.components.icons.PersonAdd
 import org.frgrz.kmpgamemaster.material.components.icons.PersonRemove
 import org.frgrz.kmpgamemaster.material.components.icons.Settings
 
-class WGGameLogScreen : Screen {
+class LogScreen : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
 
-        val viewModel = getScreenModel<WGGameLogViewModel>()
+        val viewModel = getScreenModel<LogScreenViewModel>()
 
         Scaffold(
             topBar = {
@@ -83,8 +83,3 @@ class WGGameLogScreen : Screen {
     }
 }
 
-class WGGameLogViewModel(getLogUseCase: GetLogUseCase) : ScreenModel {
-
-    val log = getLogUseCase.getLog()
-
-}

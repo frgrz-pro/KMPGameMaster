@@ -32,13 +32,13 @@ import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleF
 import org.frgrz.kmpgamemaster.material.components.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.SelectAll
 
-class WGRolesScreen : Screen {
+class RolesScreen : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
 
-        val viewModel = getScreenModel<WGRoleViewModel>()
+        val viewModel = getScreenModel<RolesScreenViewModel>()
         val filteredRoles by viewModel.filteredRoles //TODO Move to ViewModel
 
         Scaffold(

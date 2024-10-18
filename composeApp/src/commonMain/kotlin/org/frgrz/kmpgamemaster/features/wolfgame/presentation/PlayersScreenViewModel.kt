@@ -8,7 +8,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.WGRules
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CachePlayersUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogPlayerChangedUseCase
 
-class WGPlayersViewModel(
+class PlayersScreenViewModel(
     private val cachePlayersUseCase: CachePlayersUseCase,
     private val validateEntryUseCase: PlayerNameValidationUseCase,
     private val log: LogPlayerChangedUseCase,

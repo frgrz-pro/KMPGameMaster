@@ -23,7 +23,7 @@ import kmpgamemaster.composeapp.generated.resources.Res
 import kmpgamemaster.composeapp.generated.resources.sporz
 import kmpgamemaster.composeapp.generated.resources.two_rooms_and_a_boom
 import kmpgamemaster.composeapp.generated.resources.werewolf
-import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGPlayersScreen
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.PlayersScreen
 import org.frgrz.kmpgamemaster.material.components.ColorsScreen
 import org.frgrz.kmpgamemaster.material.components.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.Bug
@@ -57,7 +57,7 @@ class HomeScreen : Screen {
                         .padding(paddingValues), // Use padding values from the Scaffold
                 ) {
                     FilledTonalButton(
-                        onClick = { navigator.push(WGPlayersScreen()) },
+                        onClick = { navigator.push(PlayersScreen()) },
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentHeight()

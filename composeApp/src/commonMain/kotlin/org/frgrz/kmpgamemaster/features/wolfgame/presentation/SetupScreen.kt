@@ -39,14 +39,14 @@ import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleE
 import org.jetbrains.compose.resources.stringResource
 
 
-class WGSetupScreen : Screen {
+class SetupScreen : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
 
         val navigator = LocalNavigator.currentOrThrow
-        val viewModel = getScreenModel<WGSetupViewModel>()
+        val viewModel = getScreenModel<SetupScreenViewModel>()
 
         //TODO : viewModel.onPlayerCountChanged(players.size)
 
@@ -153,7 +153,7 @@ class WGSetupScreen : Screen {
 
                             TextButton(
                                 onClick = {
-                                    navigator.push(WGRolesScreen())
+                                    navigator.push(RolesScreen())
                                 },
                             ) {
                                 Text(
@@ -167,7 +167,7 @@ class WGSetupScreen : Screen {
 
                     OutlinedButton(
                         onClick = {
-                            navigator.push(WGPlayersScreen())
+                            navigator.push(PlayersScreen())
                         },
                         modifier = Modifier.fillMaxWidth()
                             .padding(horizontal = 6.dp)
@@ -187,7 +187,7 @@ class WGSetupScreen : Screen {
                     FilledTonalButton(
                         onClick = {
                             viewModel.saveGameSettings()
-                            navigator.push(WGGameScreen())
+                            navigator.push(GameScreen())
                         },
                         modifier = Modifier.fillMaxWidth()
                             .padding(6.dp)

@@ -31,14 +31,14 @@ import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.AddPlay
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.PlayerEntryCard
 
 
-class WGPlayersScreen : Screen {
+class PlayersScreen : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
 
         val navigator = LocalNavigator.currentOrThrow
-        val viewModel = getScreenModel<WGPlayersViewModel>()
+        val viewModel = getScreenModel<PlayersScreenViewModel>()
 
         Scaffold(
             topBar = {
@@ -88,7 +88,7 @@ class WGPlayersScreen : Screen {
                     FilledTonalButton(
                         onClick = {
                             viewModel.savePlayers()
-                            navigator.push(WGSetupScreen())
+                            navigator.push(SetupScreen())
                         },
                         modifier = Modifier
                             .fillMaxWidth()

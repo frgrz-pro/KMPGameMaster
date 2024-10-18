@@ -25,14 +25,14 @@ import org.frgrz.kmpgamemaster.material.components.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.Eye
 import org.frgrz.kmpgamemaster.material.components.icons.Notes
 
-class WGGameScreen : Screen {
+class GameScreen : Screen {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Content() {
 
         val navigator = LocalNavigator.currentOrThrow
-        val viewModel = getScreenModel<WGGameViewModel>()
+        val viewModel = getScreenModel<GameScreenViewModel>()
 
         Scaffold(
             topBar = {
@@ -47,7 +47,7 @@ class WGGameScreen : Screen {
                         IconButton(
                             onClick = {
                                 viewModel.onAccessLogClicked {
-                                    navigator.push(WGGameLogScreen())
+                                    navigator.push(LogScreen())
                                 }
                             },
                         ) {

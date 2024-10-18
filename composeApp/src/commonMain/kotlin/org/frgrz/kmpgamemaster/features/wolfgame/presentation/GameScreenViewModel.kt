@@ -15,7 +15,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogRoleAssi
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.CardItemViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.SimpleTextDialogViewModel
 
-class WGGameViewModel(
+class GameScreenViewModel(
     getGameConfigurationUseCase: GetGameConfigurationUseCase,
     getRoleDeckUseCase: GenerateRoleDeckUseCase,
     private val logCacheGameSettingsUseCase: LogCacheGameSettingsUseCase,

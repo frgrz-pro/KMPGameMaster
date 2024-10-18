@@ -14,7 +14,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRolesForFilt
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.UpdateRoleSelectionUseCase
 
 
-class WGRoleViewModel(
+class RolesScreenViewModel(
     private val filterRolesListUseCase: GetRolesForFilterUseCase,
     private val updateRoleCheckUseCase: UpdateRoleSelectionUseCase,
 ) : ScreenModel {

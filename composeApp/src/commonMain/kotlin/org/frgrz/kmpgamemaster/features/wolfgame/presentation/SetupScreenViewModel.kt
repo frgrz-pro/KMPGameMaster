@@ -16,7 +16,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CacheGameConfig
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetCachedPlayersUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.AddRemoveRowModel
 
-class WGSetupViewModel(
+class SetupScreenViewModel(
     private val getRoleSelectionUseCase: GetRoleSelectionUseCase,
     getCachedPlayersUseCase: GetCachedPlayersUseCase,
     private val cacheGameSettingsUseCase: CacheGameConfigurationUseCase,
