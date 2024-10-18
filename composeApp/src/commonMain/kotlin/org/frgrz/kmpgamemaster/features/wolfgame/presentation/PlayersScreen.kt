@@ -70,11 +70,9 @@ class PlayersScreen : Screen {
                             height = Dimension.fillToConstraints
                         }.padding(bottom = 4.dp)
                     ) {
-                        AddPlayerField(viewModel.currentInput.value, { newValue->
-                            viewModel.currentInput.value = newValue
-                        }, {
-                            viewModel.addEntry()
-                        })
+                        AddPlayerField(viewModel.addPlayerFieldViewModel)
+
+
 
                         Spacer(modifier = Modifier.height(8.dp))
 

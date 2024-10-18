@@ -13,27 +13,46 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+data class AddPlayerFieldViewModel(
+    val text: MutableState<String>,
+) {
+
+    var onAddButtonClicked: () -> Unit = {}
+        private set
+
+    fun setOnAddButtonClicked(onClicked: () -> Unit) {
+        this.onAddButtonClicked = onClicked
+    }
+
+    fun onValueChanged(value: String) {
+        text.value = value
+    }
+
+    fun resetInput() {
+        text.value = ""
+    }
+}
 
 @Composable
-fun AddPlayerField(text: String, onValueChanged: (String) -> Unit, onAddButtonClicked: () -> Unit) {
+fun AddPlayerField(viewModel: AddPlayerFieldViewModel) {
 
     Row {
         TextField(
-            value = text,
-            onValueChange = onValueChanged,
+            value = viewModel.text.value,
+            onValueChange = viewModel::onValueChanged,
             label = { Text("Nouveau Joueur") },
             modifier = Modifier.weight(1f)
                 .background(MaterialTheme.colorScheme.background),
             maxLines = 1,
-
-            )
+        )
 
         IconButton(
-            onClick = onAddButtonClicked,
+            onClick = viewModel.onAddButtonClicked,
             modifier = Modifier
                 .size(48.dp) // Set size for square shape
                 .aspectRatio(1f) // Ensure aspect ratio for square

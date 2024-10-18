@@ -13,7 +13,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.WGRules
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleSelectionUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CacheGameConfigurationUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetCachedPlayersUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.AddRemoveRowModel
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.AddRemoveRowViewModel
 
 class SetupScreenViewModel(
     private val getRoleSelectionUseCase: GetRoleSelectionUseCase,
@@ -32,7 +32,7 @@ class SetupScreenViewModel(
     private var wolvesCount = 1
     private var peasantCount = 1
 
-    val wolvesModel = AddRemoveRowModel(
+    val wolvesModel = AddRemoveRowViewModel(
         unit = "Loups",
         canAddRule = { WGRules.canAddWolves(playerCount.value, wolvesCount) },
         canRemoveRule = { WGRules.canRemoveWolves(wolvesCount) },
@@ -45,7 +45,7 @@ class SetupScreenViewModel(
         }
     )
 
-    val peasantModel = AddRemoveRowModel(
+    val peasantModel = AddRemoveRowViewModel(
         unit = "Paysans",
         canAddRule = { WGRules.canAddPeasant(playerCount.value, wolvesCount, peasantCount) },
         canRemoveRule = { WGRules.canRemovePeasant(peasantCount) },

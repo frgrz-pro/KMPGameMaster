@@ -19,7 +19,7 @@ import org.frgrz.kmpgamemaster.material.components.icons.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.Remove
 
 
-data class AddRemoveRowModel(
+data class AddRemoveRowViewModel(
     val count: MutableState<Int> = mutableStateOf(1),
     val label: MutableState<String> = mutableStateOf(""),
     val canAdd: MutableState<Boolean> = mutableStateOf(true),
@@ -63,7 +63,7 @@ data class AddRemoveRowModel(
 }
 
 @Composable
-fun AddRemoveRow(model: AddRemoveRowModel, modifier: Modifier) {
+fun AddRemoveRow(model: AddRemoveRowViewModel, modifier: Modifier) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier

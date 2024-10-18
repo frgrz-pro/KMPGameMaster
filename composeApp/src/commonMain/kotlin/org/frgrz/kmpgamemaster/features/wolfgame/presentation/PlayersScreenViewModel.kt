@@ -7,6 +7,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.PlayerNameValid
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.WGRules
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CachePlayersUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogPlayerChangedUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.AddPlayerFieldViewModel
 
 class PlayersScreenViewModel(
     private val cachePlayersUseCase: CachePlayersUseCase,
@@ -17,18 +18,25 @@ class PlayersScreenViewModel(
     private val _entries = mutableStateListOf<String>()
     val entries: List<String> = _entries
 
-
-
-    var currentInput = mutableStateOf("")
     val isValidateButtonEnabled = mutableStateOf(false)
 
-    fun addEntry() {
-        validateEntryUseCase(currentInput.value) { isValid ->
+    val addPlayerFieldViewModel = AddPlayerFieldViewModel(
+        text = mutableStateOf("")
+    )
+
+    init {
+        addPlayerFieldViewModel.setOnAddButtonClicked {
+            addEntry()
+        }
+    }
+
+   private fun addEntry() {
+        validateEntryUseCase(addPlayerFieldViewModel.text.value) { isValid ->
             if (isValid) {
-                log.logPlayerAdded(currentInput.value)
-                _entries.add(currentInput.value)
+                log.logPlayerAdded(addPlayerFieldViewModel.text.value)
+                _entries.add(addPlayerFieldViewModel.text.value)
                 updateValidateButtonVisibility()
-                currentInput.value = ""
+                addPlayerFieldViewModel.resetInput()
             }
         }
     }
