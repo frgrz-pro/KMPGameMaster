@@ -1,5 +1,6 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.presentation.components
 
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
@@ -14,12 +15,15 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.frgrz.kmpgamemaster.material.theme.AppTheme
 
 data class AddPlayerFieldViewModel(
     val text: MutableState<String>,
+    val hint: String = "Nouveau Joueur"
 ) {
 
     var onAddButtonClicked: () -> Unit = {}
@@ -45,7 +49,7 @@ fun AddPlayerField(viewModel: AddPlayerFieldViewModel) {
         TextField(
             value = viewModel.text.value,
             onValueChange = viewModel::onValueChanged,
-            label = { Text("Nouveau Joueur") },
+            label = { Text(viewModel.hint) },
             modifier = Modifier.weight(1f)
                 .background(MaterialTheme.colorScheme.background),
             maxLines = 1,
@@ -65,5 +69,17 @@ fun AddPlayerField(viewModel: AddPlayerFieldViewModel) {
                 tint = MaterialTheme.colorScheme.onBackground
             )
         }
+    }
+}
+
+@Composable
+@Preview
+fun AddPlayerField_Preview() {
+    AppTheme {
+        AddPlayerField(
+            AddPlayerFieldViewModel(
+                mutableStateOf("test")
+            )
+        )
     }
 }

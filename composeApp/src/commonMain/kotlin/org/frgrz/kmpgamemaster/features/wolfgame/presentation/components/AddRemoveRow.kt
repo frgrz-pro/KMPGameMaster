@@ -92,7 +92,7 @@ fun AddRemoveRow(model: AddRemoveRowViewModel, modifier: Modifier) {
             val icon = rememberVectorPainter(image = Icons.Filled.Add)
             Icon(
                 painter = icon,
-                contentDescription = "Remove"  //TODO String resource
+                contentDescription = "Add"  //TODO String resource
             )
         }
     }
