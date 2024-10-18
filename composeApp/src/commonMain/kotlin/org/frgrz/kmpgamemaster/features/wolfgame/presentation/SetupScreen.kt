@@ -117,39 +117,37 @@ class SetupScreen : Screen {
 
                             Spacer(modifier = Modifier.height(8.dp))
 
-                            viewModel.selectedRoles.value.DisplayResult(
-                                onLoading = { /*TODO*/ },
-                                onError = { /*TODO*/ },
-                                onSuccess = { items ->
-                                    if (items.isNotEmpty()) {
+                           with(viewModel.selectedRoles.value) {
+                               if (this.isNotEmpty()) {
 
-                                        //TODO Move logic to VM
-                                        val exceedDisplayableLimit = items.size > 15
-                                        val extraItems = items.size - 15
-                                        val displayedItems = if (exceedDisplayableLimit) {
-                                            items.subList(0, 15)
-                                        } else {
-                                            items
-                                        }
+                                   //TODO Move logic to VM
+                                   val exceedDisplayableLimit = this.size > 15
+                                   val extraItems = this.size - 15
+                                   val displayedItems = if (exceedDisplayableLimit) {
+                                      this. subList(0, 15)
+                                   } else {
+                                       this
+                                   }
 
-                                        LazyVerticalGrid(
-                                            columns = GridCells.Fixed(5),
-                                            horizontalArrangement = Arrangement.spacedBy(4.dp),
-                                            verticalArrangement = Arrangement.spacedBy(4.dp),
-                                            modifier = Modifier.padding(12.dp)
-                                        ) {
-                                            itemsIndexed(displayedItems) { index, item ->
-                                                if (extraItems > 0 && index == displayedItems.lastIndex) {
-                                                    WGRoleExtrasCardSmall(extraItems)
-                                                } else {
-                                                    //TODO Add tooltip
-                                                    WGRoleCardSmall(item.role) {}
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            )
+                                   LazyVerticalGrid(
+                                       columns = GridCells.Fixed(5),
+                                       horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                       verticalArrangement = Arrangement.spacedBy(4.dp),
+                                       modifier = Modifier.padding(12.dp)
+                                   ) {
+                                       itemsIndexed(displayedItems) { index, item ->
+                                           if (extraItems > 0 && index == displayedItems.lastIndex) {
+                                               WGRoleExtrasCardSmall(extraItems)
+                                           } else {
+                                               //TODO Add tooltip
+                                               WGRoleCardSmall(item.role) {}
+                                           }
+                                       }
+                                   }
+                               }
+                           }
+
+
 
                             TextButton(
                                 onClick = {

@@ -21,7 +21,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -39,7 +38,6 @@ class RolesScreen : Screen {
     override fun Content() {
 
         val viewModel = getScreenModel<RolesScreenViewModel>()
-        val filteredRoles by viewModel.filteredRoles //TODO Move to ViewModel
 
         Scaffold(
             topBar = {
@@ -79,7 +77,7 @@ class RolesScreen : Screen {
                             val isFilterSelected = viewModel.selectedFilterIndex.value ==
                                     viewModel.filters.indexOf(filter)
 
-                           val backgroundColor= if (isFilterSelected) {
+                            val backgroundColor = if (isFilterSelected) {
                                 MaterialTheme.colorScheme.primaryContainer
                             } else {
                                 MaterialTheme.colorScheme.onPrimaryContainer
@@ -99,26 +97,21 @@ class RolesScreen : Screen {
 
                     Spacer(modifier = Modifier.height(4.dp))
 
-                    filteredRoles.DisplayResult(
-                        onLoading = { /*TODO*/ },
-                        onError = { /*TODO*/ },
-                        onSuccess = { items ->
-                            if (items.isNotEmpty()) {
-                                LazyVerticalGrid(
-                                    columns = GridCells.Fixed(3),
-                                    horizontalArrangement = Arrangement.spacedBy(4.dp),
-                                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                                    modifier = Modifier.padding(12.dp)
-                                ) {
-                                    itemsIndexed(items = items, key = { _, item -> item.role }) { _, item ->
-                                        WGRoleCard(item) { model, isChecked ->
-                                            viewModel.onRoleCheckedChanged(model,isChecked)
-                                        }
-                                    }
+
+                    if (viewModel.filteredRoles.value.isNotEmpty()) {
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(3),
+                            horizontalArrangement = Arrangement.spacedBy(4.dp),
+                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                            modifier = Modifier.padding(12.dp)
+                        ) {
+                            itemsIndexed(items = viewModel.filteredRoles.value, key = { _, item -> item.role }) { _, item ->
+                                WGRoleCard(item) { model, isChecked ->
+                                    viewModel.onRoleCheckedChanged(model, isChecked)
                                 }
                             }
                         }
-                    )
+                    }
                 }
             }
         }

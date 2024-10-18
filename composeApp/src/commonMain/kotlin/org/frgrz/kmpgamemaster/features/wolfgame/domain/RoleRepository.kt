@@ -3,7 +3,6 @@ package org.frgrz.kmpgamemaster.features.wolfgame.domain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
-import org.frgrz.kmpgamemaster.core.RequestState
 import org.frgrz.kmpgamemaster.data.entities.WGRoleDBEntity
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGGameCache
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleLocalDataSource
@@ -18,9 +17,9 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 //TODO Split ? Create another repository for game configuration
 interface WGRoleRepository {
 
-    fun getAllChecked(isChecked: Boolean): Flow<RequestState<List<WGRoleModel>>>
+    fun getAllChecked(isChecked: Boolean): Flow<List<WGRoleModel>>
 
-    fun getAllFiltered(filter: RoleFilter): Flow<RequestState<List<WGRoleModel>>>
+    fun getAllFiltered(filter: RoleFilter): Flow<List<WGRoleModel>>
 
     fun updateRoleSelection(model: WGRoleModel, isChecked: Boolean)
 
@@ -40,26 +39,22 @@ class WGRoleRepositoryImpl(
     private val cache: WGGameCache,
 ) : WGRoleRepository {
 
-    override fun getAllChecked(isChecked: Boolean): Flow<RequestState<List<WGRoleModel>>> {
+    override fun getAllChecked(isChecked: Boolean): Flow<List<WGRoleModel>> {
         return roleLocalDataSource.getAllChecked(isChecked)
             .map { result ->
-                RequestState.Success(
-                    data = result.map {
-                        roleModelMapper.map(it)
-                    }
-                )
+                result.map {
+                    roleModelMapper.map(it)
+                }
             }
     }
 
-    override fun getAllFiltered(filter: RoleFilter): Flow<RequestState<List<WGRoleModel>>> {
+    override fun getAllFiltered(filter: RoleFilter): Flow<List<WGRoleModel>> {
         val roles = roleFilterMapper.map(filter)
         return roleLocalDataSource.getAllFiltered(roles)
             .map { result ->
-                RequestState.Success(
-                    data = result.map {
-                        roleModelMapper.map(it)
-                    }
-                )
+                result.map {
+                    roleModelMapper.map(it)
+                }
             }
     }
 

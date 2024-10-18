@@ -8,7 +8,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.frgrz.kmpgamemaster.core.RequestState
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.WGRules
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleSelectionUseCase
@@ -27,9 +26,8 @@ class SetupScreenViewModel(
     var playerLabel = mutableStateOf("Joueurs : " + playerCount.value.toString())
     var canStartGame = mutableStateOf(playerCount.value > WGRules.MIN_PLAYER)
 
-    private var _selectedRoles: MutableState<RequestState<List<WGRoleModel>>> =
-        mutableStateOf(RequestState.Idle)
-    val selectedRoles: MutableState<RequestState<List<WGRoleModel>>> = _selectedRoles
+    private var _selectedRoles: MutableState<List<WGRoleModel>> = mutableStateOf(listOf())
+    val selectedRoles: MutableState<List<WGRoleModel>> = _selectedRoles
 
     private var wolvesCount = 1
     private var peasantCount = 1
@@ -55,7 +53,6 @@ class SetupScreenViewModel(
     )
 
     init {
-        _selectedRoles.value = RequestState.Loading
         screenModelScope.launch(Dispatchers.Main) {
             getRoleSelectionUseCase.invoke(true)
                 .collectLatest {
@@ -74,7 +71,7 @@ class SetupScreenViewModel(
 
 
     fun saveGameSettings() {
-        cacheGameSettingsUseCase.invoke(selectedRoles.value.getSuccessData(), wolvesCount, peasantCount)
+        cacheGameSettingsUseCase.invoke(selectedRoles.value, wolvesCount, peasantCount)
     }
 
     private fun onPlayerCountChanged(count: Int) {
