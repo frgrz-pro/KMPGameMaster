@@ -12,10 +12,8 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -23,15 +21,29 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.jetbrains.compose.resources.stringResource
 
+data class RoleCardViewModel(
+    val model: WGRoleModel,
+    val onWGRoleSelected: (WGRoleModel, Boolean) -> Unit,
+) {
 
-//TODO ViewModel
+    val showDialog: MutableState<Boolean> = mutableStateOf(false)
+
+    val roleDialogViewModel: RoleDialogViewModel = RoleDialogViewModel(
+        model = model,
+        onDialogDismissRequested = { showDialog.value = false }
+    )
+
+    fun onCardClicked() {
+        showDialog.value = true
+    }
+}
+
+
 @Composable
-fun WGRoleCard(model: WGRoleModel, onWGRoleSelected: (WGRoleModel, Boolean) -> Unit) {
-
-    var showDialog by remember { mutableStateOf(false) } //TODO Move to ViewModel
+fun RoleCard(viewModel: RoleCardViewModel) {
 
     Card(
-        onClick = { showDialog = true },
+        onClick = { viewModel.onCardClicked() },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp
         ),
@@ -45,7 +57,7 @@ fun WGRoleCard(model: WGRoleModel, onWGRoleSelected: (WGRoleModel, Boolean) -> U
             val text = createRef()
 
             WGRoleImageLarge(
-                role = model.role,
+                role = viewModel.model.role,
                 modifier = Modifier.fillMaxSize()
                     .aspectRatio(1f)
                     .constrainAs(image) {
@@ -56,9 +68,9 @@ fun WGRoleCard(model: WGRoleModel, onWGRoleSelected: (WGRoleModel, Boolean) -> U
             )
 
             Checkbox(
-                checked = model.isSelected,
+                checked = viewModel.model.isSelected,
                 onCheckedChange = { isChecked ->
-                   onWGRoleSelected(model, isChecked)
+                    viewModel.onWGRoleSelected(viewModel.model, isChecked)
                 },
                 modifier = Modifier.constrainAs(checkbox) {
                     top.linkTo(parent.top)
@@ -67,7 +79,7 @@ fun WGRoleCard(model: WGRoleModel, onWGRoleSelected: (WGRoleModel, Boolean) -> U
             )
 
             Text(
-                text = stringResource(model.name),
+                text = stringResource(viewModel.model.name),
                 color = MaterialTheme.colorScheme.tertiaryContainer,
                 maxLines = 1,
                 textAlign = TextAlign.Center,
@@ -87,9 +99,7 @@ fun WGRoleCard(model: WGRoleModel, onWGRoleSelected: (WGRoleModel, Boolean) -> U
         }
     }
 
-    if (showDialog) {
-        WGRoleDialog(model) { onDialogDismissRequested ->
-            showDialog = onDialogDismissRequested
-        }
+    if (viewModel.showDialog.value) {
+        RoleDialog(viewModel.roleDialogViewModel)
     }
 }

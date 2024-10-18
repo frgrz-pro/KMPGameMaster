@@ -3,6 +3,7 @@ package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases
 import kotlinx.coroutines.flow.Flow
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepository
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleFilter
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 
 
@@ -34,7 +35,7 @@ class GetRolesForFilterUseCase(
 class UpdateRoleSelectionUseCase(
     private val repository: WGRoleRepository,
 ) {
-    fun invoke(role: WGRoleModel, isChecked: Boolean) {
+    fun invoke(role: WGRole, isChecked: Boolean) {
         repository.updateRoleSelection(role, isChecked)
     }
 }

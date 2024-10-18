@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.koin.getScreenModel
-import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleCard
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.RoleCard
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleFilterCard
 import org.frgrz.kmpgamemaster.material.components.icons.IconPack
 import org.frgrz.kmpgamemaster.material.components.icons.SelectAll
@@ -98,17 +98,15 @@ class RolesScreen : Screen {
                     Spacer(modifier = Modifier.height(4.dp))
 
 
-                    if (viewModel.filteredRoles.value.isNotEmpty()) {
+                    if (viewModel.cardsViewModel.value.isNotEmpty()) {
                         LazyVerticalGrid(
                             columns = GridCells.Fixed(3),
                             horizontalArrangement = Arrangement.spacedBy(4.dp),
                             verticalArrangement = Arrangement.spacedBy(4.dp),
                             modifier = Modifier.padding(12.dp)
                         ) {
-                            itemsIndexed(items = viewModel.filteredRoles.value, key = { _, item -> item.role }) { _, item ->
-                                WGRoleCard(item) { model, isChecked ->
-                                    viewModel.onRoleCheckedChanged(model, isChecked)
-                                }
+                            itemsIndexed(items = viewModel.cardsViewModel.value) { _, item ->
+                                RoleCard(item)
                             }
                         }
                     }

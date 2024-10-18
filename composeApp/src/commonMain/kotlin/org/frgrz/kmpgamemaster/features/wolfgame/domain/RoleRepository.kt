@@ -21,7 +21,7 @@ interface WGRoleRepository {
 
     fun getAllFiltered(filter: RoleFilter): Flow<List<WGRoleModel>>
 
-    fun updateRoleSelection(model: WGRoleModel, isChecked: Boolean)
+    fun updateRoleSelection(model: WGRole, isChecked: Boolean)
 
     fun cachePlayerConfiguration(players: List<String>)
 
@@ -59,10 +59,10 @@ class WGRoleRepositoryImpl(
     }
 
     override fun updateRoleSelection(
-        model: WGRoleModel,
+        model: WGRole,
         isChecked: Boolean,
     ) {
-        val role = WGRoleDBEntity.WGRole.entries[model.role.ordinal]
+        val role = WGRoleDBEntity.WGRole.entries[WGRole.entries.indexOf(model)]
         roleLocalDataSource.updateRole(role, isChecked)
 
     }
