@@ -6,10 +6,12 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.PlayerNameValidationUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.WGRules
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CachePlayersUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.CacheLogPlayerChangedUseCase
 
 class WGPlayersViewModel(
     private val cachePlayersUseCase: CachePlayersUseCase,
-    private val validateEntryUseCase: PlayerNameValidationUseCase
+    private val validateEntryUseCase: PlayerNameValidationUseCase,
+    private val log: CacheLogPlayerChangedUseCase,
 ) : ScreenModel {
 
     private val _entries = mutableStateListOf<String>()
@@ -17,14 +19,10 @@ class WGPlayersViewModel(
     var currentInput = mutableStateOf("")
     val isValidateButtonEnabled = mutableStateOf(false)
 
-    private fun updateValidateButtonVisibility() {
-        isValidateButtonEnabled.value = _entries.size >= WGRules.MIN_PLAYER
-
-    }
-
     fun addEntry() {
         validateEntryUseCase(currentInput.value) { isValid ->
             if (isValid) {
+                log.logPlayerAdded(currentInput.value)
                 _entries.add(currentInput.value)
                 updateValidateButtonVisibility()
                 currentInput.value = ""
@@ -33,6 +31,7 @@ class WGPlayersViewModel(
     }
 
     fun removeEntry(index: Int) {
+        log.logPlayerRemoved(_entries[index])
         _entries.removeAt(index)
         updateValidateButtonVisibility()
     }
@@ -50,11 +49,20 @@ class WGPlayersViewModel(
         _entries.add("Tom")
         _entries.add("Kelly")
         _entries.add("Amaïa")
+
+        _entries.map {
+            log.logPlayerAdded(it)
+        }
+
         updateValidateButtonVisibility()
     }
 
     fun savePlayers() {
         cachePlayersUseCase.invoke(entries)
+    }
+
+    private fun updateValidateButtonVisibility() {
+        isValidateButtonEnabled.value = _entries.size >= WGRules.MIN_PLAYER
     }
 
 }

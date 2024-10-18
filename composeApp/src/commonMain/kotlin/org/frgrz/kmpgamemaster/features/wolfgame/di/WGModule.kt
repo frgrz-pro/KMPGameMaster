@@ -7,6 +7,9 @@ import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleFilterMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleLocalDataSource
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleLocalDataSourceImpl
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleModelMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.GameLogCache
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.GameLogRepository
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.GameLogRepositoryImpl
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRolesForFilterUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleSelectionUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepository
@@ -25,12 +28,15 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectSolo
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectVillagersUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.SelectWolvesUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.VerifyRoleCompatibilityUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.CacheLogPlayerChangedUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.GetLogUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGGameLogViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGGameViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGSetupViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGPlayersViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGRoleViewModel
 import org.koin.dsl.module
+import kotlin.math.log
 
 val wgModule = module {
 
@@ -39,6 +45,7 @@ val wgModule = module {
     factory<WGRoleDao> { WGRoleDaoImpl(db = get()) }
     factory<WGRoleLocalDataSource> { WGRoleLocalDataSourceImpl(dao = get()) }
     single { WGGameCache() }
+    single { GameLogCache() }
 
     //region Mappers
 
@@ -52,6 +59,12 @@ val wgModule = module {
             roleLocalDataSource = get(),
             roleModelMapper = get(),
             roleFilterMapper = get(),
+            cache = get()
+        )
+    }
+
+    factory<GameLogRepository> {
+        GameLogRepositoryImpl(
             cache = get()
         )
     }
@@ -93,6 +106,8 @@ val wgModule = module {
     //region Other Use Cases
 
     factory { PlayerNameValidationUseCase() }
+    factory { GetLogUseCase(repository = get()) }
+    factory { CacheLogPlayerChangedUseCase(repository = get()) }
 
     //region ViewModels
 
@@ -114,7 +129,8 @@ val wgModule = module {
     factory {
         WGPlayersViewModel(
             cachePlayersUseCase = get(),
-            validateEntryUseCase = get()
+            validateEntryUseCase = get(),
+            log = get()
         )
     }
 
@@ -126,7 +142,9 @@ val wgModule = module {
     }
 
     factory {
-        WGGameLogViewModel()
+        WGGameLogViewModel(
+            getLogUseCase = get()
+        )
     }
 
 }

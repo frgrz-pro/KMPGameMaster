@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -23,6 +25,8 @@ import kmpgamemaster.composeapp.generated.resources.two_rooms_and_a_boom
 import kmpgamemaster.composeapp.generated.resources.werewolf
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGPlayersScreen
 import org.frgrz.kmpgamemaster.material.components.ColorsScreen
+import org.frgrz.kmpgamemaster.material.components.IconPack
+import org.frgrz.kmpgamemaster.material.components.icons.Bug
 import org.jetbrains.compose.resources.stringResource
 
 class HomeScreen : Screen {
@@ -37,7 +41,14 @@ class HomeScreen : Screen {
 
         Scaffold(
             topBar = {
-                TopAppBar(title = { Text("Home") })
+                TopAppBar(title = { Text("Home") },
+                    actions = {
+                        IconButton(
+                            onClick = { navigator.push(DebugScreen()) },
+                        ) {
+                            Icon(imageVector = IconPack.Bug, contentDescription = "")
+                        }
+                    })
             },
             content = { paddingValues ->
                 Column (
