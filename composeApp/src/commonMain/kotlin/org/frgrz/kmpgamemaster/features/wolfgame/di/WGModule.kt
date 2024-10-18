@@ -14,6 +14,11 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRolesForFilt
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleSelectionUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepository
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepositoryImpl
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.PlaysWithMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleCardViewModelMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleDialogViewModelMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleLargeDrawableMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.WinsWithMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.PlayerNameValidationUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CacheGameConfigurationUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CachePlayersUseCase
@@ -54,6 +59,24 @@ val wgModule = module {
     factory { WGRoleModelMapper() }
     factory { WGRoleFilterMapper() }
 
+    factory { RoleLargeDrawableMapper() }
+    factory { PlaysWithMapper() }
+    factory { WinsWithMapper() }
+
+    factory {
+        RoleDialogViewModelMapper(
+            drawableMapper = get(),
+            playsWithMapper = get(),
+            winsWithMapper = get()
+        )
+    }
+
+    factory {
+        RoleCardViewModelMapper(
+            roleDialogViewModelMapper = get()
+        )
+    }
+
     //region Repository
 
     factory<WGRoleRepository> {
@@ -73,7 +96,12 @@ val wgModule = module {
 
     //region DB UseCases
 
-    factory { GetRolesForFilterUseCase(repository = get()) }
+    factory {
+        GetRolesForFilterUseCase(
+            repository = get(),
+            roleCardViewModelMapper = get()
+        )
+    }
     factory { UpdateRoleSelectionUseCase(repository = get()) }
     factory { GetRoleSelectionUseCase(repository = get()) }
 

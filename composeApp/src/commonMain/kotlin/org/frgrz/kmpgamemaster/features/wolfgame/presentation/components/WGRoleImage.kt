@@ -6,31 +6,29 @@ import androidx.compose.ui.Modifier
 import kmpgamemaster.composeapp.generated.resources.Res
 import kmpgamemaster.composeapp.generated.resources.angel_large
 import kmpgamemaster.composeapp.generated.resources.angel_medium
-import kmpgamemaster.composeapp.generated.resources.assassin_large
-import kmpgamemaster.composeapp.generated.resources.assassin_medium
 import kmpgamemaster.composeapp.generated.resources.astronomist_large
-import kmpgamemaster.composeapp.generated.resources.astronomist_medium
 import kmpgamemaster.composeapp.generated.resources.bear_handler_large
-import kmpgamemaster.composeapp.generated.resources.bear_handler_medium
 import kmpgamemaster.composeapp.generated.resources.berserk_large
+import kmpgamemaster.composeapp.generated.resources.astronomist_medium
+import kmpgamemaster.composeapp.generated.resources.bear_handler_medium
 import kmpgamemaster.composeapp.generated.resources.berserk_medium
 import kmpgamemaster.composeapp.generated.resources.big_bad_wolf_large
-import kmpgamemaster.composeapp.generated.resources.big_bad_wolf_medium
 import kmpgamemaster.composeapp.generated.resources.black_wolf_large
-import kmpgamemaster.composeapp.generated.resources.black_wolf_medium
 import kmpgamemaster.composeapp.generated.resources.blacksmith_large
-import kmpgamemaster.composeapp.generated.resources.blacksmith_medium
 import kmpgamemaster.composeapp.generated.resources.blue_wolf_large
-import kmpgamemaster.composeapp.generated.resources.blue_wolf_medium
 import kmpgamemaster.composeapp.generated.resources.bully_large
-import kmpgamemaster.composeapp.generated.resources.bully_medium
 import kmpgamemaster.composeapp.generated.resources.cassandre_large
-import kmpgamemaster.composeapp.generated.resources.cassandre_medium
 import kmpgamemaster.composeapp.generated.resources.comedian_large
-import kmpgamemaster.composeapp.generated.resources.comedian_medium
 import kmpgamemaster.composeapp.generated.resources.corrupter_large
-import kmpgamemaster.composeapp.generated.resources.corrupter_medium
 import kmpgamemaster.composeapp.generated.resources.cupid_large
+import kmpgamemaster.composeapp.generated.resources.big_bad_wolf_medium
+import kmpgamemaster.composeapp.generated.resources.black_wolf_medium
+import kmpgamemaster.composeapp.generated.resources.blacksmith_medium
+import kmpgamemaster.composeapp.generated.resources.blue_wolf_medium
+import kmpgamemaster.composeapp.generated.resources.bully_medium
+import kmpgamemaster.composeapp.generated.resources.cassandre_medium
+import kmpgamemaster.composeapp.generated.resources.comedian_medium
+import kmpgamemaster.composeapp.generated.resources.corrupter_medium
 import kmpgamemaster.composeapp.generated.resources.cupid_medium
 import kmpgamemaster.composeapp.generated.resources.deflecteur_large
 import kmpgamemaster.composeapp.generated.resources.deflecteur_medium
@@ -62,8 +60,8 @@ import kmpgamemaster.composeapp.generated.resources.mayor_large
 import kmpgamemaster.composeapp.generated.resources.mayor_medium
 import kmpgamemaster.composeapp.generated.resources.moon_son_large
 import kmpgamemaster.composeapp.generated.resources.moon_son_medium
-import kmpgamemaster.composeapp.generated.resources.noctambulist_large
-import kmpgamemaster.composeapp.generated.resources.noctambulist_medium
+import kmpgamemaster.composeapp.generated.resources.noctambule_large
+import kmpgamemaster.composeapp.generated.resources.noctambule_medium
 import kmpgamemaster.composeapp.generated.resources.old_knight_large
 import kmpgamemaster.composeapp.generated.resources.old_knight_medium
 import kmpgamemaster.composeapp.generated.resources.peasant_large
@@ -88,6 +86,7 @@ import kmpgamemaster.composeapp.generated.resources.traitor_large
 import kmpgamemaster.composeapp.generated.resources.traitor_medium
 import kmpgamemaster.composeapp.generated.resources.two_sisters_large
 import kmpgamemaster.composeapp.generated.resources.two_sisters_medium
+import kmpgamemaster.composeapp.generated.resources.village_elder_large
 import kmpgamemaster.composeapp.generated.resources.village_elder_medium
 import kmpgamemaster.composeapp.generated.resources.white_soothsayer_large
 import kmpgamemaster.composeapp.generated.resources.white_soothsayer_medium
@@ -147,7 +146,7 @@ fun WGRoleImageMedium(role: WGRole, modifier: Modifier) {
         WGRole.IDIOT -> Res.drawable.idiot_medium
         WGRole.MARSHALL -> Res.drawable.marshall_medium
         WGRole.MOON_SON -> Res.drawable.moon_son_medium
-        WGRole.NOCTAMBUL -> Res.drawable.noctambulist_medium
+        WGRole.NOCTAMBUL -> Res.drawable.noctambule_medium
         WGRole.OLD_KNIGHT -> Res.drawable.old_knight_medium
         WGRole.PIED_PIPER -> Res.drawable.pied_piper_medium
         WGRole.PRIEST -> Res.drawable.priest_medium
@@ -178,7 +177,7 @@ fun WGRoleImageMedium(role: WGRole, modifier: Modifier) {
 
 @Composable
 fun WGRoleImageLarge(role: WGRole, modifier: Modifier) {
-    val drawableId = when (role) {
+    val drawableId  = when (role) {
         WGRole.LITTLE_GIRL -> Res.drawable.little_girl_large
         WGRole.HUNTER -> Res.drawable.hunter_large
         WGRole.MAYOR -> Res.drawable.mayor_large
@@ -213,7 +212,7 @@ fun WGRoleImageLarge(role: WGRole, modifier: Modifier) {
         WGRole.IDIOT -> Res.drawable.idiot_large
         WGRole.MARSHALL -> Res.drawable.marshall_large
         WGRole.MOON_SON -> Res.drawable.moon_son_large
-        WGRole.NOCTAMBUL -> Res.drawable.noctambulist_large
+        WGRole.NOCTAMBUL -> Res.drawable.noctambule_large
         WGRole.OLD_KNIGHT -> Res.drawable.old_knight_large
         WGRole.PIED_PIPER -> Res.drawable.pied_piper_large
         WGRole.PRIEST -> Res.drawable.priest_large
@@ -222,7 +221,7 @@ fun WGRoleImageLarge(role: WGRole, modifier: Modifier) {
         WGRole.THREE_BROTHERS -> Res.drawable.three_brothers_large
         WGRole.TRAITOR -> Res.drawable.traitor_large
         WGRole.TWO_SISTERS -> Res.drawable.two_sisters_large
-        WGRole.VILLAGE_ELDER -> Res.drawable.village_elder_medium //TODO Large asset resource
+        WGRole.VILLAGE_ELDER -> Res.drawable.village_elder_large
         WGRole.WHITE_SOOTHSAYER -> Res.drawable.white_soothsayer_large
         WGRole.WHITE_WOLF -> Res.drawable.white_wolf_large
         WGRole.WILD_KID -> Res.drawable.wild_kid_large

@@ -1,10 +1,14 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepository
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleCardViewModelMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleFilter
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.RoleCardViewModel
 
 
 class GetRoleSelectionUseCase(
@@ -18,16 +22,21 @@ class GetRoleSelectionUseCase(
 
 class GetRolesForFilterUseCase(
     private val repository: WGRoleRepository,
+    private val roleCardViewModelMapper: RoleCardViewModelMapper
 ) {
 
-    fun invoke(filter: RoleFilter): Flow<List<WGRoleModel>> {
+    fun invoke(filter: RoleFilter): Flow<List<RoleCardViewModel>> {
         val flow = if (filter == RoleFilter.SELECTED || filter == RoleFilter.UNSELECTED) {
             repository.getAllChecked(filter == RoleFilter.SELECTED)
         } else {
             repository.getAllFiltered(filter)
         }
 
-        return flow
+        return flow.map { roles ->
+            roles.map { role ->
+                roleCardViewModelMapper.map(role)
+            }
+        }
     }
 }
 

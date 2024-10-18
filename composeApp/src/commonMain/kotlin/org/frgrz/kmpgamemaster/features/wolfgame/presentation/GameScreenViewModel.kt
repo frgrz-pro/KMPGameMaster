@@ -167,7 +167,7 @@ class GameScreenViewModel(
                 state = state,
                 onCardClicked = { cardId ->
                     if (!isDebug.value) {
-                        _roleDialogModel.value = RoleDialogViewModel(roles[cardId], ::dismissRoleDialog)
+                        //TODO Fix_roleDialogModel.value = RoleDialogViewModel(roles[cardId], ::dismissRoleDialog)
                         showRoleDialog()
                         onRoleDrawn(cardId)
                     }

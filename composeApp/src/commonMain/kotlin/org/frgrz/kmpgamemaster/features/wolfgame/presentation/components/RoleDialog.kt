@@ -1,5 +1,6 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.presentation.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,14 +25,35 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import kmpgamemaster.composeapp.generated.resources.Res
 import kmpgamemaster.composeapp.generated.resources.close
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleAction
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.material.components.TextBadge
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
-data class RoleDialogViewModel(
+/*data class RoleDialogViewModel(
     val model: WGRoleModel,
     val onDialogDismissRequested: () -> Unit,
-)
+)*/
+
+
+data class RoleDialogViewModel(
+    val name:StringResource,
+    val imageDrawableResource: DrawableResource,
+    val playsWith: StringResource,
+    val winsWith:StringResource,
+    val actions: List<WGRoleAction> //TODO VM
+) {
+
+    var onDialogDismissRequested: () -> Unit = {}
+        private set
+
+    fun setOnDialogDismissRequested(onDialogDismissRequested: ()->Unit) {
+        this.onDialogDismissRequested = onDialogDismissRequested
+    }
+}
 
 @Composable
 fun RoleDialog(viewModel: RoleDialogViewModel) {
@@ -63,15 +85,17 @@ fun RoleDialog(viewModel: RoleDialogViewModel) {
                                 end.linkTo(parent.end)
                             }
                     ) {
-                        WGRoleImageLarge(
-                            role = viewModel.model.role,
-                            modifier = Modifier.fillMaxSize()
+                        val imagePainter = painterResource(viewModel.imageDrawableResource)
+                        Image(
+                            painter = imagePainter,
+                            contentDescription = "My Image", //TODO String resource
+                            modifier =  Modifier.fillMaxSize()
                                 .aspectRatio(1f)
                         )
                     }
 
                     Text(
-                        text = stringResource(viewModel.model.name),
+                        text = stringResource(viewModel.name),
                         style = MaterialTheme.typography.headlineSmall,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
@@ -95,13 +119,13 @@ fun RoleDialog(viewModel: RoleDialogViewModel) {
                                 end.linkTo(parent.end)
                             }) {
                         TextBadge(
-                            viewModel.model.playsWith.name,
+                            stringResource( viewModel.playsWith),
                             MaterialTheme.colorScheme.primaryContainer,
                             MaterialTheme.colorScheme.onPrimaryContainer
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         TextBadge(
-                            viewModel.model.winsWith.name,
+                            stringResource( viewModel.winsWith),
                             MaterialTheme.colorScheme.secondaryContainer,
                             MaterialTheme.colorScheme.onSecondaryContainer
                         )
@@ -117,7 +141,7 @@ fun RoleDialog(viewModel: RoleDialogViewModel) {
                                 end.linkTo(parent.end)
                             }
                     ) {
-                        viewModel.model.actions.forEach {
+                        viewModel.actions.forEach {
                             WGRoleActionBox(it)
                         }
                     }

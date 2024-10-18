@@ -29,7 +29,7 @@ import kmpgamemaster.composeapp.generated.resources.little_girl_large
 import kmpgamemaster.composeapp.generated.resources.marshall_large
 import kmpgamemaster.composeapp.generated.resources.mayor_large
 import kmpgamemaster.composeapp.generated.resources.moon_son_large
-import kmpgamemaster.composeapp.generated.resources.noctambulist_large
+import kmpgamemaster.composeapp.generated.resources.noctambule_large
 import kmpgamemaster.composeapp.generated.resources.old_knight_large
 import kmpgamemaster.composeapp.generated.resources.peasant_large
 import kmpgamemaster.composeapp.generated.resources.pied_piper_large
@@ -42,7 +42,7 @@ import kmpgamemaster.composeapp.generated.resources.thief_large
 import kmpgamemaster.composeapp.generated.resources.three_brothers_large
 import kmpgamemaster.composeapp.generated.resources.traitor_large
 import kmpgamemaster.composeapp.generated.resources.two_sisters_large
-import kmpgamemaster.composeapp.generated.resources.village_elder_medium
+import kmpgamemaster.composeapp.generated.resources.village_elder_large
 import kmpgamemaster.composeapp.generated.resources.white_soothsayer_large
 import kmpgamemaster.composeapp.generated.resources.white_wolf_large
 import kmpgamemaster.composeapp.generated.resources.wild_kid_large
@@ -88,12 +88,12 @@ class RoleLargeDrawableMapper : Mapper<WGRole, DrawableResource> {
             WGRole.FOX -> Res.drawable.fox_large
             WGRole.GENTLEMAN -> Res.drawable.gentleman_large
             WGRole.GUARD -> Res.drawable.guard_large
-            WGRole.GURU -> Res.drawable.guru_large // Use illustration in Ankou
+            WGRole.GURU -> Res.drawable.guru_large
             WGRole.HITMAN -> Res.drawable.hitman_large
             WGRole.IDIOT -> Res.drawable.idiot_large
             WGRole.MARSHALL -> Res.drawable.marshall_large
             WGRole.MOON_SON -> Res.drawable.moon_son_large
-            WGRole.NOCTAMBUL -> Res.drawable.noctambulist_large
+            WGRole.NOCTAMBUL -> Res.drawable.noctambule_large
             WGRole.OLD_KNIGHT -> Res.drawable.old_knight_large
             WGRole.PIED_PIPER -> Res.drawable.pied_piper_large
             WGRole.PRIEST -> Res.drawable.priest_large
@@ -102,7 +102,7 @@ class RoleLargeDrawableMapper : Mapper<WGRole, DrawableResource> {
             WGRole.THREE_BROTHERS -> Res.drawable.three_brothers_large
             WGRole.TRAITOR -> Res.drawable.traitor_large
             WGRole.TWO_SISTERS -> Res.drawable.two_sisters_large
-            WGRole.VILLAGE_ELDER -> Res.drawable.village_elder_medium //TODO Large asset resource
+            WGRole.VILLAGE_ELDER -> Res.drawable.village_elder_large
             WGRole.WHITE_SOOTHSAYER -> Res.drawable.white_soothsayer_large
             WGRole.WHITE_WOLF -> Res.drawable.white_wolf_large
             WGRole.WILD_KID -> Res.drawable.wild_kid_large
