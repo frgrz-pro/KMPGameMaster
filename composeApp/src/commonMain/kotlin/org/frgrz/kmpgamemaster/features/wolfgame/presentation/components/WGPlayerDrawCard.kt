@@ -32,13 +32,13 @@ data class CardItemViewModel(
     val isClickable: MutableState<Boolean> = mutableStateOf(true),
     val role: MutableState<WGRoleModel>,
     val onCardClicked: (Int) -> Unit,
-    val state: MutableState<GameScreenViewModel.State>,
+    val state: MutableState<GameScreenViewModel.ScreenState>,
     val isExtraRole: Boolean = false,
 )
 
 @Composable
 fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
-    val bg = if (viewModel.state.value == GameScreenViewModel.State.REVEAL) {
+    val bg = if (viewModel.state.value == GameScreenViewModel.ScreenState.REVEAL) {
         with(viewModel.role.value.role) {
 
 
@@ -64,7 +64,7 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
         }
     }
 
-    val tx = if (viewModel.state.value == GameScreenViewModel.State.REVEAL) {
+    val tx = if (viewModel.state.value == GameScreenViewModel.ScreenState.REVEAL) {
         with(viewModel.role.value.role) {
             if(viewModel.isExtraRole){
                 MaterialTheme.colorScheme.onSecondary
@@ -89,10 +89,10 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
     }
 
     val heightModifier = when {
-        viewModel.state.value == GameScreenViewModel.State.NORMAL && viewModel.isExtraRole -> Modifier.height(0.dp)
-        viewModel.state.value == GameScreenViewModel.State.NORMAL && !viewModel.isExtraRole -> Modifier.wrapContentHeight()
-        viewModel.state.value == GameScreenViewModel.State.REVEAL && viewModel.isExtraRole -> Modifier.wrapContentHeight()
-        viewModel.state.value == GameScreenViewModel.State.REVEAL && !viewModel.isExtraRole -> Modifier.wrapContentHeight()
+        viewModel.state.value == GameScreenViewModel.ScreenState.NORMAL && viewModel.isExtraRole -> Modifier.height(0.dp)
+        viewModel.state.value == GameScreenViewModel.ScreenState.NORMAL && !viewModel.isExtraRole -> Modifier.wrapContentHeight()
+        viewModel.state.value == GameScreenViewModel.ScreenState.REVEAL && viewModel.isExtraRole -> Modifier.wrapContentHeight()
+        viewModel.state.value == GameScreenViewModel.ScreenState.REVEAL && !viewModel.isExtraRole -> Modifier.wrapContentHeight()
         else -> Modifier.wrapContentHeight()
     }
 
@@ -115,7 +115,7 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
                 val image = createRef()
                 val text2 = createRef()
 
-                if (viewModel.state.value == GameScreenViewModel.State.REVEAL) {
+                if (viewModel.state.value == GameScreenViewModel.ScreenState.REVEAL) {
                     WGRoleImageLarge(
                         role = viewModel.role.value.role,
                         modifier = Modifier.fillMaxHeight()
@@ -136,7 +136,7 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
                             top.linkTo(parent.top)
                             end.linkTo(parent.end)
                             bottom.linkTo(parent.bottom)
-                            if (viewModel.state.value == GameScreenViewModel.State.REVEAL) {
+                            if (viewModel.state.value == GameScreenViewModel.ScreenState.REVEAL) {
                                 start.linkTo(image.end)
                             } else {
                                 start.linkTo(parent.start)
@@ -145,7 +145,7 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
                     style = MaterialTheme.typography.titleLarge,
                     color = tx
                 )
-                if (viewModel.state.value == GameScreenViewModel.State.REVEAL) {
+                if (viewModel.state.value == GameScreenViewModel.ScreenState.REVEAL) {
                     Text(
                         text = viewModel.role.value.role.name,
                         textAlign = TextAlign.Center,
@@ -154,7 +154,7 @@ fun WGPlayerDrawCard(viewModel: CardItemViewModel) {
                                 top.linkTo(text.bottom)
                                 end.linkTo(parent.end)
                                 bottom.linkTo(parent.bottom)
-                                if (viewModel.state.value == GameScreenViewModel.State.REVEAL) {
+                                if (viewModel.state.value == GameScreenViewModel.ScreenState.REVEAL) {
                                     start.linkTo(image.end)
                                 } else {
                                     start.linkTo(parent.start)
@@ -181,7 +181,7 @@ fun WGPlayerDrawCard_Unselected_Preview() {
                 isClickable = mutableStateOf(true),
                 role = mutableStateOf(PreviewData.roleModel),
                 onCardClicked = {},
-                state = mutableStateOf(GameScreenViewModel.State.NORMAL)
+                state = mutableStateOf(GameScreenViewModel.ScreenState.NORMAL)
             )
         )
     }
@@ -198,7 +198,7 @@ fun WGPlayerDrawCard_Selected_Preview() {
                 isClickable = mutableStateOf(false),
                 role = mutableStateOf(PreviewData.roleModel),
                 onCardClicked = {},
-                state = mutableStateOf(GameScreenViewModel.State.NORMAL)
+                state = mutableStateOf(GameScreenViewModel.ScreenState.NORMAL)
             )
         )
     }

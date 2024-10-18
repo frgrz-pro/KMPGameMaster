@@ -23,7 +23,7 @@ class GameScreenViewModel(
 ) : ScreenModel {
 
     private val isDebug = mutableStateOf(true)
-    private val state = mutableStateOf(if (isDebug.value) State.REVEAL else State.NORMAL)
+    private val state = mutableStateOf(if (isDebug.value) ScreenState.REVEAL else ScreenState.NORMAL)
 
 
     private val gameConfiguration = getGameConfigurationUseCase.invoke()
@@ -140,16 +140,16 @@ class GameScreenViewModel(
     }
 
     fun toggleState() {
-        if (state.value == State.NORMAL) {
+        if (state.value == ScreenState.NORMAL) {
             revealClickCount++
             if (revealClickCount == 5 || isDebug.value) {
                 revealClickCount = 0
-                state.value = State.REVEAL
+                state.value = ScreenState.REVEAL
             } else {
                 isWarningDialogVisible.value = true
             }
         } else {
-            state.value = State.NORMAL
+            state.value = ScreenState.NORMAL
         }
     }
 
@@ -170,7 +170,9 @@ class GameScreenViewModel(
         }
     }
 
-    enum class State {
+    
+
+    enum class ScreenState {
         NORMAL, REVEAL
     }
 }
