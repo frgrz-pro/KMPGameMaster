@@ -33,11 +33,11 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.GetLogUseCa
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogCacheGameSettingsUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogRoleAssignedUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogRoleDeckUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGGameLogViewModel
-import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGGameViewModel
-import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGSetupViewModel
-import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGPlayersViewModel
-import org.frgrz.kmpgamemaster.features.wolfgame.presentation.WGRoleViewModel
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.LogScreenViewModel
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.GameScreenViewModel
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.SetupScreenViewModel
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.PlayersScreenViewModel
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.RolesScreenViewModel
 import org.koin.dsl.module
 
 val wgModule = module {
@@ -118,7 +118,7 @@ val wgModule = module {
     //region ViewModels
 
     factory {
-        WGSetupViewModel(
+        SetupScreenViewModel(
             getRoleSelectionUseCase = get(),
             getCachedPlayersUseCase = get(),
             cacheGameSettingsUseCase = get()
@@ -126,14 +126,14 @@ val wgModule = module {
     }
 
     factory {
-        WGRoleViewModel(
+        RolesScreenViewModel(
             filterRolesListUseCase = get(),
             updateRoleCheckUseCase = get()
         )
     }
 
     factory {
-        WGPlayersViewModel(
+        PlayersScreenViewModel(
             cachePlayersUseCase = get(),
             validateEntryUseCase = get(),
             log = get()
@@ -141,7 +141,7 @@ val wgModule = module {
     }
 
     factory {
-        WGGameViewModel(
+        GameScreenViewModel(
             getGameConfigurationUseCase = get(),
             getRoleDeckUseCase = get(),
             logCacheGameSettingsUseCase = get(),
@@ -150,7 +150,7 @@ val wgModule = module {
     }
 
     factory {
-        WGGameLogViewModel(
+        LogScreenViewModel(
             getLogUseCase = get()
         )
     }
