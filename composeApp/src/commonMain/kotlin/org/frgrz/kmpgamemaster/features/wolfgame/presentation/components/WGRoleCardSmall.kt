@@ -1,5 +1,6 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.presentation.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
@@ -14,15 +15,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 
+data class RoleThumbnailViewModel(
+    val drawableResource: DrawableResource
+)
 
 @Composable
-fun WGRoleCardSmall(role: WGRole, onCardClicked: () -> Unit) {
+fun WGRoleCardSmall(viewModel: RoleThumbnailViewModel) {
     Card(
-        onClick = {
-            onCardClicked.invoke()
-        },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp
         ),
@@ -31,9 +33,10 @@ fun WGRoleCardSmall(role: WGRole, onCardClicked: () -> Unit) {
             .fillMaxWidth()
             .aspectRatio(1f)
     ) {
-        WGRoleImageMedium(
-            role = role,
-            modifier = Modifier.fillMaxSize()
+        Image(
+            modifier = Modifier.fillMaxSize(),
+            contentDescription = "",
+            painter = painterResource(viewModel.drawableResource)
         )
     }
 }

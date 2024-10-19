@@ -1,21 +1,23 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepository
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleCardViewModelMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleThumbnailViewModelMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleFilter
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.RoleCardViewModel
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.RoleThumbnailViewModel
 
 
 class GetRoleSelectionUseCase(
-    private val repository: WGRoleRepository
+    private val repository: WGRoleRepository,
+    private val thumbnailViewModelMapper: RoleThumbnailViewModelMapper
 ) {
-    fun invoke(isChecked: Boolean): Flow<List<WGRoleModel>> {
+    fun invoke(isChecked: Boolean): Flow<List<RoleThumbnailViewModel>> {
         return repository.getAllChecked(isChecked)
+            .map { it.map { role -> thumbnailViewModelMapper.map(role.role) } }
     }
 }
 

@@ -13,7 +13,7 @@ class RoleCardViewModelMapper(
             name = input.name,
             role = input.role,
             isSelected = mutableStateOf(input.isSelected),
-            imageResource = RoleLargeDrawableMapper().map(input.role),
+            imageResource = RoleDrawableLargeMapper().map(input.role),
             roleDialogViewModel = roleDialogViewModelMapper.map(input)
         )
     }

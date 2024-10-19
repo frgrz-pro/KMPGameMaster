@@ -117,17 +117,10 @@ class SetupScreen : Screen {
 
                             Spacer(modifier = Modifier.height(8.dp))
 
-                           with(viewModel.selectedRoles.value) {
+                           with(viewModel.thumbnailsViewModels.value) {
                                if (this.isNotEmpty()) {
 
-                                   //TODO Move logic to VM
-                                   val exceedDisplayableLimit = this.size > 15
-                                   val extraItems = this.size - 15
-                                   val displayedItems = if (exceedDisplayableLimit) {
-                                      this. subList(0, 15)
-                                   } else {
-                                       this
-                                   }
+
 
                                    LazyVerticalGrid(
                                        columns = GridCells.Fixed(5),
@@ -135,12 +128,11 @@ class SetupScreen : Screen {
                                        verticalArrangement = Arrangement.spacedBy(4.dp),
                                        modifier = Modifier.padding(12.dp)
                                    ) {
-                                       itemsIndexed(displayedItems) { index, item ->
-                                           if (extraItems > 0 && index == displayedItems.lastIndex) {
-                                               WGRoleExtrasCardSmall(extraItems)
+                                       itemsIndexed(viewModel.thumbnailsViewModels.value) { index, item ->
+                                           if (viewModel.extraItemsCount.value > 0 && index == viewModel.thumbnailsViewModels.value.lastIndex) {
+                                               WGRoleExtrasCardSmall(viewModel.extraItemsCount.value)
                                            } else {
-                                               //TODO Add tooltip
-                                               WGRoleCardSmall(item.role) {}
+                                               WGRoleCardSmall(item)
                                            }
                                        }
                                    }

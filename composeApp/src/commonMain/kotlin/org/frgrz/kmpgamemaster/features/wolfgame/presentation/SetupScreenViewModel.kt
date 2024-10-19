@@ -1,6 +1,7 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.presentation
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
@@ -14,6 +15,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleSelectio
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CacheGameConfigurationUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetCachedPlayersUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.AddRemoveRowViewModel
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.RoleThumbnailViewModel
 
 class SetupScreenViewModel(
     private val getRoleSelectionUseCase: GetRoleSelectionUseCase,
@@ -26,8 +28,11 @@ class SetupScreenViewModel(
     var playerLabel = mutableStateOf("Joueurs : " + playerCount.value.toString())
     var canStartGame = mutableStateOf(playerCount.value > WGRules.MIN_PLAYER)
 
-    private var _selectedRoles: MutableState<List<WGRoleModel>> = mutableStateOf(listOf())
-    val selectedRoles: MutableState<List<WGRoleModel>> = _selectedRoles
+    //private var _selectedRoles: MutableState<List<WGRoleModel>> = mutableStateOf(listOf())
+    //val selectedRoles: MutableState<List<WGRoleModel>> = _selectedRoles
+
+    private var _thumbnailsViewModels: MutableState<List<RoleThumbnailViewModel>> = mutableStateOf(listOf())
+    val thumbnailsViewModels: State<List<RoleThumbnailViewModel>> = _thumbnailsViewModels
 
     private var wolvesCount = 1
     private var peasantCount = 1
@@ -56,7 +61,7 @@ class SetupScreenViewModel(
         screenModelScope.launch(Dispatchers.Main) {
             getRoleSelectionUseCase.invoke(true)
                 .collectLatest {
-                    _selectedRoles.value = it
+                    updateThumbnails(it)
                 }
         }
 
@@ -69,9 +74,26 @@ class SetupScreenViewModel(
         wolvesModel.updateCount(WGRules.getOptimalWolvesCount(playerCount.value))
     }
 
+    val exceedDisplayableLimit = mutableStateOf( thumbnailsViewModels.value.size > 15)
+    val extraItemsCount = mutableStateOf(thumbnailsViewModels.value.size - 15)
+
+    private fun updateThumbnails(thumbnails: List<RoleThumbnailViewModel>) {
+        _thumbnailsViewModels.value = thumbnails
+
+        exceedDisplayableLimit.value = thumbnails.size > 15
+        extraItemsCount.value = thumbnails.size - 15
+
+        _thumbnailsViewModels.value = if (exceedDisplayableLimit.value) {
+            thumbnails. subList(0, 15)
+        } else {
+            thumbnails
+        }
+
+    }
+
 
     fun saveGameSettings() {
-        cacheGameSettingsUseCase.invoke(selectedRoles.value, wolvesCount, peasantCount)
+        //cacheGameSettingsUseCase.invoke(selectedRoles.value, wolvesCount, peasantCount)
     }
 
     private fun onPlayerCountChanged(count: Int) {

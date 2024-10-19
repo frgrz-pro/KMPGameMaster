@@ -5,7 +5,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.RoleDia
 
 
 class RoleDialogViewModelMapper(
-    private val drawableMapper: RoleLargeDrawableMapper,
+    private val drawableMapper: RoleDrawableLargeMapper,
     private val playsWithMapper: PlaysWithStringMapper,
     private val winConditionMapper: WinRoleActionItemViewModelMapper,
     private val roleActionItemViewModelMapper: RoleActionItemViewModelMapper,

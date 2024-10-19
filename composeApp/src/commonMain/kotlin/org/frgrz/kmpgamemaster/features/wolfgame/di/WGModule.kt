@@ -24,8 +24,10 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleCancelString
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleCardViewModelMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleDialogViewModelMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleFilterMapper
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleLargeDrawableMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleDrawableLargeMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleDrawableMediumMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleNameMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleThumbnailViewModelMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleTypeMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.WGRoleModelDBMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.WinConditionMapper
@@ -68,7 +70,6 @@ val wgModule = module {
 
     //region Mappers
 
-
     factory { PlaysWithMapper() }
     factory { PlaysWithStringMapper() }
     factory { RoleActionIconMapper() }
@@ -99,9 +100,17 @@ val wgModule = module {
         )
     }
 
+    factory { RoleDrawableMediumMapper() }
+    factory { RoleDrawableLargeMapper() }
     factory { RoleFilterMapper() }
-    factory { RoleLargeDrawableMapper() }
     factory { RoleNameMapper() }
+
+    factory {
+        RoleThumbnailViewModelMapper(
+            roleDrawableMediumMapper = get()
+        )
+    }
+
     factory { RoleTypeMapper() }
     factory { WGRoleFilterMapper() }
 
@@ -116,6 +125,7 @@ val wgModule = module {
             roleTypeMapper = get()
         )
     }
+
 
     factory {
         WGRoleModelMapper(
@@ -137,6 +147,8 @@ val wgModule = module {
     }
 
     factory { WinsWithMapper() }
+
+    //endregion
 
     //region Repository
 
@@ -163,8 +175,14 @@ val wgModule = module {
             roleCardViewModelMapper = get()
         )
     }
+
     factory { UpdateRoleSelectionUseCase(repository = get()) }
-    factory { GetRoleSelectionUseCase(repository = get()) }
+    factory {
+        GetRoleSelectionUseCase(
+            repository = get(),
+            thumbnailViewModelMapper = get()
+        )
+    }
 
     //region Cache UseCases
 

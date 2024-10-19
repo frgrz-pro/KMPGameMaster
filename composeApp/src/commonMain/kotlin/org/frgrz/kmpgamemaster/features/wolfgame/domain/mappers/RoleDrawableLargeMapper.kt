@@ -56,7 +56,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
 import org.jetbrains.compose.resources.DrawableResource
 
 
-class RoleLargeDrawableMapper : Mapper<WGRole, DrawableResource> {
+class RoleDrawableLargeMapper : Mapper<WGRole, DrawableResource> {
     override fun map(input: WGRole): DrawableResource {
         return when (input) {
             WGRole.LITTLE_GIRL -> Res.drawable.little_girl_large
