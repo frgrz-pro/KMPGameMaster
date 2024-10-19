@@ -7,9 +7,11 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.coroutines.launch
 import org.frgrz.kmpgamemaster.core.moveItemsBeforeIndexToEnd
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleDialogViewModelMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleDeck
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetGameConfigurationUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleDialogViewModelUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GenerateRoleDeckUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogCacheGameSettingsUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.log.LogRoleAssignedUseCase
@@ -22,11 +24,11 @@ class GameScreenViewModel(
     getRoleDeckUseCase: GenerateRoleDeckUseCase,
     private val logCacheGameSettingsUseCase: LogCacheGameSettingsUseCase,
     private val logRoleAssignedUseCase: LogRoleAssignedUseCase,
+    private val getRoleDialogViewModelUseCase: GetRoleDialogViewModelUseCase
 ) : ScreenModel {
 
-    private val isDebug = mutableStateOf(false)
+    private val isDebug = mutableStateOf(true)
     private val state = mutableStateOf(if (isDebug.value) ScreenState.REVEAL else ScreenState.NORMAL)
-
 
     private val gameConfiguration = getGameConfigurationUseCase.invoke()
     private var deck = RoleDeck()
@@ -34,24 +36,26 @@ class GameScreenViewModel(
     private val _cardItems = mutableStateListOf<PlayerRoleCardDrawViewModel>()
     val cardItems: List<PlayerRoleCardDrawViewModel> = _cardItems
 
-    var isPlayerDialogVisible = mutableStateOf(!isDebug.value)
-    var isRoleDialogVisible = mutableStateOf(false)
-
     private val startingPlayerIndex = getStartingPlayerIndex()
     private var orderedPlayers = orderPlayerList()
     private var playerToCall = orderedPlayers.first()
 
+    var isPlayerDialogVisible = mutableStateOf(!isDebug.value)
     var playerDialogViewModel = TextDialogViewModel(playerToCall) {
         isPlayerDialogVisible.value = false
     }
 
     private var roles: List<WGRoleModel> = listOf()
-
-
-
+    var isRoleDialogVisible = mutableStateOf(false)
     private val _roleDialogModel = mutableStateOf<RoleDialogViewModel?>(null)
     val roleDialogModel: State<RoleDialogViewModel?> = _roleDialogModel
 
+    private var accessLogClickCount = 0
+    private var revealClickCount = 0
+    val isWarningDialogVisible = mutableStateOf(false)
+    val warningDialogViewModel = TextDialogViewModel("Accès réservé au maitre du jeu") {
+        isWarningDialogVisible.value = false
+    }
 
     init {
         screenModelScope.launch {
@@ -64,6 +68,31 @@ class GameScreenViewModel(
             if (isDebug.value) {
                 autoDealRoles()
             }
+        }
+    }
+
+    fun onAccessLogClicked(onAccessAuthorized: () -> Unit) {
+        accessLogClickCount++
+        if (accessLogClickCount == 5 || isDebug.value) {
+            accessLogClickCount = 0
+            onAccessAuthorized.invoke()
+        } else {
+            isWarningDialogVisible.value = true
+        }
+
+    }
+
+    fun toggleState() {
+        if (state.value == ScreenState.NORMAL) {
+            revealClickCount++
+            if (revealClickCount == 5 || isDebug.value) {
+                revealClickCount = 0
+                state.value = ScreenState.REVEAL
+            } else {
+                isWarningDialogVisible.value = true
+            }
+        } else {
+            state.value = ScreenState.NORMAL
         }
     }
 
@@ -126,39 +155,6 @@ class GameScreenViewModel(
         }
     }
 
-    private var revealClickCount = 0
-    val isWarningDialogVisible = mutableStateOf(false)
-    val warningDialogViewModel = TextDialogViewModel("Accès réservé au maitre du jeu") {
-        isWarningDialogVisible.value = false
-    }
-
-    private var accessLogClickCount = 0
-
-    fun onAccessLogClicked(onAccessAuthorized: () -> Unit) {
-        accessLogClickCount++
-        if (accessLogClickCount == 5 || isDebug.value) {
-            accessLogClickCount = 0
-            onAccessAuthorized.invoke()
-        } else {
-            isWarningDialogVisible.value = true
-        }
-
-    }
-
-    fun toggleState() {
-        if (state.value == ScreenState.NORMAL) {
-            revealClickCount++
-            if (revealClickCount == 5 || isDebug.value) {
-                revealClickCount = 0
-                state.value = ScreenState.REVEAL
-            } else {
-                isWarningDialogVisible.value = true
-            }
-        } else {
-            state.value = ScreenState.NORMAL
-        }
-    }
-
     private fun createPlayerCardItems(): List<PlayerRoleCardDrawViewModel> {
         return List(gameConfiguration.value.players.size) { index ->
             PlayerRoleCardDrawViewModel(
@@ -167,7 +163,7 @@ class GameScreenViewModel(
                 state = state,
                 onCardClicked = { cardId ->
                     if (!isDebug.value) {
-                        //TODO Fix_roleDialogModel.value = RoleDialogViewModel(roles[cardId], ::dismissRoleDialog)
+                        _roleDialogModel.value = getRoleDialogViewModelUseCase(roles[cardId], ::dismissRoleDialog)
                         showRoleDialog()
                         onRoleDrawn(cardId)
                     }
@@ -188,3 +184,4 @@ class GameScreenViewModel(
         NORMAL, REVEAL
     }
 }
+
