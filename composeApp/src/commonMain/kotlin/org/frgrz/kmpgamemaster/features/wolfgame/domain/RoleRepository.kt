@@ -7,7 +7,7 @@ import org.frgrz.kmpgamemaster.data.entities.WGRoleDBEntity
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGGameCache
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleLocalDataSource
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleFilterMapper
-import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleModelMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.WGRoleModelDBMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.GameConfiguration
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleFilter
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
@@ -34,7 +34,7 @@ interface WGRoleRepository {
 
 class WGRoleRepositoryImpl(
     private val roleLocalDataSource: WGRoleLocalDataSource,
-    private val roleModelMapper: WGRoleModelMapper,
+    private val roleModelMapper: WGRoleModelDBMapper,
     private val roleFilterMapper: WGRoleFilterMapper,
     private val cache: WGGameCache,
 ) : WGRoleRepository {

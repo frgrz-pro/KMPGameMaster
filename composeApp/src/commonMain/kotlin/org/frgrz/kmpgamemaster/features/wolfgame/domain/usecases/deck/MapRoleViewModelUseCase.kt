@@ -1,6 +1,6 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck
 
-import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleModelMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.WGRoleModelMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 

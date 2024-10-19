@@ -27,15 +27,16 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.constraintlayout.compose.ConstraintLayout
 import kmpgamemaster.composeapp.generated.resources.Res
+import kmpgamemaster.composeapp.generated.resources.assassin
+import kmpgamemaster.composeapp.generated.resources.assassin_action
+import kmpgamemaster.composeapp.generated.resources.assassin_action_desc
+import kmpgamemaster.composeapp.generated.resources.assassin_large
 import kmpgamemaster.composeapp.generated.resources.close
-import kmpgamemaster.composeapp.generated.resources.little_girl
-import kmpgamemaster.composeapp.generated.resources.little_girl_action
-import kmpgamemaster.composeapp.generated.resources.little_girl_action_desc
-import kmpgamemaster.composeapp.generated.resources.little_girl_large
-import kmpgamemaster.composeapp.generated.resources.plays_with_village
-import kmpgamemaster.composeapp.generated.resources.wins_with_village
+import kmpgamemaster.composeapp.generated.resources.plays_solo
+import kmpgamemaster.composeapp.generated.resources.wins_solo
+import org.frgrz.kmpgamemaster.material.components.icons.CancelRole
 import org.frgrz.kmpgamemaster.material.components.icons.IconPack
-import org.frgrz.kmpgamemaster.material.components.icons.Spy
+import org.frgrz.kmpgamemaster.material.components.icons.Kill
 import org.frgrz.kmpgamemaster.material.components.icons.Team
 import org.frgrz.kmpgamemaster.material.components.icons.Win
 import org.frgrz.kmpgamemaster.material.theme.AppTheme
@@ -49,8 +50,9 @@ data class RoleDialogViewModel(
     val name: StringResource,
     val imageDrawableResource: DrawableResource,
     val playsWith: StringResource,
-    val winCondition: RoleActionItemViewModel,
-    val actions: List<RoleActionItemViewModel>
+    val winConditions: List<RoleActionItemViewModel>,
+    val cancels: String,
+    val actions: List<RoleActionItemViewModel>,
 ) {
 
     var onDialogDismissRequested: () -> Unit = {}
@@ -69,8 +71,8 @@ fun RoleDialog(viewModel: RoleDialogViewModel) {
         content = {
             Card(modifier = Modifier.padding(24.dp)) {
                 ConstraintLayout(
-                    modifier = Modifier.padding(top = 12.dp)
-                        .width(360.dp)
+                    modifier = Modifier.padding(top = 24.dp)
+                        .fillMaxWidth()
                 ) {
                     val image = createRef()
                     val title = createRef()
@@ -127,7 +129,7 @@ fun RoleDialog(viewModel: RoleDialogViewModel) {
                         Row(modifier = Modifier.fillMaxWidth()) {
                             Icon(
                                 imageVector = IconPack.Team,
-                                modifier = Modifier.height(32.dp)
+                                modifier = Modifier.height(24.dp)
                                     .aspectRatio(1f),
                                 contentDescription = ""
                             )
@@ -140,24 +142,48 @@ fun RoleDialog(viewModel: RoleDialogViewModel) {
                             )
                         }
 
-                        Spacer(modifier = Modifier.height(8.dp))
+                        viewModel.winConditions.forEach {
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Row(modifier = Modifier.fillMaxWidth()) {
+                                Icon(
+                                    imageVector = it.icon,
+                                    modifier = Modifier.height(24.dp)
+                                        .aspectRatio(1f),
+                                    contentDescription = ""
+                                )
 
-                        Row(modifier = Modifier.fillMaxWidth()) {
-                            Icon(
-                                imageVector = viewModel.winCondition.icon,
-                                modifier = Modifier.height(32.dp)
-                                    .aspectRatio(1f),
-                                contentDescription = ""
-                            )
-                            Text(
-                                stringResource(viewModel.winCondition.name),
-                                modifier = Modifier.padding(start = 8.dp)
-                                    .align(Alignment.CenterVertically),
-                                style = MaterialTheme.typography.titleMedium,
-                            )
+                                //TODO Display points
+                                Text(
+                                    stringResource(it.name),
+                                    modifier = Modifier.padding(start = 8.dp)
+                                        .align(Alignment.CenterVertically),
+                                    style = MaterialTheme.typography.titleMedium,
+                                )
+                            }
                         }
 
-                        Spacer(modifier = Modifier.height(12.dp))
+                        if (viewModel.cancels.isNotEmpty()) {
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Row(modifier = Modifier.fillMaxWidth()) {
+                                Icon(
+                                    imageVector = IconPack.CancelRole,
+                                    modifier = Modifier.height(24.dp)
+                                        .aspectRatio(1f),
+                                    contentDescription = ""
+                                )
+
+                                Text(
+                                    viewModel.cancels,
+                                    modifier = Modifier.padding(start = 8.dp)
+                                        .align(Alignment.CenterVertically),
+                                    style = MaterialTheme.typography.titleMedium,
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(8.dp))
 
                         viewModel.actions.forEach {
                             RoleActionItem(it)
@@ -183,28 +209,31 @@ fun RoleDialog(viewModel: RoleDialogViewModel) {
 }
 
 
-
 @Composable
 @Preview
 fun RoleDialog_Preview() {
 
+
     val roleActionItemViewModel = RoleActionItemViewModel(
-        Res.string.little_girl_action,
-        Res.string.little_girl_action_desc,
-        IconPack.Spy,
+        Res.string.assassin_action,
+        Res.string.assassin_action_desc,
+        IconPack.Kill,
     )
 
-    val winCondition = RoleActionItemViewModel(
-        Res.string.wins_with_village,
-        null,
-        IconPack.Win,
+    val winConditions = listOf(
+        RoleActionItemViewModel(
+            Res.string.wins_solo,
+            null,
+            IconPack.Win,
+        )
     )
 
     val roleDialogViewModel = RoleDialogViewModel(
-        Res.string.little_girl,
-        Res.drawable.little_girl_large,
-        Res.string.plays_with_village,
-        winCondition,
+        Res.string.assassin,
+        Res.drawable.assassin_large,
+        Res.string.plays_solo,
+        winConditions,
+        "Immunisé contre les Loups.",
         listOf(roleActionItemViewModel)
     )
 

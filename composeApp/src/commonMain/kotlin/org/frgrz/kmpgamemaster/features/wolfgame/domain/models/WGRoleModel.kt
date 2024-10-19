@@ -8,11 +8,45 @@ data class WGRoleModel(
     var isSelected: Boolean,
     val isDefault: Boolean,
     val playsWith: PlaysWith,
-    //val winsWith: WinsWith,
-    val winCondition: WinCondition,
+    val winConditions: List<WinCondition>,
+    val cancels: RoleCancel,
     val filters: List<RoleFilter>,
     val actions: List<WGRoleAction>,
 )
+
+
+data class WinCondition(
+    val type: WinConditionType,
+    val winsWith: WinsWith,
+    val points: WinScore,
+)
+
+
+enum class WinConditionType {
+    CLASSIC_WOLF,
+    CLASSIC_VILLAGE,
+    CLASSIC_SOLO,
+    WHEN_VOTED,
+    WHEN_EVERYONE_CONTAMINATED,
+    WITH_VILLAGE_IF_RIVAL_DEAD,
+    NONE,
+}
+
+enum class WinScore(val points: Int) {
+    SOLO_WIN(5),
+    WOLF_WIN(4),
+    VILLAGE_WIN(3),
+    NONE(0)
+}
+
+enum class WinsWith {
+    WOLVES,
+    VILLAGE,
+    WOLVES_OR_VILLAGE,
+    SOLO,
+    NONE;
+}
+
 
 enum class PlaysWith {
     WOLVES,
@@ -21,23 +55,6 @@ enum class PlaysWith {
     SOLO;
 }
 
-data class WinCondition(
-    val type: WinConditionType,
-    val winsWith: WinsWith
-)
-
-enum class WinConditionType {
-    CLASSIC_WOLF,
-    CLASSIC_VILLAGE,
-
-}
-
-enum class WinsWith {
-    WOLVES,
-    VILLAGE,
-    WOLVES_OR_VILLAGE,
-    SOLO;
-}
 
 enum class RoleFilter {
     SELECTED,
@@ -117,7 +134,7 @@ enum class WGRole {
         )
     }
 
-    fun isWolfAndAddsWolf():Boolean {
+    fun isWolfAndAddsWolf(): Boolean {
         return this in listOf(
             BLACK_WOLF,
             WOLF_KITTEN,
@@ -162,7 +179,7 @@ enum class WGRole {
         )
     }
 
-    fun isVillagerAndAddsWolf():Boolean {
+    fun isVillagerAndAddsWolf(): Boolean {
         return this in listOf(
             WOLF_DOG,
             WOLF_FAN,
@@ -171,6 +188,21 @@ enum class WGRole {
             TRAITOR
         )
     }
+
+    fun allWolves(): List<WGRole> = listOf(
+        BIG_BAD_WOLF,
+        BLACK_WOLF,
+        BLUE_WOLF,
+        WHITE_WOLF,
+        WOLF_BERSERK,
+        WOLF_KITTEN,
+        WOLF,
+        WOLF_DOG,
+        WOLF_FAN,
+        WILD_KID,
+        GENTLEMAN,
+        TRAITOR
+    )
 
     fun isSolo(): Boolean {
         return this in listOf(
@@ -207,7 +239,7 @@ enum class WGRole {
     }
 
 
-    fun isExtraRole():Boolean {
+    fun isExtraRole(): Boolean {
         return this in listOf(
             THIEF,
             COMEDIAN

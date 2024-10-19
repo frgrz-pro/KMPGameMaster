@@ -1,6 +1,7 @@
 package org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers
 
 import kmpgamemaster.composeapp.generated.resources.Res
+import kmpgamemaster.composeapp.generated.resources.empty
 import kmpgamemaster.composeapp.generated.resources.wins_change
 import kmpgamemaster.composeapp.generated.resources.wins_solo
 import kmpgamemaster.composeapp.generated.resources.wins_with_village
@@ -16,6 +17,7 @@ class WinsWithMapper:Mapper<WinsWith, StringResource>{
             WinsWith.VILLAGE -> Res.string.wins_with_village
             WinsWith.WOLVES_OR_VILLAGE -> Res.string.wins_change
             WinsWith.SOLO -> Res.string.wins_solo
+            WinsWith.NONE -> Res.string.empty
         }
     }
 

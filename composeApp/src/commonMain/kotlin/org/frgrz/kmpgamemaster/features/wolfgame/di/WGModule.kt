@@ -6,8 +6,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.data.WGGameCache
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleFilterMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleLocalDataSource
 import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleLocalDataSourceImpl
-import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRoleModelMapper
-import org.frgrz.kmpgamemaster.features.wolfgame.data.WinConditionMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.WGRoleModelMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.GameLogCache
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.GameLogRepository
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.GameLogRepositoryImpl
@@ -16,11 +15,20 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleSelectio
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepository
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepositoryImpl
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.PlaysWithMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.PlaysWithStringMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleActionIconMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleActionItemViewModelMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleActionMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleCancelMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleCancelStringMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleCardViewModelMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleDialogViewModelMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleFilterMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleLargeDrawableMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleNameMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleTypeMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.WGRoleModelDBMapper
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.WinConditionMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.WinRoleActionItemViewModelMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.WinsWithMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.PlayerNameValidationUseCase
@@ -59,18 +67,10 @@ val wgModule = module {
     single { GameLogCache() }
 
     //region Mappers
-    factory { WinConditionMapper() }
 
-    factory {
-        WGRoleModelMapper(
-            winConditionMapper = get()
-        )
-    }
 
-    factory { WGRoleFilterMapper() }
-    factory { RoleLargeDrawableMapper() }
     factory { PlaysWithMapper() }
-    factory { WinsWithMapper() }
+    factory { PlaysWithStringMapper() }
     factory { RoleActionIconMapper() }
 
     factory {
@@ -79,9 +79,13 @@ val wgModule = module {
         )
     }
 
+    factory { RoleActionMapper() }
+    factory { RoleCancelMapper() }
+    factory { RoleCancelStringMapper() }
+
     factory {
-        WinRoleActionItemViewModelMapper(
-            winsWithMapper = get()
+        RoleCardViewModelMapper(
+            roleDialogViewModelMapper = get()
         )
     }
 
@@ -90,15 +94,49 @@ val wgModule = module {
             drawableMapper = get(),
             playsWithMapper = get(),
             winConditionMapper = get(),
-            roleActionItemViewModelMapper = get()
+            roleActionItemViewModelMapper = get(),
+            cancelsMapper = get()
+        )
+    }
+
+    factory { RoleFilterMapper() }
+    factory { RoleLargeDrawableMapper() }
+    factory { RoleNameMapper() }
+    factory { RoleTypeMapper() }
+    factory { WGRoleFilterMapper() }
+
+    factory {
+        WGRoleModelDBMapper(
+            winConditionMapper = get(),
+            roleNameMapper = get(),
+            roleCancelMapper = get(),
+            playsWithMapper = get(),
+            roleActionMapper = get(),
+            roleFilterMapper = get(),
+            roleTypeMapper = get()
         )
     }
 
     factory {
-        RoleCardViewModelMapper(
-            roleDialogViewModelMapper = get()
+        WGRoleModelMapper(
+            winConditionMapper = get(),
+            roleNameMapper = get(),
+            roleCancelMapper = get(),
+            playsWithMapper = get(),
+            roleActionMapper = get(),
+            roleFilterMapper = get(),
         )
     }
+
+    factory { WinConditionMapper() }
+
+    factory {
+        WinRoleActionItemViewModelMapper(
+            winsWithMapper = get()
+        )
+    }
+
+    factory { WinsWithMapper() }
 
     //region Repository
 
