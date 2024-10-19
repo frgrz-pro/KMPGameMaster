@@ -34,8 +34,8 @@ import kmpgamemaster.composeapp.generated.resources.more_roles
 import kmpgamemaster.composeapp.generated.resources.start_game
 import kmpgamemaster.composeapp.generated.resources.werewolf
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.AddRemoveRow
-import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleCardSmall
-import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.WGRoleExtrasCardSmall
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.RoleThumbnail
+import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.RoleThumbnailOverflow
 import org.jetbrains.compose.resources.stringResource
 
 
@@ -117,29 +117,24 @@ class SetupScreen : Screen {
 
                             Spacer(modifier = Modifier.height(8.dp))
 
-                           with(viewModel.thumbnailsViewModels.value) {
-                               if (this.isNotEmpty()) {
-
-
-
-                                   LazyVerticalGrid(
-                                       columns = GridCells.Fixed(5),
-                                       horizontalArrangement = Arrangement.spacedBy(4.dp),
-                                       verticalArrangement = Arrangement.spacedBy(4.dp),
-                                       modifier = Modifier.padding(12.dp)
-                                   ) {
-                                       itemsIndexed(viewModel.thumbnailsViewModels.value) { index, item ->
-                                           if (viewModel.extraItemsCount.value > 0 && index == viewModel.thumbnailsViewModels.value.lastIndex) {
-                                               WGRoleExtrasCardSmall(viewModel.extraItemsCount.value)
-                                           } else {
-                                               WGRoleCardSmall(item)
-                                           }
-                                       }
-                                   }
-                               }
-                           }
-
-
+                            with(viewModel.thumbnailsViewModels.value) {
+                                if (this.isNotEmpty()) {
+                                    LazyVerticalGrid(
+                                        columns = GridCells.Fixed(5),
+                                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                        verticalArrangement = Arrangement.spacedBy(4.dp),
+                                        modifier = Modifier.padding(12.dp)
+                                    ) {
+                                        itemsIndexed(viewModel.thumbnailsViewModels.value) { index, item ->
+                                            if (viewModel.extraItemsCount.value > 0 && index == viewModel.thumbnailsViewModels.value.lastIndex) {
+                                                RoleThumbnailOverflow(viewModel.extraItemsCount.value)
+                                            } else {
+                                                RoleThumbnail(item)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
 
                             TextButton(
                                 onClick = {

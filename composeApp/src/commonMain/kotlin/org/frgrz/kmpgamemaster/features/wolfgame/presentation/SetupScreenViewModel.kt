@@ -9,16 +9,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.WGRules
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleSelectionUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleThumbnailsSelectionUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CacheGameConfigurationUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetCachedPlayersUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.AddRemoveRowViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.RoleThumbnailViewModel
 
 class SetupScreenViewModel(
-    private val getRoleSelectionUseCase: GetRoleSelectionUseCase,
+    private val getRoleSelectionUseCase: GetRoleThumbnailsSelectionUseCase,
     getCachedPlayersUseCase: GetCachedPlayersUseCase,
     private val cacheGameSettingsUseCase: CacheGameConfigurationUseCase,
 ) : ScreenModel {
@@ -26,17 +25,13 @@ class SetupScreenViewModel(
     private val players: StateFlow<List<String>> = getCachedPlayersUseCase.invoke()
     private var playerCount = mutableStateOf(WGRules.OPTIMAL_PLAYER_COUNT)
     var playerLabel = mutableStateOf("Joueurs : " + playerCount.value.toString())
-    var canStartGame = mutableStateOf(playerCount.value > WGRules.MIN_PLAYER)
-
-    //private var _selectedRoles: MutableState<List<WGRoleModel>> = mutableStateOf(listOf())
-    //val selectedRoles: MutableState<List<WGRoleModel>> = _selectedRoles
 
     private var _thumbnailsViewModels: MutableState<List<RoleThumbnailViewModel>> = mutableStateOf(listOf())
     val thumbnailsViewModels: State<List<RoleThumbnailViewModel>> = _thumbnailsViewModels
+    private var thumbnailsCountOverflow = thumbnailsViewModels.value.size > 15
+    val extraItemsCount = mutableStateOf(thumbnailsViewModels.value.size - 15)
 
     private var wolvesCount = 1
-    private var peasantCount = 1
-
     val wolvesModel = AddRemoveRowViewModel(
         unit = "Loups",
         canAddRule = { WGRules.canAddWolves(playerCount.value, wolvesCount) },
@@ -50,12 +45,15 @@ class SetupScreenViewModel(
         }
     )
 
+    private var peasantCount = 1
     val peasantModel = AddRemoveRowViewModel(
         unit = "Paysans",
         canAddRule = { WGRules.canAddPeasant(playerCount.value, wolvesCount, peasantCount) },
         canRemoveRule = { WGRules.canRemovePeasant(peasantCount) },
         onCountChanged = { peasantCount = it }
     )
+
+    var canStartGame = mutableStateOf(playerCount.value > WGRules.MIN_PLAYER)
 
     init {
         screenModelScope.launch(Dispatchers.Main) {
@@ -74,16 +72,14 @@ class SetupScreenViewModel(
         wolvesModel.updateCount(WGRules.getOptimalWolvesCount(playerCount.value))
     }
 
-    val exceedDisplayableLimit = mutableStateOf( thumbnailsViewModels.value.size > 15)
-    val extraItemsCount = mutableStateOf(thumbnailsViewModels.value.size - 15)
 
     private fun updateThumbnails(thumbnails: List<RoleThumbnailViewModel>) {
         _thumbnailsViewModels.value = thumbnails
 
-        exceedDisplayableLimit.value = thumbnails.size > 15
+        thumbnailsCountOverflow = thumbnails.size > 15
         extraItemsCount.value = thumbnails.size - 15
 
-        _thumbnailsViewModels.value = if (exceedDisplayableLimit.value) {
+        _thumbnailsViewModels.value = if (thumbnailsCountOverflow) {
             thumbnails. subList(0, 15)
         } else {
             thumbnails
@@ -93,7 +89,7 @@ class SetupScreenViewModel(
 
 
     fun saveGameSettings() {
-        //cacheGameSettingsUseCase.invoke(selectedRoles.value, wolvesCount, peasantCount)
+        cacheGameSettingsUseCase.invoke(wolvesCount, peasantCount)
     }
 
     private fun onPlayerCountChanged(count: Int) {

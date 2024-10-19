@@ -7,17 +7,26 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleCardViewMode
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.RoleThumbnailViewModelMapper
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.RoleFilter
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRole
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.RoleCardViewModel
 import org.frgrz.kmpgamemaster.features.wolfgame.presentation.components.RoleThumbnailViewModel
 
 
-class GetRoleSelectionUseCase(
+class GetRoleThumbnailsSelectionUseCase(
     private val repository: WGRoleRepository,
     private val thumbnailViewModelMapper: RoleThumbnailViewModelMapper
 ) {
     fun invoke(isChecked: Boolean): Flow<List<RoleThumbnailViewModel>> {
-        return repository.getAllChecked(isChecked)
+        return repository.getAllCheckedAsFlow(isChecked)
             .map { it.map { role -> thumbnailViewModelMapper.map(role.role) } }
+    }
+}
+
+class GetRoleSelectionUseCase(
+    private val repository: WGRoleRepository
+) {
+    fun invoke(isChecked: Boolean): List<WGRoleModel> {
+        return repository.getAllChecked(isChecked)
     }
 }
 
@@ -29,7 +38,7 @@ class GetRolesForFilterUseCase(
 
     fun invoke(filter: RoleFilter): Flow<List<RoleCardViewModel>> {
         val flow = if (filter == RoleFilter.SELECTED || filter == RoleFilter.UNSELECTED) {
-            repository.getAllChecked(filter == RoleFilter.SELECTED)
+            repository.getAllCheckedAsFlow(filter == RoleFilter.SELECTED)
         } else {
             repository.getAllFiltered(filter)
         }

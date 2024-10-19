@@ -8,7 +8,9 @@ import org.frgrz.kmpgamemaster.data.entities.WGRoleDBEntity
 
 interface WGRoleLocalDataSource {
 
-    fun getAllChecked(isChecked: Boolean): Flow<List<WGRoleDBEntity>>
+    fun getAllChecked(isChecked: Boolean): List<WGRoleDBEntity>
+
+    fun getAllCheckedAsFlow(isChecked: Boolean): Flow<List<WGRoleDBEntity>>
 
     fun getAllFiltered(roles: List<WGRoleDBEntity.WGRole>): Flow<List<WGRoleDBEntity>>
 
@@ -20,15 +22,20 @@ class WGRoleLocalDataSourceImpl(
     private val dao: WGRoleDao,
 ) : WGRoleLocalDataSource {
 
-    override fun getAllChecked(isChecked: Boolean): Flow<List<WGRoleDBEntity>> {
-        return dao.all()
+    override fun getAllChecked(isChecked: Boolean): List<WGRoleDBEntity> {
+        return dao.getAll()
+            .filter { role -> role.selected == isChecked }
+    }
+
+    override fun getAllCheckedAsFlow(isChecked: Boolean): Flow<List<WGRoleDBEntity>> {
+        return dao.getAllAsFlow()
             .map { result ->
                 result.filter { role -> role.selected == isChecked }
             }
     }
 
     override fun getAllFiltered(roles: List<WGRoleDBEntity.WGRole>): Flow<List<WGRoleDBEntity>> {
-        return dao.all()
+        return dao.getAllAsFlow()
             .map { result ->
                 result.filter { role -> role.role in roles.map { it.name } }
             }

@@ -17,7 +17,9 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.models.WGRoleModel
 //TODO Split ? Create another repository for game configuration
 interface WGRoleRepository {
 
-    fun getAllChecked(isChecked: Boolean): Flow<List<WGRoleModel>>
+    fun getAllCheckedAsFlow(isChecked: Boolean): Flow<List<WGRoleModel>>
+
+    fun getAllChecked(isChecked: Boolean): List<WGRoleModel>
 
     fun getAllFiltered(filter: RoleFilter): Flow<List<WGRoleModel>>
 
@@ -39,12 +41,19 @@ class WGRoleRepositoryImpl(
     private val cache: WGGameCache,
 ) : WGRoleRepository {
 
-    override fun getAllChecked(isChecked: Boolean): Flow<List<WGRoleModel>> {
-        return roleLocalDataSource.getAllChecked(isChecked)
+    override fun getAllCheckedAsFlow(isChecked: Boolean): Flow<List<WGRoleModel>> {
+        return roleLocalDataSource.getAllCheckedAsFlow(isChecked)
             .map { result ->
                 result.map {
                     roleModelMapper.map(it)
                 }
+            }
+    }
+
+    override fun getAllChecked(isChecked: Boolean): List<WGRoleModel> {
+        return roleLocalDataSource.getAllChecked(isChecked)
+            .map { result ->
+                roleModelMapper.map(result)
             }
     }
 

@@ -23,7 +23,7 @@ data class RoleThumbnailViewModel(
 )
 
 @Composable
-fun WGRoleCardSmall(viewModel: RoleThumbnailViewModel) {
+fun RoleThumbnail(viewModel: RoleThumbnailViewModel) {
     Card(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp
@@ -43,7 +43,7 @@ fun WGRoleCardSmall(viewModel: RoleThumbnailViewModel) {
 
 
 @Composable
-fun WGRoleExtrasCardSmall(count: Int) {
+fun RoleThumbnailOverflow(count: Int) {
     Card(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp

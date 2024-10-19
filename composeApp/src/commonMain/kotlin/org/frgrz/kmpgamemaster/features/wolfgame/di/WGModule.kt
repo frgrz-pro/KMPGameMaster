@@ -11,7 +11,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.GameLogCache
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.GameLogRepository
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.GameLogRepositoryImpl
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRolesForFilterUseCase
-import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleSelectionUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleThumbnailsSelectionUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepository
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.WGRoleRepositoryImpl
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.mappers.PlaysWithMapper
@@ -38,6 +38,7 @@ import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CacheGameConfig
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.CachePlayersUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetCachedPlayersUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetGameConfigurationUseCase
+import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.GetRoleSelectionUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GenerateRoleDeckUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.UpdateRoleSelectionUseCase
 import org.frgrz.kmpgamemaster.features.wolfgame.domain.usecases.deck.GetRoleCategoriesUseCase
@@ -178,7 +179,7 @@ val wgModule = module {
 
     factory { UpdateRoleSelectionUseCase(repository = get()) }
     factory {
-        GetRoleSelectionUseCase(
+        GetRoleThumbnailsSelectionUseCase(
             repository = get(),
             thumbnailViewModelMapper = get()
         )
@@ -188,8 +189,16 @@ val wgModule = module {
 
     factory { CachePlayersUseCase(repository = get()) }
     factory { GetCachedPlayersUseCase(repository = get()) }
-    factory { CacheGameConfigurationUseCase(repository = get()) }
+
+    factory {
+        CacheGameConfigurationUseCase(
+            repository = get(),
+            getRoleSelectionUseCase = get()
+        )
+    }
+
     factory { GetGameConfigurationUseCase(repository = get()) }
+    factory { GetRoleSelectionUseCase(repository = get()) }
 
     //region Deck UseCases
 

@@ -12,7 +12,9 @@ import org.frgrz.kmpgamemaster.features.wolfgame.data.WGRolesDBSeed
 
 interface WGRoleDao {
 
-    fun all(): Flow<List<WGRoleDBEntity>>
+    fun getAll(): List<WGRoleDBEntity>
+
+    fun getAllAsFlow(): Flow<List<WGRoleDBEntity>>
 
     fun updateSelection(name: String, isSelected: Boolean): WGRoleDBEntity?
 
@@ -30,7 +32,11 @@ class WGRoleDaoImpl(private val db: RealmDatabase) : WGRoleDao {
         }
     }
 
-    override fun all(): Flow<List<WGRoleDBEntity>> {
+    override fun getAll(): List<WGRoleDBEntity> {
+        return db.getAll()
+    }
+
+    override fun getAllAsFlow(): Flow<List<WGRoleDBEntity>> {
         return db.getAllAsFlow<WGRoleDBEntity>()
     }
 
